@@ -965,11 +965,11 @@
                 {
                     "source": "/home/john/AndroidStudioProjects/Notes/app/src/main/res/values/colors.xml",
                     "from": {
-                        "startLines": "-1,-1,2,-1,-1",
-                        "startColumns": "-1,-1,4,-1,-1",
-                        "startOffsets": "-1,-1,55,-1,-1",
-                        "endColumns": "-1,-1,46,-1,-1",
-                        "endOffsets": "-1,-1,97,-1,-1"
+                        "startLines": "-1,-1,-1,-1,6",
+                        "startColumns": "-1,-1,-1,-1,4",
+                        "startOffsets": "-1,-1,-1,-1,244",
+                        "endColumns": "-1,-1,-1,-1,44",
+                        "endOffsets": "-1,-1,-1,-1,284"
                     },
                     "to": {
                         "startLines": "170,193,194,195,217",

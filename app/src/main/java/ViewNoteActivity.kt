@@ -49,7 +49,7 @@ class ViewNoteActivity : AppCompatActivity() {
 
 
         toolbar.setTitleTextColor(Color.BLACK)
-        toolbar.setBackgroundColor(Color.parseColor("#a8f5ff"))
+        toolbar.setBackgroundColor(Color.parseColor("#07C9FA"))
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)

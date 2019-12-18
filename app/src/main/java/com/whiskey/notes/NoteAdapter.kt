@@ -3,30 +3,29 @@ package com.whiskey.notes
 
 import android.content.Intent
 import android.icu.text.SimpleDateFormat
-import android.icu.text.Transliterator
-import android.opengl.Visibility
 import android.os.Build
-import android.os.Handler
-import android.os.Parcel
-import android.os.Parcelable
 import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.note_row_item.*
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.note_row_item.view.*
-import java.net.Inet4Address
 import java.util.*
 import kotlin.collections.ArrayList
 @RequiresApi(Build.VERSION_CODES.N)
-class NoteAdapter(var notes: ArrayList<String>, var titles: ArrayList<String>, var bDelete: Button, var deleteAll: CheckBox, var buttonLayout: ConstraintLayout)
+class NoteAdapter(
+    var notes: ArrayList<String>,
+    var titles: ArrayList<String>,
+    var bDelete: Button,
+    var deleteAll: CheckBox,
+    var buttonLayout: ConstraintLayout,
+    var fab: FloatingActionButton
+)
     : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
     var checkedItems= ArrayList<Int>()
     private var checkedVisible = false
@@ -140,6 +139,7 @@ class NoteAdapter(var notes: ArrayList<String>, var titles: ArrayList<String>, v
                 holder.customView.button.visibility = View.VISIBLE
                 deleteAll.visibility = View.VISIBLE
                 buttonLayout.visibility = View.VISIBLE
+                fab.isVisible = false
 
 
             }
@@ -148,7 +148,7 @@ class NoteAdapter(var notes: ArrayList<String>, var titles: ArrayList<String>, v
                 bDelete.visibility = View.GONE
                 holder.customView.button.visibility = View.GONE
                 deleteAll.visibility = View.GONE
-
+                fab.isVisible = true
 
             }
 

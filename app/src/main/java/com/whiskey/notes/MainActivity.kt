@@ -6,23 +6,18 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
-import android.text.Layout
 import android.util.Log
 import android.view.*
-import android.widget.Button
-import android.widget.CheckBox
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.btnDelete
-import kotlinx.android.synthetic.main.note_row_item.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -89,7 +84,7 @@ class MainActivity : AppCompatActivity() {
             layoutM.reverseLayout = true
             layoutManager = layoutM
             val buttonLayout: ConstraintLayout = constrain
-            adapter  = NoteAdapter(notes, titles, delete, deleteAll, buttonLayout)
+            adapter  = NoteAdapter(notes, titles, delete, deleteAll, buttonLayout, fab)
             noteadapter = adapter as NoteAdapter
             addItemDecoration(VerticalSpacing(50))
             (adapter as NoteAdapter).notifyDataSetChanged()

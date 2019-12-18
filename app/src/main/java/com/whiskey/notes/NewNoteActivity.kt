@@ -1,6 +1,7 @@
 package com.whiskey.notes
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -46,6 +47,7 @@ class NewNoteActivity : AppCompatActivity() {
     }
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_note)
@@ -53,7 +55,7 @@ class NewNoteActivity : AppCompatActivity() {
         titles = intent.getStringArrayListExtra("titles")
          var time = time.toString()
         toolbar.setTitleTextColor(Color.BLACK)
-        toolbar.setBackgroundColor(Color.parseColor("#a8f5ff"))
+        toolbar.setBackgroundColor(Color.parseColor("#07C9FA"))
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -87,10 +89,6 @@ class NewNoteActivity : AppCompatActivity() {
             intent.putStringArrayListExtra("notes", notes)
             intent.putStringArrayListExtra("titles", titles)
             intent.putExtra("time", time)
-            if(noteText.isNotBlank() || noteTitle.isNotBlank()){
-                Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show()
-            }
-
 
             startActivity(intent)
             return true
