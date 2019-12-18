@@ -998,6 +998,8 @@ drawable abc_vector_test
 drawable avd_hide_password
 drawable avd_show_password
 drawable btn_add_item
+drawable delete_icon
+drawable delete_icon_2
 drawable design_bottom_navigation_item_background
 drawable design_fab_background
 drawable design_ic_visibility
@@ -1071,6 +1073,7 @@ id bottom
 id btnDelete
 id btnShowAlert
 id button
+id button2
 id buttonPanel
 id center
 id center_horizontal
@@ -1400,6 +1403,7 @@ string path_password_eye_mask_strike_through
 string path_password_eye_mask_visible
 string path_password_strike_through
 string search_menu_title
+string share
 string status_bar_notification_info_overflow
 style AlertDialog_AppCompat
 style AlertDialog_AppCompat_Light
