@@ -47,10 +47,11 @@
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:buttonTint="@color/colorPrimary"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@android:color/background_dark"
         android:textColorHighlight="@android:color/background_light"
         android:textColorHint="@android:color/background_light"
         android:textColorLink="@android:color/background_light"
+        android:textCursorDrawable="@android:color/background_dark"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/itemNote"
@@ -74,5 +75,22 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.988"
         tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/dateText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="sdfsdfsdf"
+        android:textColor="@android:color/black"
+        android:textIsSelectable="false"
+        android:textSize="12sp"
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.912"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

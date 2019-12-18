@@ -2,20 +2,28 @@
 
 package com.whiskey.notes
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.view.menu.MenuBuilder
 import com.whiskey.notes.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.add_note.*
 import kotlinx.android.synthetic.main.edit_note.*
+import kotlinx.android.synthetic.main.note_row_item.*
 import kotlinx.android.synthetic.main.view_note.*
 
 class ViewNoteActivity : AppCompatActivity() {
@@ -24,6 +32,7 @@ class ViewNoteActivity : AppCompatActivity() {
     lateinit var note: String
     lateinit var title: String
     var position: Int = 0
+    var menuVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +42,7 @@ class ViewNoteActivity : AppCompatActivity() {
         titles = intent.getStringArrayListExtra("titles")
         note = intent.getStringExtra("note")
         title = intent.getStringExtra("title")
-        position = intent.getIntExtra("position",position)
+        position = intent.getIntExtra("position", position)
 
         intent.putStringArrayListExtra("notes", notes)
         intent.putStringArrayListExtra("titles", titles)
@@ -44,55 +53,105 @@ class ViewNoteActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
-
-        setTitle(title)
-
+        eNote.clearFocus()
+        eTitle.clearFocus()
+        eTitle.setText(title)
         eNote.setText(note)
+        rConst.setOnClickListener {
+            eNote.hasFocus()
+            eNote.isSelected = true
+            eNote.isCursorVisible = true
+            menuVisible = true
+            eNote.requestFocus()
+            invalidateOptionsMenu()
+            showSoftKeyboard(this.findViewById(R.id.eNote))
 
+        }
+        eNote.setOnFocusChangeListener { v, hasFocus ->
+            eNote.hasFocus()
+            eNote.isSelected = true
+            eNote.isCursorVisible = true
+            menuVisible = true
+            invalidateOptionsMenu()
+
+        }
+        eTitle.setOnFocusChangeListener { v, hasFocus ->
+            eTitle.hasFocus()
+
+            eTitle.isSelected = true
+            menuVisible = true
+            invalidateOptionsMenu()
+
+        }
     }
+    fun showSoftKeyboard(view: View) {
+        if (view.requestFocus()) {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
+        }
+    }
+
+    fun ResetView(){
+
+        eTitle.clearFocus()
+        eNote.clearFocus()
+        menuVisible = false
+        hideKeyboard()
+        title = eTitle.text.toString()
+        note = eNote.text.toString()
+    }
+
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here.
         val id = item.getItemId()
 
-        if (id == R.id.edit) {
+        if (id == R.id.save) {
             //save function
-            val editIntent = Intent(this, EditNoteActivity::class.java)
-
-            editIntent.putExtra("note", note)
-            editIntent.putExtra("title", title)
-            editIntent.putStringArrayListExtra("notes", notes)
-            editIntent.putStringArrayListExtra("titles", titles)
-            editIntent.putExtra("position", position)
-            Log.d("notePosition2", position.toString())
-
-
-
-            startActivity(editIntent)
+           ResetView()
             return true
         }
 
         return super.onOptionsItemSelected(item)
 
     }
+    fun Activity.hideKeyboard() {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(this.findViewById<EditText>(R.id.eNote).getWindowToken(), 0)
+    }
     override fun onSupportNavigateUp():Boolean{
         onBackPressed()
         return true
     }
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.edit_menu, menu)
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+
+        val menuItem = menu?.findItem(R.id.save)
+
+        menuItem?.isVisible = menuVisible
         return true
     }
-    override fun onBackPressed() {
-        val mainIntent = Intent(this, MainActivity::class.java)
-        val noteText = note
-        val noteTitle = title
-        mainIntent.putExtra("note", noteText)
-        mainIntent.putExtra("title", noteTitle)
-        mainIntent.putStringArrayListExtra("notes", notes)
-        mainIntent.putStringArrayListExtra("titles", titles)
-        mainIntent.putExtra("position", position)
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
 
-        startActivity(mainIntent)
+    override fun onBackPressed() {
+        if(eTitle.isFocused || eNote.isFocused){
+            ResetView()
+
+        }else{
+            val mainIntent = Intent(this, MainActivity::class.java)
+            val noteText = note
+            val noteTitle = title
+            mainIntent.putExtra("note", noteText)
+            mainIntent.putExtra("title", noteTitle)
+            mainIntent.putStringArrayListExtra("notes", notes)
+            mainIntent.putStringArrayListExtra("titles", titles)
+            mainIntent.putExtra("position", position)
+
+            startActivity(mainIntent)
+        }
 
     }
 }

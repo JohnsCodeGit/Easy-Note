@@ -7,19 +7,26 @@ import androidx.appcompat.app.AppCompatActivity
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.graphics.toColor
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.add_note.*
+import kotlinx.android.synthetic.main.note_row_item.*
+import java.time.LocalDateTime
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlinx.android.synthetic.main.add_note.toolbar as toolbar1
 
 class NewNoteActivity : AppCompatActivity() {
     var notes = ArrayList<String>()
     var titles = ArrayList<String>()
 
+    var time: Calendar = Calendar.getInstance()
     fun alertDialog(){
         val dialogBuilder = AlertDialog.Builder(this,R.style.MyDialogTheme)
 
@@ -44,7 +51,7 @@ class NewNoteActivity : AppCompatActivity() {
         setContentView(R.layout.add_note)
         notes = intent.getStringArrayListExtra("notes")
         titles = intent.getStringArrayListExtra("titles")
-
+         var time = time.toString()
         toolbar.setTitleTextColor(Color.BLACK)
         toolbar.setBackgroundColor(Color.parseColor("#a8f5ff"))
         setSupportActionBar(toolbar)
@@ -79,6 +86,7 @@ class NewNoteActivity : AppCompatActivity() {
             intent.putExtra("title", noteTitle)
             intent.putStringArrayListExtra("notes", notes)
             intent.putStringArrayListExtra("titles", titles)
+            intent.putExtra("time", time)
             if(noteText.isNotBlank() || noteTitle.isNotBlank()){
                 Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show()
             }

@@ -2,14 +2,17 @@ package com.whiskey.notes
 
 
 import android.content.Intent
+import android.icu.text.SimpleDateFormat
 import android.icu.text.Transliterator
 import android.opengl.Visibility
+import android.os.Build
 import android.os.Handler
 import android.os.Parcel
 import android.os.Parcelable
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -20,13 +23,16 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.note_row_item.*
 import kotlinx.android.synthetic.main.note_row_item.view.*
 import java.net.Inet4Address
-
+import java.util.*
+import kotlin.collections.ArrayList
+@RequiresApi(Build.VERSION_CODES.N)
 class NoteAdapter(var notes: ArrayList<String>, var titles: ArrayList<String>, var bDelete: Button, var deleteAll: CheckBox, var buttonLayout: ConstraintLayout)
     : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
     var checkedItems= ArrayList<Int>()
     private var checkedVisible = false
     private var isAllChecked = false
-
+    val date = Calendar.getInstance().time
+    val formatter = SimpleDateFormat("MM/dd/yyyy @ hh:mm aaa")
     override fun getItemCount() = notes.size
 
     fun HideItems(){
@@ -36,6 +42,7 @@ class NoteAdapter(var notes: ArrayList<String>, var titles: ArrayList<String>, v
 
         val layoutInflater = LayoutInflater.from(parent.context)
         val customView = layoutInflater.inflate(R.layout.note_row_item, parent, false)
+
         return NoteViewHolder(customView)
 
     }
@@ -45,12 +52,13 @@ class NoteAdapter(var notes: ArrayList<String>, var titles: ArrayList<String>, v
         titles.addAll(titlesList)
     }
 
+
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val itemNote = notes[position]
         val itemTitle = titles[position]
+        //TODO: Make date unique to each element
         holder.customView.itemTitle.text = itemTitle
         holder.customView.itemNote.text = itemNote
-
         if (notes.size != 0) {
 
             //Delete all items
@@ -238,7 +246,10 @@ class NoteAdapter(var notes: ArrayList<String>, var titles: ArrayList<String>, v
     inner class NoteViewHolder(val customView: View) : RecyclerView.ViewHolder(customView),
         View.OnLongClickListener, View.OnClickListener{
 
+
         init {
+            customView.dateText.text = formatter.format(date)
+
             customView.isLongClickable = true
             customView.setOnLongClickListener(this)
             customView.setOnClickListener(this)

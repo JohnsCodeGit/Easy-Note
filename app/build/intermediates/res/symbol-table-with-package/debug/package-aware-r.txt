@@ -1034,6 +1034,7 @@ drawable tooltip_frame_light
 id ALT
 id CTRL
 id FUNCTION
+id LConst
 id META
 id SHIFT
 id SYM
@@ -1089,6 +1090,7 @@ id contentPanel
 id coordinator
 id custom
 id customPanel
+id dateText
 id decor_content_parent
 id default_activity_button
 id delete
@@ -1101,6 +1103,7 @@ id dimensions
 id direct
 id disableHome
 id eNote
+id eTitle
 id eTxtNote
 id eTxtTitle
 id edit
@@ -1167,6 +1170,7 @@ id percent
 id pin
 id progress_circular
 id progress_horizontal
+id rConst
 id radio
 id radioButton
 id recyclerView_main

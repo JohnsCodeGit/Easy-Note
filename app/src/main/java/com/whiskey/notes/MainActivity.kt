@@ -1,5 +1,6 @@
 package com.whiskey.notes
 
+import android.annotation.TargetApi
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Rect
@@ -43,6 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    @TargetApi(Build.VERSION_CODES.N)
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -121,6 +123,7 @@ class MainActivity : AppCompatActivity() {
     }
 //    private var chkBox: CheckBox = findViewById(R.id.checkBox)
 //    private var but: Button = findViewById(R.id.button)
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onBackPressed() {
         btnDelete.visibility = View.GONE
         radioButton.visibility = View.GONE
