@@ -232,6 +232,23 @@ class NoteAdapter(
         val alert = dialogBuilder.create()
         alert.show()
     }
+    fun quicksort(items:List<Int>): List<Int> {
+        if (items.count() < 2){
+            return items
+        }
+        val pivot = items[items.count()/2]
+
+        val equal = items.filter { it == pivot }
+//    println("pivot value is : "+equal)
+
+        val less = items.filter { it < pivot }
+//    println("Lesser values than pivot : "+less)
+
+        val greater = items.filter { it > pivot }
+//    println("Greater values than pivot : "+greater)
+
+        return quicksort(less) + (equal) + quicksort(greater)
+    }
 
     fun DeleteItems(view: View, delete: CheckBox, btn: Button){
         val dialogBuilder =
@@ -243,30 +260,54 @@ class NoteAdapter(
             .setCancelable(false)
             .setPositiveButton("Yes") {
                     dialog, id-> dialog.dismiss()
-
+                checkedItems.sort()
+                Log.d("itemDeleted List1", (checkedItems).toString())
+                
                 for (i in 0 until checkedItems.size){
-                    if(i == 0 ||checkedItems[i] == 0 ) {
-                        notedbHandler.DeleteItem(notes[checkedItems[i]])
-                        dateDbHandler.DeleteItem(dates[checkedItems[i]])
-                        titleDbHandler.DeleteItem(titles[checkedItems[i]])
-                        notes.removeAt(checkedItems[i])
-                        titles.removeAt(checkedItems[i])
-                        dates.removeAt(checkedItems[i])
-
-
-                        Log.d("itemDeleted", notes[checkedItems[i]].toString())
-//                    notifyItemRemoved(position)
+                    if(checkedItems.size == 0) {
+                        break
                     }
                     else{
-                        notedbHandler.DeleteItem(notes[checkedItems[i]-1])
-                        dateDbHandler.DeleteItem(dates[checkedItems[i]-1])
-                        titleDbHandler.DeleteItem(titles[checkedItems[i]-1])
-                        notes.removeAt(checkedItems[i]-1)
-                        titles.removeAt(checkedItems[i]-1)
-                        dates.removeAt(checkedItems[i]-1)
+                        notedbHandler.deleteItem(checkedItems[0]+1-i)
+                        dateDbHandler.deleteItem(checkedItems[0]+1-i)
+                        titleDbHandler.deleteItem(checkedItems[0]+1-i)
+                        notes.removeAt(checkedItems[0]-i)
+                        titles.removeAt(checkedItems[0]-i)
+                        dates.removeAt(checkedItems[0]-i)
+                        Log.d("itemDeleted3", checkedItems[0].toString())
+                        checkedItems.removeAt(0)
+                        Log.d("itemDeleted List", (checkedItems).toString())
 
-                        Log.d("itemDeleted", checkedItems[i].toString())
+
                     }
+//                        else if (i == checkedItems.size - 1 && checkedItems.size < 3){
+//
+//                        notedbHandler.deleteItem(checkedItems[i]+1)
+//                        dateDbHandler.deleteItem(checkedItems[i]+1)
+//                        titleDbHandler.deleteItem(checkedItems[i]+1)
+//                        notes.removeAt(checkedItems[i])
+//                        titles.removeAt(checkedItems[i])
+//                        dates.removeAt(checkedItems[i])
+//
+//                        Log.d("itemDeleted", i.toString())
+//                    }
+//                    else if((i == 0 ||checkedItems[i] == 0 || checkedItems[i] == i )){
+//                        notedbHandler.deleteItem(checkedItems[i]+1)
+//                        dateDbHandler.deleteItem(checkedItems[i]+1)
+//                        titleDbHandler.deleteItem(checkedItems[i]+1)
+//                        notes.removeAt(checkedItems[i])
+//                        titles.removeAt(checkedItems[i])
+//                        dates.removeAt(checkedItems[i])
+//
+//
+//                        Log.d("itemDeleted2", checkedItems[i].toString())
+//            //                    notifyItemRemoved(position)
+//                    }
+
+
+
+
+
                 }
                 checkedVisible = false
                 checkedItems.clear()
@@ -297,8 +338,7 @@ class NoteAdapter(
             customView.isLongClickable = true
             customView.setOnLongClickListener(this)
             customView.setOnClickListener(this)
-//            customView.findViewById(R.id.checkBox)
-//            customView.findViewById(R.id.button)
+
 
         }
         override fun onLongClick(v: View?): Boolean {

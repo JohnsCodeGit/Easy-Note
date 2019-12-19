@@ -30,25 +30,25 @@ class MainActivity : AppCompatActivity() {
     var titles = ArrayList<String>()
     var dates = ArrayList<String>()
     lateinit  var noteadapter: NoteAdapter
-    val notedbHandler = NotesDbHelper(this, null)
-    val titleDbHandler = TitlesDbHelper(this, null)
-    val dateDbHandler = dateDbHelper(this, null)
+    private val notedbHandler = NotesDbHelper(this, null)
+    private val titleDbHandler = TitlesDbHelper(this, null)
+    private val dateDbHandler = dateDbHelper(this, null)
 
     @RequiresApi(Build.VERSION_CODES.N)
     val formatter = SimpleDateFormat("MM/dd/yyyy @ hh:mm aaa")
 
 
     override fun onSaveInstanceState(outState: Bundle?) {
-        super.onSaveInstanceState(outState)
+
 
         outState?.putStringArrayList("savedNotes", notes)
         outState?.putStringArrayList("savedTitles", titles)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        super.onRestoreInstanceState(savedInstanceState)
+
         notes = savedInstanceState?.getStringArrayList("savedNotes") as ArrayList<String>
-        titles = savedInstanceState?.getStringArrayList("savedTitles") as ArrayList<String>
+        titles = savedInstanceState.getStringArrayList("savedTitles") as ArrayList<String>
 
     }
 
@@ -90,10 +90,10 @@ class MainActivity : AppCompatActivity() {
                 notes.add(noteText)
                 titles.add(titleText)
                 dates.add(dateText)
-                notedbHandler.addNote(noteText)
-                titleDbHandler.addTitle(titleText)
-                dateDbHandler.addDate(dateText)
-                Log.d("noteAddedToDatabase",notedbHandler.getNoteSize().toString() )
+                notedbHandler.addNote(noteText, notes.size)
+                titleDbHandler.addTitle(titleText, titles.size)
+                dateDbHandler.addDate(dateText,dates.size)
+                Log.d("itemDeletedSize",notes.size.toString() )
 
 
             }
