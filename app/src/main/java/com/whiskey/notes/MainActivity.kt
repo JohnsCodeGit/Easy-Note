@@ -4,26 +4,39 @@ import android.annotation.TargetApi
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Rect
+import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
+import com.whiskey.notes.com.whiskey.notes.ThemeActivity
+import com.whiskey.notes.com.whiskey.notes.TitlesDbHelper
+import com.whiskey.notes.com.whiskey.notes.dateDbHelper
 
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.btnDelete
+import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
     var notes = ArrayList<String>()
     var titles = ArrayList<String>()
+    var dates = ArrayList<String>()
     lateinit  var noteadapter: NoteAdapter
+    val notedbHandler = NotesDbHelper(this, null)
+    val titleDbHandler = TitlesDbHelper(this, null)
+    val dateDbHandler = dateDbHelper(this, null)
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    val formatter = SimpleDateFormat("MM/dd/yyyy @ hh:mm aaa")
+
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
@@ -50,27 +63,44 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener { val intent = Intent(this, NewNoteActivity::class.java)
             intent.putStringArrayListExtra("notes", notes)
             intent.putStringArrayListExtra("titles", titles)
+            intent.putStringArrayListExtra("dates", dates)
             startActivity(intent)
         }
 
+        if(notedbHandler.getNoteSize() != 0.toLong() ) {
+            notes = notedbHandler.getAllNote()
+            titles = titleDbHandler.getAllTitle()
+            dates = dateDbHandler.getAllDate()
+
+
+        }
         val noteText = intent.getStringExtra("note")
         val titleText = intent.getStringExtra("title")
+        val dateText = intent.getStringExtra("date")
 
-
-        if(noteText != null || titleText != null) {
+        if((noteText != null || titleText != null) && dateText != null) {
             Log.d("NOTETEXT", noteText)
             notes = intent.getStringArrayListExtra("notes")
             titles = intent.getStringArrayListExtra("titles")
+            dates = intent.getStringArrayListExtra("dates")
             val position: Int = intent.getIntExtra("position", -1)
 
             Log.d("notePosition", position.toString())
             if(position == -1 && (noteText.isNotEmpty() || titleText.isNotEmpty())) {
                 notes.add(noteText)
                 titles.add(titleText)
+                dates.add(dateText)
+                notedbHandler.addNote(noteText)
+                titleDbHandler.addTitle(titleText)
+                dateDbHandler.addDate(dateText)
+                Log.d("noteAddedToDatabase",notedbHandler.getNoteSize().toString() )
+
+
             }
             else if(position != -1 && (noteText.isNotEmpty() || titleText.isNotEmpty())){
                 notes[position] = noteText
                 titles[position] = titleText
+                dates[position] = dateText
             }
 
         }
@@ -84,7 +114,8 @@ class MainActivity : AppCompatActivity() {
             layoutM.reverseLayout = true
             layoutManager = layoutM
             val buttonLayout: ConstraintLayout = constrain
-            adapter  = NoteAdapter(notes, titles, delete, deleteAll, buttonLayout, fab)
+            adapter  = NoteAdapter(notes, titles, delete, deleteAll, buttonLayout, fab, dates, this.context,
+                notedbHandler, titleDbHandler, dateDbHandler)
             noteadapter = adapter as NoteAdapter
             addItemDecoration(VerticalSpacing(50))
             (adapter as NoteAdapter).notifyDataSetChanged()
@@ -94,25 +125,26 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main_menu_delete, menu)
+       // menuInflater.inflate(R.menu.main_menu_delete, menu)
 
         return true
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        val btn: MenuItem? = menu?.findItem(R.id.delete)
-        btn?.isVisible = false
 
         return true
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         val id = item.getItemId()
-           if (id == R.id.delete){
-                Toast.makeText(this, "Deleted", Toast.LENGTH_LONG).show()
+           if (id == R.id.Theme){
+               val intent = Intent(this, ThemeActivity::class.java)
+
+               startActivity(intent)
            }
         return super.onOptionsItemSelected(item)
     }

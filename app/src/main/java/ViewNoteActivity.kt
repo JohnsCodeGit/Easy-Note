@@ -6,38 +6,37 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.icu.text.SimpleDateFormat
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.Toast
-import androidx.appcompat.app.ActionBar
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.menu.MenuBuilder
-import com.whiskey.notes.R
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.toolbar
-import kotlinx.android.synthetic.main.add_note.*
-import kotlinx.android.synthetic.main.edit_note.*
-import kotlinx.android.synthetic.main.note_row_item.*
 import kotlinx.android.synthetic.main.view_note.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ViewNoteActivity : AppCompatActivity() {
     var notes = ArrayList<String>()
     var titles = ArrayList<String>()
+    var dates = ArrayList<String>()
     lateinit var note: String
     lateinit var title: String
+
     var position: Int = 0
     var menuVisible = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.view_note)
 
+        dates = intent.getStringArrayListExtra("dates")
         notes = intent.getStringArrayListExtra("notes")
         titles = intent.getStringArrayListExtra("titles")
         note = intent.getStringExtra("note")
@@ -46,7 +45,12 @@ class ViewNoteActivity : AppCompatActivity() {
 
         intent.putStringArrayListExtra("notes", notes)
         intent.putStringArrayListExtra("titles", titles)
+        intent.putStringArrayListExtra("dates", dates)
+            eTitle.hint = "No Title"
+            eTitle.setHintTextColor(Color.DKGRAY)
 
+
+            eNote.hint = "Notes"
 
         toolbar.setTitleTextColor(Color.BLACK)
         toolbar.setBackgroundColor(Color.parseColor("#07C9FA"))
@@ -92,7 +96,11 @@ class ViewNoteActivity : AppCompatActivity() {
     }
 
     fun ResetView(){
+        eTitle.hint = "No Title"
+        eTitle.setHintTextColor(Color.DKGRAY)
 
+
+        eNote.hint = "Notes"
         eTitle.clearFocus()
         eNote.clearFocus()
         menuVisible = false
@@ -108,7 +116,7 @@ class ViewNoteActivity : AppCompatActivity() {
 
         if (id == R.id.save) {
             //save function
-           ResetView()
+            ResetView()
             return true
         }
 
@@ -119,6 +127,7 @@ class ViewNoteActivity : AppCompatActivity() {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(this.findViewById<EditText>(R.id.eNote).getWindowToken(), 0)
     }
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onSupportNavigateUp():Boolean{
         onBackPressed()
         return true
@@ -136,6 +145,7 @@ class ViewNoteActivity : AppCompatActivity() {
         return true
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onBackPressed() {
         if(eTitle.isFocused || eNote.isFocused){
             ResetView()
@@ -144,10 +154,17 @@ class ViewNoteActivity : AppCompatActivity() {
             val mainIntent = Intent(this, MainActivity::class.java)
             val noteText = note
             val noteTitle = title
+
+            val date = Calendar.getInstance().time
+            val formatter = SimpleDateFormat("MM/dd/yyyy @ hh:mm aaa")
+            val dateText = formatter.format(date).toString()
+
             mainIntent.putExtra("note", noteText)
             mainIntent.putExtra("title", noteTitle)
             mainIntent.putStringArrayListExtra("notes", notes)
             mainIntent.putStringArrayListExtra("titles", titles)
+            mainIntent.putStringArrayListExtra("dates", dates)
+            mainIntent.putExtra("date", dateText)
             mainIntent.putExtra("position", position)
 
             startActivity(mainIntent)

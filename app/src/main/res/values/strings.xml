@@ -6,4 +6,7 @@
     <string name="delete">Delete</string>
     <string name="all">All</string>
     <string name="share">Share</string>
+    <string name="background">Background</string>
+    <string name="dark">Dark</string>
+    <string name="light">Light</string>
 </resources>

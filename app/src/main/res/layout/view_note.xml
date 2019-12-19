@@ -75,6 +75,7 @@
             android:paddingLeft="5dp"
             android:paddingTop="5dp"
             android:textSize="24sp"
+            android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

@@ -4,12 +4,12 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
         <item
 
-            android:id="@+id/delete"
+            android:id="@+id/Theme"
 
 
-            app:showAsAction="always"
+            app:showAsAction="never"
 
-            android:title="Delete"
+            android:title="Themes"
             />
 
     </menu>

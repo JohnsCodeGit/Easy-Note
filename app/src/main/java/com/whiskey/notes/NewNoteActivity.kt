@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
+import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.util.Log
 import android.view.Menu
@@ -26,8 +27,9 @@ import kotlinx.android.synthetic.main.add_note.toolbar as toolbar1
 class NewNoteActivity : AppCompatActivity() {
     var notes = ArrayList<String>()
     var titles = ArrayList<String>()
+    var dates = ArrayList<String>()
 
-    var time: Calendar = Calendar.getInstance()
+
     fun alertDialog(){
         val dialogBuilder = AlertDialog.Builder(this,R.style.MyDialogTheme)
 
@@ -53,7 +55,7 @@ class NewNoteActivity : AppCompatActivity() {
         setContentView(R.layout.add_note)
         notes = intent.getStringArrayListExtra("notes")
         titles = intent.getStringArrayListExtra("titles")
-         var time = time.toString()
+        dates = intent.getStringArrayListExtra("dates")
         toolbar.setTitleTextColor(Color.BLACK)
         toolbar.setBackgroundColor(Color.parseColor("#07C9FA"))
         setSupportActionBar(toolbar)
@@ -73,6 +75,7 @@ class NewNoteActivity : AppCompatActivity() {
 
 
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here.
         val id = item.getItemId()
@@ -88,8 +91,13 @@ class NewNoteActivity : AppCompatActivity() {
             intent.putExtra("title", noteTitle)
             intent.putStringArrayListExtra("notes", notes)
             intent.putStringArrayListExtra("titles", titles)
-            intent.putExtra("time", time)
+            intent.putStringArrayListExtra("dates", dates)
 
+            val date = Calendar.getInstance().time
+            val formatter = SimpleDateFormat("MM/dd/yyyy @ hh:mm aaa")
+            val dateText = formatter.format(date).toString()
+
+            intent.putExtra("date", dateText)
             startActivity(intent)
             return true
         }

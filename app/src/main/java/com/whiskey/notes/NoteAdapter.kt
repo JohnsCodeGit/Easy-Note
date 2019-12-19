@@ -1,8 +1,8 @@
 package com.whiskey.notes
 
 
+import android.content.Context
 import android.content.Intent
-import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.util.Log
 import android.view.*
@@ -14,8 +14,10 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
+import com.whiskey.notes.com.whiskey.notes.TitlesDbHelper
+import com.whiskey.notes.com.whiskey.notes.dateDbHelper
 import kotlinx.android.synthetic.main.note_row_item.view.*
-import java.util.*
 import kotlin.collections.ArrayList
 @RequiresApi(Build.VERSION_CODES.N)
 class NoteAdapter(
@@ -24,14 +26,18 @@ class NoteAdapter(
     var bDelete: Button,
     var deleteAll: CheckBox,
     var buttonLayout: ConstraintLayout,
-    var fab: FloatingActionButton
+    var fab: FloatingActionButton,
+    var dates: ArrayList<String>,
+    var context: Context,
+    var notedbHandler: NotesDbHelper,
+    var titleDbHandler: TitlesDbHelper,
+    var dateDbHandler: dateDbHelper
 )
     : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
     var checkedItems= ArrayList<Int>()
     private var checkedVisible = false
     private var isAllChecked = false
-    val date = Calendar.getInstance().time
-    val formatter = SimpleDateFormat("MM/dd/yyyy @ hh:mm aaa")
+
     override fun getItemCount() = notes.size
 
     fun HideItems(){
@@ -55,7 +61,9 @@ class NoteAdapter(
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val itemNote = notes[position]
         val itemTitle = titles[position]
-        //TODO: Make date unique to each element
+
+        val dateText = dates[position]
+        holder.customView.dateText.text = dateText
         holder.customView.itemTitle.text = itemTitle
         holder.customView.itemNote.text = itemNote
         if (notes.size != 0) {
@@ -68,12 +76,10 @@ class NoteAdapter(
                     for(i in 0 until notes.size){
                         checkedItems.add(i)
                     }
-                    Log.d("itemAdded", checkedItems.size.toString())
+                    Log.d("itemAddedAll", checkedItems.size.toString())
                 }
                 else {
                     unSelectAll()
-                    holder.customView.checkBox.isChecked = false
-
                     checkedItems.clear()
                     Log.d("itemsCleared", checkedItems.size.toString())
                 }
@@ -81,17 +87,26 @@ class NoteAdapter(
             // Add checked check boxes to array to delete checked items
 
             holder.customView.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
-                if (isChecked) {
+
+                Log.d("itemChecked", isChecked.toString())
+                Log.d("itemNotesSize", notes.size.toString())
+
+                if (isChecked && !deleteAll.isChecked) {
+
                     checkedItems.add(position)
-                    Log.d("itemAdded", "Item was unchecked")
+                    Log.d("itemAdded", position.toString())
+
 
                 }
-                else{
-                    holder.customView.checkBox.isChecked = false
-                    if(position < checkedItems.size)
+                else if(!isChecked){
+                    if(position < checkedItems.size) {
+                        deleteAll.isChecked = false
                         checkedItems.removeAt(position)
-                    Log.d("itemRemoved", "Item was checked")
+                        Log.d("itemRemoved", position.toString())
+                    }
                 }
+                Log.d("itemsChecked", checkedItems.toString())
+                Log.d("itemDeleteCheckState", deleteAll.isChecked.toString())
 
             }
 
@@ -117,7 +132,7 @@ class NoteAdapter(
 
                 }else {
 
-                    DeleteItems(holder.customView, position, deleteAll, bDelete)
+                    DeleteItems(holder.customView, deleteAll, bDelete)
 
                 }
 
@@ -164,6 +179,7 @@ class NoteAdapter(
                 intent.putExtra("position", position)
                 intent.putStringArrayListExtra("notes", notes)
                 intent.putStringArrayListExtra("titles", titles)
+                intent.putStringArrayListExtra("dates", dates)
                 startActivity(holder.customView.context, intent, null)
 
                 notifyDataSetChanged()
@@ -193,13 +209,20 @@ class NoteAdapter(
                     dialog, id-> dialog.dismiss()
                 notes.clear()
                 titles.clear()
+                dates.clear()
                 checkedItems.clear()
+                notedbHandler.deleteAll()
+                titleDbHandler.deleteAll()
+                dateDbHandler.deleteAll()
                 checkedVisible = false
                 HideItems()
                 delete.visibility = View.GONE
                 btn.visibility = View.GONE
                 buttonLayout.visibility = View.GONE
-
+                fab.isVisible = true
+                deleteAll.isSelected = false
+                unSelectAll()
+                deleteAll.isChecked = false
                 notifyDataSetChanged()
 
             }
@@ -210,7 +233,7 @@ class NoteAdapter(
         alert.show()
     }
 
-    fun DeleteItems(view: View, position: Int, delete: CheckBox, btn: Button){
+    fun DeleteItems(view: View, delete: CheckBox, btn: Button){
         val dialogBuilder =
             AlertDialog.Builder(view.context, R.style.MyDialogTheme)
 
@@ -221,11 +244,29 @@ class NoteAdapter(
             .setPositiveButton("Yes") {
                     dialog, id-> dialog.dismiss()
 
-                for (i in 0 until (checkedItems.size)){
+                for (i in 0 until checkedItems.size){
+                    if(i == 0 ||checkedItems[i] == 0 ) {
+                        notedbHandler.DeleteItem(notes[checkedItems[i]])
+                        dateDbHandler.DeleteItem(dates[checkedItems[i]])
+                        titleDbHandler.DeleteItem(titles[checkedItems[i]])
+                        notes.removeAt(checkedItems[i])
+                        titles.removeAt(checkedItems[i])
+                        dates.removeAt(checkedItems[i])
 
-                    notes.removeAt(checkedItems[i])
-                    titles.removeAt(checkedItems[i])
-                    notifyItemRemoved(position)
+
+                        Log.d("itemDeleted", notes[checkedItems[i]].toString())
+//                    notifyItemRemoved(position)
+                    }
+                    else{
+                        notedbHandler.DeleteItem(notes[checkedItems[i]-1])
+                        dateDbHandler.DeleteItem(dates[checkedItems[i]-1])
+                        titleDbHandler.DeleteItem(titles[checkedItems[i]-1])
+                        notes.removeAt(checkedItems[i]-1)
+                        titles.removeAt(checkedItems[i]-1)
+                        dates.removeAt(checkedItems[i]-1)
+
+                        Log.d("itemDeleted", checkedItems[i].toString())
+                    }
                 }
                 checkedVisible = false
                 checkedItems.clear()
@@ -233,6 +274,10 @@ class NoteAdapter(
                 delete.visibility = View.GONE
                 btn.visibility = View.GONE
                 buttonLayout.visibility = View.GONE
+                fab.isVisible = true
+                deleteAll.isSelected = false
+                unSelectAll()
+                deleteAll.isChecked = false
 
                 notifyDataSetChanged()
             }
@@ -248,13 +293,12 @@ class NoteAdapter(
 
 
         init {
-            customView.dateText.text = formatter.format(date)
 
             customView.isLongClickable = true
             customView.setOnLongClickListener(this)
             customView.setOnClickListener(this)
-            val checkBox: CheckBox = customView.findViewById(R.id.checkBox)
-            val button: Button = customView.findViewById(R.id.button)
+//            customView.findViewById(R.id.checkBox)
+//            customView.findViewById(R.id.button)
 
         }
         override fun onLongClick(v: View?): Boolean {
