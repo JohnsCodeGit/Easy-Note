@@ -9,8 +9,9 @@
 
     <TextView
         android:id="@+id/itemTitle"
-        android:layout_width="174dp"
-        android:layout_height="40dp"
+        android:layout_width="316dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="679dp"
         android:background="@android:color/transparent"
         android:paddingTop="5dp"
@@ -20,7 +21,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.077"
+        app:layout_constraintHorizontal_bias="0.307"
         app:layout_constraintStart_toEndOf="@+id/checkBox"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
@@ -35,10 +36,10 @@
         android:textCursorDrawable="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.036"
+        app:layout_constraintHorizontal_bias="0.058"
         app:layout_constraintStart_toEndOf="@+id/button"
         app:layout_constraintTop_toTopOf="@+id/itemTitle"
-        app:layout_constraintVertical_bias="0.753" />
+        app:layout_constraintVertical_bias="0.97" />
 
     <CheckBox
         android:id="@+id/checkBox"
@@ -46,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:buttonTint="@color/colorAccent"
+        android:buttonTint="@android:color/black"
         android:textColor="@android:color/background_dark"
         android:textColorHighlight="@android:color/background_light"
         android:textColorHint="@android:color/background_light"
@@ -88,9 +89,9 @@
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.912"
+        app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.009" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

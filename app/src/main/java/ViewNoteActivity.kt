@@ -55,8 +55,8 @@ class ViewNoteActivity : AppCompatActivity() {
 
             eNote.hint = "Notes"
 
-        toolbar.setTitleTextColor(Color.BLACK)
-        toolbar.setBackgroundColor(Color.parseColor("#07C9FA"))
+        toolbar.setTitleTextColor(Color.WHITE)
+        toolbar.setBackgroundColor(Color.parseColor("#202026"))
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -126,9 +126,9 @@ class ViewNoteActivity : AppCompatActivity() {
             val notedbHandler = NotesDbHelper(this, null)
             val titleDbHandler = TitlesDbHelper(this, null)
             val dateDbHandler = dateDbHelper(this, null)
-            notedbHandler.updateNote(note, position+1)
+            notedbHandler.updateNote(eNote.text.toString(), position+1)
             dateDbHandler.updateNote(dateText, position+1)
-            titleDbHandler.updateNote(title, position+1)
+            titleDbHandler.updateNote(eTitle.text.toString(), position+1)
             ResetView()
             return true
         }
