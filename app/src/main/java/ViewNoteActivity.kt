@@ -16,6 +16,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
+import com.whiskey.notes.com.whiskey.notes.TitlesDbHelper
+import com.whiskey.notes.com.whiskey.notes.dateDbHelper
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.view_note.*
 import java.util.*
@@ -110,12 +113,22 @@ class ViewNoteActivity : AppCompatActivity() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here.
         val id = item.getItemId()
 
         if (id == R.id.save) {
             //save function
+            val date = Calendar.getInstance().time
+            val formatter = SimpleDateFormat("MM/dd/yyyy @ hh:mm aaa")
+            val dateText = formatter.format(date).toString()
+            val notedbHandler = NotesDbHelper(this, null)
+            val titleDbHandler = TitlesDbHelper(this, null)
+            val dateDbHandler = dateDbHelper(this, null)
+            notedbHandler.updateNote(note, position+1)
+            dateDbHandler.updateNote(dateText, position+1)
+            titleDbHandler.updateNote(title, position+1)
             ResetView()
             return true
         }

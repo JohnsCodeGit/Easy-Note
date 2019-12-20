@@ -1,5 +1,6 @@
 package com.whiskey.notes
 
+
 import android.annotation.TargetApi
 import android.content.Intent
 import android.graphics.Color
@@ -8,7 +9,9 @@ import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.*
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -18,11 +21,7 @@ import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
 import com.whiskey.notes.com.whiskey.notes.ThemeActivity
 import com.whiskey.notes.com.whiskey.notes.TitlesDbHelper
 import com.whiskey.notes.com.whiskey.notes.dateDbHelper
-
-
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.btnDelete
-import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
@@ -39,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
 
 
         outState?.putStringArrayList("savedNotes", notes)
@@ -101,6 +101,10 @@ class MainActivity : AppCompatActivity() {
                 notes[position] = noteText
                 titles[position] = titleText
                 dates[position] = dateText
+
+                notedbHandler.updateNote(noteText, position+1)
+                dateDbHandler.updateNote(dateText, position+1)
+                titleDbHandler.updateNote(titleText, position+1)
             }
 
         }

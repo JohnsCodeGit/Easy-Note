@@ -5,8 +5,8 @@ import android.content.Context
 import android.database.DatabaseUtils
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.net.Uri
 import android.util.Log
+
 
 class NotesDbHelper (context: Context,
                      factory: SQLiteDatabase.CursorFactory?) :
@@ -55,6 +55,14 @@ class NotesDbHelper (context: Context,
     fun deleteAll(){
         val db = this.writableDatabase
         db.execSQL("delete from $TABLE_NAME")
+    }
+    fun updateNote(note: String, position: Int){
+        val newValues = ContentValues()
+        newValues.put(COLUMN_NAME, note)
+
+        val db = this.writableDatabase
+        db.update(TABLE_NAME, newValues, "$COLUMN_INDEX=$position", null)
+        db.close()
     }
 
 

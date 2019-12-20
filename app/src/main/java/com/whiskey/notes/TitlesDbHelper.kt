@@ -54,6 +54,14 @@ class TitlesDbHelper (context: Context,
         val db = this.writableDatabase
         db.execSQL("delete from $TABLE_NAME")
     }
+    fun updateNote(note: String, position: Int){
+        val newValues = ContentValues()
+        newValues.put(COLUMN_NAME, note)
+
+        val db = this.writableDatabase
+        db.update(TABLE_NAME, newValues, "$COLUMN_INDEX=$position", null)
+        db.close()
+    }
 
     fun deleteItem(item: Int){
         val db = writableDatabase
