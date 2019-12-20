@@ -3,10 +3,16 @@ package com.whiskey.notes
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
+import android.preference.PreferenceManager
+import android.preference.PreferenceManager.getDefaultSharedPreferences
 import android.util.Log
-import android.view.*
-import android.widget.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.CheckBox
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -18,7 +24,9 @@ import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
 import com.whiskey.notes.com.whiskey.notes.TitlesDbHelper
 import com.whiskey.notes.com.whiskey.notes.dateDbHelper
 import kotlinx.android.synthetic.main.note_row_item.view.*
-import kotlin.collections.ArrayList
+
+
+
 @RequiresApi(Build.VERSION_CODES.N)
 class NoteAdapter(
     var notes: ArrayList<String>,
@@ -37,7 +45,7 @@ class NoteAdapter(
     var checkedItems= ArrayList<Int>()
     private var checkedVisible = false
     private var isAllChecked = false
-
+    //var pref: SharedPreferences = null
     override fun getItemCount() = notes.size
 
     fun HideItems(){
@@ -51,12 +59,14 @@ class NoteAdapter(
         return NoteViewHolder(customView)
 
     }
-    //Load items from database into adapter
-    fun setItems(list: ArrayList<String>, titlesList: ArrayList<String>) {
-        notes.addAll(list)
-        titles.addAll(titlesList)
-    }
 
+//    fun getCheckedItems(key: String){
+//        val preferences: SharedPreferences =
+//            ApplicationProvider.getApplicationContext()
+//                .getSharedPreferences("PROJECT_NAME", Context.MODE_PRIVATE)
+//        val value: Boolean = preferences.getBoolean("KEY", false)
+//        val value1: String? = preferences.getString("KEY", null)
+//    }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val itemNote = notes[position]
@@ -74,6 +84,7 @@ class NoteAdapter(
                     checkedItems.clear()
                     SelectAll()
                     for(i in 0 until notes.size){
+
                         checkedItems.add(i)
                     }
                     Log.d("itemAddedAll", checkedItems.size.toString())
@@ -93,10 +104,7 @@ class NoteAdapter(
 
                 if (isChecked && !deleteAll.isChecked) {
 
-                    checkedItems.add(position)
-                    Log.d("itemAdded", position.toString())
-
-
+                            checkedItems.add(position)
                 }
                 else if(!isChecked){
                     if(position < checkedItems.size) {
@@ -262,7 +270,7 @@ class NoteAdapter(
                     dialog, id-> dialog.dismiss()
                 checkedItems.sort()
                 Log.d("itemDeleted List1", (checkedItems).toString())
-                
+
                 for (i in 0 until checkedItems.size){
                     if(checkedItems.size == 0) {
                         break
@@ -280,33 +288,6 @@ class NoteAdapter(
 
 
                     }
-//                        else if (i == checkedItems.size - 1 && checkedItems.size < 3){
-//
-//                        notedbHandler.deleteItem(checkedItems[i]+1)
-//                        dateDbHandler.deleteItem(checkedItems[i]+1)
-//                        titleDbHandler.deleteItem(checkedItems[i]+1)
-//                        notes.removeAt(checkedItems[i])
-//                        titles.removeAt(checkedItems[i])
-//                        dates.removeAt(checkedItems[i])
-//
-//                        Log.d("itemDeleted", i.toString())
-//                    }
-//                    else if((i == 0 ||checkedItems[i] == 0 || checkedItems[i] == i )){
-//                        notedbHandler.deleteItem(checkedItems[i]+1)
-//                        dateDbHandler.deleteItem(checkedItems[i]+1)
-//                        titleDbHandler.deleteItem(checkedItems[i]+1)
-//                        notes.removeAt(checkedItems[i])
-//                        titles.removeAt(checkedItems[i])
-//                        dates.removeAt(checkedItems[i])
-//
-//
-//                        Log.d("itemDeleted2", checkedItems[i].toString())
-//            //                    notifyItemRemoved(position)
-//                    }
-
-
-
-
 
                 }
                 checkedVisible = false
