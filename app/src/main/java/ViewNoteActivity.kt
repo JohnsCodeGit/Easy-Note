@@ -49,7 +49,7 @@ class ViewNoteActivity : AppCompatActivity() {
         intent.putStringArrayListExtra("notes", notes)
         intent.putStringArrayListExtra("titles", titles)
         intent.putStringArrayListExtra("dates", dates)
-            eTitle.hint = "No Title"
+            eTitle.hint = "Note Title"
             eTitle.setHintTextColor(Color.DKGRAY)
         toolbar.inflateMenu(R.menu.menu)
 
@@ -111,11 +111,7 @@ class ViewNoteActivity : AppCompatActivity() {
     }
 
     fun ResetView(){
-        eTitle.hint = "No Title"
-        eTitle.setHintTextColor(Color.DKGRAY)
-
-
-        eNote.hint = "Notes"
+        
         eTitle.clearFocus()
         eNote.clearFocus()
         menuVisible = false
