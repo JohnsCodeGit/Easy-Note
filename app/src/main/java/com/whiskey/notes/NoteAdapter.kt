@@ -185,6 +185,7 @@ class NoteAdapter(
                 checkedItems.clear()
                 intent.putExtra("title", titles[position])
                 intent.putExtra("note", notes[position])
+                intent.putExtra("date", dates[position])
                 intent.putExtra("position", position)
                 intent.putStringArrayListExtra("notes", notes)
                 intent.putStringArrayListExtra("titles", titles)

@@ -33,10 +33,6 @@ class MainActivity : AppCompatActivity() {
     private val titleDbHandler = TitlesDbHelper(this, null)
     private val dateDbHandler = dateDbHelper(this, null)
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    val formatter = SimpleDateFormat("MM/dd/yyyy @ hh:mm aaa")
-
-
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
 
