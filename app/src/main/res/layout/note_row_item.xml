@@ -9,11 +9,13 @@
 
     <TextView
         android:id="@+id/itemTitle"
-        android:layout_width="316dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="679dp"
+        android:layout_width="336dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
         android:background="@android:color/transparent"
+        android:gravity="top|left"
+        android:maxLines="1"
         android:paddingTop="5dp"
         android:textColor="@android:color/black"
         android:textCursorDrawable="@color/colorPrimary"
@@ -21,25 +23,27 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.307"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/checkBox"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.225" />
 
     <TextView
         android:id="@+id/itemNote"
         android:layout_width="336dp"
         android:layout_height="51dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:gravity="top|left"
+        android:lines="3"
         android:textColor="@android:color/black"
         android:textCursorDrawable="@color/colorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.058"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toTopOf="@+id/itemTitle"
-        app:layout_constraintVertical_bias="0.97" />
+        app:layout_constraintTop_toBottomOf="@+id/itemTitle"
+        app:layout_constraintVertical_bias="0.0" />
 
     <CheckBox
         android:id="@+id/checkBox"
@@ -63,18 +67,17 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="33dp"
-        android:layout_height="30dp"
+        android:layout_width="31dp"
+        android:layout_height="31dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="10dp"
         android:background="@android:color/transparent"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.008"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.988"
         tools:visibility="visible" />
 
     <TextView
@@ -82,7 +85,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:enabled="false"
-        android:text="sdfsdfsdf"
         android:textColor="@android:color/black"
         android:textIsSelectable="false"
         android:textSize="12sp"

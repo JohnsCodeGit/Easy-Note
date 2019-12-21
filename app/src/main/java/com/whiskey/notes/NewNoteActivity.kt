@@ -57,7 +57,7 @@ class NewNoteActivity : AppCompatActivity() {
         titles = intent.getStringArrayListExtra("titles")
         dates = intent.getStringArrayListExtra("dates")
         toolbar.setTitleTextColor(Color.WHITE)
-        toolbar.setBackgroundColor(Color.parseColor("#202026"))
+        toolbar.setBackgroundColor(Color.parseColor("#000000"))
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)

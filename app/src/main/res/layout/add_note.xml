@@ -63,7 +63,7 @@
             android:backgroundTint="@android:color/transparent"
             android:ems="10"
             android:hint="@string/new_note"
-            android:inputType="textCapSentences|textMultiLine"
+            android:inputType="date|textMultiLine|number|textCapSentences|numberDecimal"
             android:scrollHorizontally="false"
             android:textColor="#ffffff"
             android:textColorHighlight="#2196F3"

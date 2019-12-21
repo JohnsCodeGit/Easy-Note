@@ -51,13 +51,14 @@ class ViewNoteActivity : AppCompatActivity() {
         intent.putStringArrayListExtra("dates", dates)
             eTitle.hint = "No Title"
             eTitle.setHintTextColor(Color.DKGRAY)
-
+        toolbar.inflateMenu(R.menu.menu)
 
             eNote.hint = "Notes"
 
         toolbar.setTitleTextColor(Color.WHITE)
-        toolbar.setBackgroundColor(Color.parseColor("#202026"))
+        toolbar.setBackgroundColor(Color.parseColor("#000000"))
         setSupportActionBar(toolbar)
+        toolbar.inflateMenu(R.menu.menu)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         eNote.clearFocus()
@@ -90,6 +91,17 @@ class ViewNoteActivity : AppCompatActivity() {
             invalidateOptionsMenu()
 
         }
+
+
+    }
+    fun Share(title: String, note: String){
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "text/plain"
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, title)
+        var shareMessage = "\n" + note
+
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
+        startActivity(Intent.createChooser(shareIntent, "Share with..."))
     }
     fun showSoftKeyboard(view: View) {
         if (view.requestFocus()) {
@@ -126,11 +138,16 @@ class ViewNoteActivity : AppCompatActivity() {
             val notedbHandler = NotesDbHelper(this, null)
             val titleDbHandler = TitlesDbHelper(this, null)
             val dateDbHandler = dateDbHelper(this, null)
-            notedbHandler.updateNote(eNote.text.toString(), position+1)
-            dateDbHandler.updateNote(dateText, position+1)
-            titleDbHandler.updateNote(eTitle.text.toString(), position+1)
+            notedbHandler.updateNote(eNote.text.toString(), position + 1)
+            dateDbHandler.updateNote(dateText, position + 1)
+            titleDbHandler.updateNote(eTitle.text.toString(), position + 1)
             ResetView()
             return true
+        }
+        else if(id == R.id.share){
+
+            Share(eTitle.text.toString(), eNote.text.toString())
+
         }
 
         return super.onOptionsItemSelected(item)

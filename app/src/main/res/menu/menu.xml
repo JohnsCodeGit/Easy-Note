@@ -9,5 +9,13 @@
         app:showAsAction="always"
 
         android:title="Save"/>
+    <item
+        android:id="@+id/share"
+        android:title="@string/share"
+        app:showAsAction="always"
+        android:icon="@android:drawable/ic_menu_share"
+
+
+        />
 
 </menu>
