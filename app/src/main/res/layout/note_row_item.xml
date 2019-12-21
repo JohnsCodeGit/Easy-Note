@@ -10,13 +10,14 @@
     <TextView
         android:id="@+id/itemTitle"
         android:layout_width="336dp"
-        android:layout_height="40dp"
+        android:layout_height="38dp"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
         android:background="@android:color/transparent"
         android:gravity="top|left"
         android:maxLines="1"
         android:paddingTop="5dp"
+        android:text="sdaq"
         android:textColor="@android:color/black"
         android:textCursorDrawable="@color/colorPrimary"
         android:textSize="24sp"
@@ -26,7 +27,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/checkBox"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.225" />
+        app:layout_constraintVertical_bias="0.195" />
 
     <TextView
         android:id="@+id/itemNote"
@@ -78,6 +79,7 @@
         app:layout_constraintHorizontal_bias="0.008"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.92"
         tools:visibility="visible" />
 
     <TextView

@@ -97,8 +97,8 @@ class ViewNoteActivity : AppCompatActivity() {
     fun Share(title: String, note: String){
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "text/plain"
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, title)
-        var shareMessage = "\n" + note
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "")
+        var shareMessage = title + "\n\n" + note
 
         shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
         startActivity(Intent.createChooser(shareIntent, "Share with..."))
@@ -111,7 +111,7 @@ class ViewNoteActivity : AppCompatActivity() {
     }
 
     fun ResetView(){
-        
+
         eTitle.clearFocus()
         eNote.clearFocus()
         menuVisible = false
