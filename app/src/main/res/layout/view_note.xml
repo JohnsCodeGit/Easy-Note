@@ -48,17 +48,17 @@
             android:textStyle="italic"
             app:layout_constraintBottom_toTopOf="@+id/eTitle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.889"
+            app:layout_constraintHorizontal_bias="0.98"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            app:layout_constraintVertical_bias="0.48000002" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <EditText
             android:id="@+id/eNote"
             style="@style/Base.Widget.MaterialComponents.TextInputEditText"
             android:layout_width="0dp"
 
-            android:layout_height="wrap_content"
+            android:layout_height="563dp"
             android:layout_marginBottom="572dp"
             android:autofillHints=""
             android:background="@android:color/transparent"
@@ -66,6 +66,8 @@
             android:ems="10"
             android:gravity="top|left"
             android:inputType="none"
+            android:scrollbarSize="10dp"
+            android:scrollbarStyle="outsideOverlay"
             android:scrollbars="vertical"
             android:scrollHorizontally="false"
             android:textColor="#ffffff"
@@ -74,6 +76,7 @@
             android:textColorLink="#FFFFFF"
             android:textCursorDrawable="@android:color/white"
             android:textIsSelectable="true"
+            android:verticalScrollbarPosition="right"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -85,10 +88,12 @@
             android:id="@+id/eTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:background="@android:color/transparent"
             android:ems="10"
             android:gravity="top|left"
             android:inputType="none"
+            android:maxLength="28"
             android:paddingLeft="12dp"
             android:paddingTop="10dp"
             android:paddingRight="12dp"
@@ -98,7 +103,7 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            app:layout_constraintVertical_bias="0.066" />
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

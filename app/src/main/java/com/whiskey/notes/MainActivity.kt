@@ -15,6 +15,7 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
@@ -53,9 +54,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        toolbar.setBackgroundColor(Color.BLACK)
         setSupportActionBar(toolbar)
         toolbar.setTitleTextColor(Color.WHITE)
-
+        window.statusBarColor = Color.BLACK
         fab.setOnClickListener { val intent = Intent(this, NewNoteActivity::class.java)
             intent.putStringArrayListExtra("notes", notes)
             intent.putStringArrayListExtra("titles", titles)
@@ -128,7 +130,7 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
        // menuInflater.inflate(R.menu.main_menu_delete, menu)
 
         return true
@@ -144,8 +146,8 @@ class MainActivity : AppCompatActivity() {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        val id = item.getItemId()
-           if (id == R.id.Theme){
+        val id = item.itemId
+           if (id == R.id.Delete){
                val intent = Intent(this, ThemeActivity::class.java)
 
                startActivity(intent)

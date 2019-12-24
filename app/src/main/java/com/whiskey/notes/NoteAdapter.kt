@@ -81,6 +81,7 @@ class NoteAdapter(
         holder.customView.itemTitle.text = itemTitle
         holder.customView.itemNote.text = itemNote
 
+        //DO NOT TOUCH
         if(notes.size == checkedItems.size){
 
 
@@ -127,8 +128,8 @@ class NoteAdapter(
                 }
 
             }
-            // Add checked check boxes to array to delete checked items
 
+            // Add checked check boxes to array to delete checked items
             holder.customView.checkBox.setOnCheckedChangeListener { _, isChecked ->
 
                 Log.d("itemChecked", isChecked.toString())
@@ -179,10 +180,6 @@ class NoteAdapter(
 
             }
 
-
-            //DO NOT TOUCH
-            //holder.customView.checkBox.isChecked = isAllChecked
-
             // Delete items
             bDelete.setOnClickListener {
 
@@ -198,6 +195,7 @@ class NoteAdapter(
 
 
             }
+
             if(notes.size == 0){
                 checkedVisible = false
             }
@@ -225,6 +223,7 @@ class NoteAdapter(
                 deleteAll.visibility = View.GONE
                 fab.isVisible = true
                 checkedItems.clear()
+                mCheckItems.clear()
 
             }
 
@@ -257,6 +256,7 @@ class NoteAdapter(
                     holder.customView.button.visibility = View.GONE
                     bDelete.visibility = View.GONE
                     checkedItems.clear()
+                    mCheckItems.clear()
                     intent.putExtra("title", titles[position])
                     intent.putExtra("note", notes[position])
                     intent.putExtra("date", dates[position])
@@ -275,8 +275,6 @@ class NoteAdapter(
 
     fun SelectAll(){
         isAllChecked = true
-
-        //Handler().postDelayed({notifyDataSetChanged()}, 100)
         notifyDataSetChanged()
 
 
@@ -393,15 +391,11 @@ class NoteAdapter(
             customView.checkBox.isChecked = mCheckItems.get(position, false)
         }
 
-        fun SelectAll(){
-            checkbox.isChecked = true
-            notifyDataSetChanged()
-
-
-        }
         override fun onLongClick(v: View?): Boolean {
             //Changed the state of check box visibility
             checkedVisible = true
+            customView.checkBox.isChecked = true
+
             notifyDataSetChanged()
             return true
         }
