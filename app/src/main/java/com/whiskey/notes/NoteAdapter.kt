@@ -147,9 +147,10 @@ class NoteAdapter(
                             }
                 }
                 else if(!isChecked && deleteAll.isChecked){
+                    checkedItems.clear()
+                    mCheckItems.clear()
                     for(i in 0 until notes.size){
-                        checkedItems.clear()
-                        mCheckItems.clear()
+
                         checkedItems.add(i)
                         mCheckItems.put(i, true)
                     }
@@ -303,6 +304,8 @@ class NoteAdapter(
                 dateDbHandler.deleteAll()
                 checkedVisible = false
                 HideItems()
+                mCheckItems.clear()
+
                 delete.visibility = View.GONE
                 btn.visibility = View.GONE
                 buttonLayout.visibility = View.GONE
@@ -341,9 +344,9 @@ class NoteAdapter(
                         notedbHandler.deleteItem(checkedItems[0]+1-i)
                         dateDbHandler.deleteItem(checkedItems[0]+1-i)
                         titleDbHandler.deleteItem(checkedItems[0]+1-i)
-                        notes.removeAt(checkedItems[0])
-                        titles.removeAt(checkedItems[0])
-                        dates.removeAt(checkedItems[0])
+                        notes.removeAt(checkedItems[0]-i)
+                        titles.removeAt(checkedItems[0]-i)
+                        dates.removeAt(checkedItems[0]-i)
                         Log.d("itemDeleted3", checkedItems[0].toString())
                         //notifyItemRemoved(checkedItems[0]-i)
                         checkedItems.removeAt(0)
@@ -355,6 +358,7 @@ class NoteAdapter(
                 }
                 checkedVisible = false
                 checkedItems.clear()
+                mCheckItems.clear()
                 HideItems()
                 delete.visibility = View.GONE
                 btn.visibility = View.GONE
