@@ -3,16 +3,16 @@ package com.whiskey.notes
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Build
-import android.preference.PreferenceManager
-import android.preference.PreferenceManager.getDefaultSharedPreferences
+import android.os.Handler
 import android.util.Log
+import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -40,16 +40,21 @@ class NoteAdapter(
     var notedbHandler: NotesDbHelper,
     var titleDbHandler: TitlesDbHelper,
     var dateDbHandler: dateDbHelper
+
 )
     : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
     var checkedItems= ArrayList<Int>()
     private var checkedVisible = false
     private var isAllChecked = false
     //var pref: SharedPreferences = null
+
+    private var mCheckItems = SparseBooleanArray()
+
     override fun getItemCount() = notes.size
 
     fun HideItems(){
         checkedVisible = false
+        checkedItems.clear()
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
 
@@ -60,13 +65,12 @@ class NoteAdapter(
 
     }
 
-//    fun getCheckedItems(key: String){
-//        val preferences: SharedPreferences =
-//            ApplicationProvider.getApplicationContext()
-//                .getSharedPreferences("PROJECT_NAME", Context.MODE_PRIVATE)
-//        val value: Boolean = preferences.getBoolean("KEY", false)
-//        val value1: String? = preferences.getString("KEY", null)
-//    }
+    override fun onViewRecycled(holder: NoteViewHolder) {
+        holder.customView.checkBox.setOnCheckedChangeListener(null)
+
+    }
+
+
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val itemNote = notes[position]
@@ -76,44 +80,92 @@ class NoteAdapter(
         holder.customView.dateText.text = dateText
         holder.customView.itemTitle.text = itemTitle
         holder.customView.itemNote.text = itemNote
+
+        if(notes.size == checkedItems.size){
+
+
+            holder.customView.checkBox.isChecked = isAllChecked
+
+            mCheckItems.clear()
+
+        }
+        else {
+            holder.bind(position)
+        }
+        Log.d("Bound", mCheckItems[position].toString())
+
         if (notes.size != 0) {
 
             //Delete all items
-            deleteAll.setOnClickListener {
-                if (!deleteAll.isSelected){
+            deleteAll.setOnCheckedChangeListener{_, isChecked ->
+                if (isChecked){
                     checkedItems.clear()
-                    SelectAll()
+
                     for(i in 0 until notes.size){
 
-                        checkedItems.add(i)
+                        if(checkedItems.contains(i)){}
+                        else {
+                            checkedItems.add(i)
+                            mCheckItems.put(i, true)
+                            Log.d("itemAdded",
+                                mCheckItems[i].toString()
+                                        + ", "
+                                        + position.toString())
+                        }
                     }
-                    Log.d("itemAddedAll", checkedItems.size.toString())
+                    Log.d("itemAddedAll", checkedItems.size.toString() +", "+ notes.size.toString())
+                    SelectAll()
+
                 }
-                else {
+                else if(!isChecked && notes.size == checkedItems.size && !holder.customView.checkBox.isSelected){
+                    Log.d("itemsCleared", checkedItems.size.toString())
+
                     unSelectAll()
                     checkedItems.clear()
+                    mCheckItems.clear()
                     Log.d("itemsCleared", checkedItems.size.toString())
                 }
+
             }
             // Add checked check boxes to array to delete checked items
 
-            holder.customView.checkBox.setOnCheckedChangeListener { buttonView, isChecked ->
+            holder.customView.checkBox.setOnCheckedChangeListener { _, isChecked ->
 
                 Log.d("itemChecked", isChecked.toString())
                 Log.d("itemNotesSize", notes.size.toString())
 
-                if (isChecked && !deleteAll.isChecked) {
 
-                            checkedItems.add(position)
+                if (isChecked) {
+                            if(checkedItems.contains(position)){}
+                            else {
+                                checkedItems.add(position)
+                                mCheckItems.put(position, true)
+                                Log.d("itemAdded",
+                                    mCheckItems[position].toString()
+                                            + ", "
+                                            + position.toString())
+                            }
                 }
-                else if(!isChecked){
-                    if(position < checkedItems.size) {
-                        deleteAll.isChecked = false
-                        checkedItems.removeAt(position)
-                        Log.d("itemRemoved", position.toString())
+                else if(!isChecked && deleteAll.isChecked){
+                    for(i in 0 until notes.size){
+                        checkedItems.clear()
+                        mCheckItems.clear()
+                        checkedItems.add(i)
+                        mCheckItems.put(i, true)
                     }
+                    holder.customView.checkBox.isChecked = false
+                    mCheckItems.put(position, false)
+                    checkedItems.remove(position)
+                    Log.d("itemRemoved", checkedItems.size.toString())
                 }
-                Log.d("itemsChecked", checkedItems.toString())
+                else if(!isChecked && !deleteAll.isChecked){
+
+                        mCheckItems.put(position, false)
+                        checkedItems.remove(position)
+                        Log.d("itemRemoved", checkedItems.size.toString())
+
+                }
+                Log.d("itemsChecked", mCheckItems[position].toString())
                 Log.d("itemDeleteCheckState", deleteAll.isChecked.toString())
 
             }
@@ -125,11 +177,10 @@ class NoteAdapter(
                 deleteAll.isChecked = false
 
             }
-            deleteAll.isSelected = isAllChecked
-            deleteAll.isChecked = isAllChecked
+
 
             //DO NOT TOUCH
-            holder.customView.checkBox.isChecked = isAllChecked
+            //holder.customView.checkBox.isChecked = isAllChecked
 
             // Delete items
             bDelete.setOnClickListener {
@@ -178,21 +229,43 @@ class NoteAdapter(
 
 
             holder.customView.setOnClickListener {
-                val intent = Intent(holder.customView.context, ViewNoteActivity::class.java)
-                holder.customView.checkBox.visibility = View.GONE
-                holder.customView.button.visibility = View.GONE
-                bDelete.visibility = View.GONE
-                checkedItems.clear()
-                intent.putExtra("title", titles[position])
-                intent.putExtra("note", notes[position])
-                intent.putExtra("date", dates[position])
-                intent.putExtra("position", position)
-                intent.putStringArrayListExtra("notes", notes)
-                intent.putStringArrayListExtra("titles", titles)
-                intent.putStringArrayListExtra("dates", dates)
-                startActivity(holder.customView.context, intent, null)
 
-                notifyDataSetChanged()
+                if (checkedVisible){
+                    holder.customView.checkBox.isChecked = !holder.customView.checkBox.isChecked
+                    if(!checkedItems.contains(position) && holder.customView.checkBox.isChecked){
+
+                        checkedItems.add(position)
+                        mCheckItems.put(position, true)
+                        Log.d("itemAdded",
+                            mCheckItems[position].toString()
+                                    + ", "
+                                    + position.toString())
+                    }
+                    else if(!holder.customView.checkBox.isChecked){
+                        if(position < checkedItems.size) {
+                            mCheckItems.put(position, false)
+                            deleteAll.isChecked = false
+                            checkedItems.removeAt(position)
+                            Log.d("itemRemoved", position.toString())
+                        }
+                    }
+                }
+                else {
+                    val intent = Intent(holder.customView.context, ViewNoteActivity::class.java)
+                    holder.customView.checkBox.visibility = View.GONE
+                    holder.customView.button.visibility = View.GONE
+                    bDelete.visibility = View.GONE
+                    checkedItems.clear()
+                    intent.putExtra("title", titles[position])
+                    intent.putExtra("note", notes[position])
+                    intent.putExtra("date", dates[position])
+                    intent.putExtra("position", position)
+                    intent.putStringArrayListExtra("notes", notes)
+                    intent.putStringArrayListExtra("titles", titles)
+                    intent.putStringArrayListExtra("dates", dates)
+                    startActivity(holder.customView.context, intent, null)
+
+                }
             }
         }
 
@@ -201,7 +274,11 @@ class NoteAdapter(
 
     fun SelectAll(){
         isAllChecked = true
+
+        //Handler().postDelayed({notifyDataSetChanged()}, 100)
         notifyDataSetChanged()
+
+
     }
     fun unSelectAll(){
         isAllChecked = false
@@ -233,7 +310,7 @@ class NoteAdapter(
                 deleteAll.isSelected = false
                 unSelectAll()
                 deleteAll.isChecked = false
-                notifyDataSetChanged()
+                //notifyDataSetChanged()
 
             }
             .setNegativeButton("No") { dialog, id ->
@@ -264,10 +341,11 @@ class NoteAdapter(
                         notedbHandler.deleteItem(checkedItems[0]+1-i)
                         dateDbHandler.deleteItem(checkedItems[0]+1-i)
                         titleDbHandler.deleteItem(checkedItems[0]+1-i)
-                        notes.removeAt(checkedItems[0]-i)
-                        titles.removeAt(checkedItems[0]-i)
-                        dates.removeAt(checkedItems[0]-i)
+                        notes.removeAt(checkedItems[0])
+                        titles.removeAt(checkedItems[0])
+                        dates.removeAt(checkedItems[0])
                         Log.d("itemDeleted3", checkedItems[0].toString())
+                        //notifyItemRemoved(checkedItems[0]-i)
                         checkedItems.removeAt(0)
                         Log.d("itemDeleted List", (checkedItems).toString())
 
@@ -286,7 +364,7 @@ class NoteAdapter(
                 unSelectAll()
                 deleteAll.isChecked = false
 
-                notifyDataSetChanged()
+
             }
             .setNegativeButton("No") { dialog, id ->
                 dialog.cancel()
@@ -297,13 +375,23 @@ class NoteAdapter(
 
     inner class NoteViewHolder(val customView: View) : RecyclerView.ViewHolder(customView),
         View.OnLongClickListener, View.OnClickListener{
-
+        private var checkbox = customView.checkBox
 
         init {
-
             customView.isLongClickable = true
             customView.setOnLongClickListener(this)
             customView.setOnClickListener(this)
+
+
+        }
+
+        fun bind(position: Int) { // use the sparse boolean array to check
+            customView.checkBox.isChecked = mCheckItems.get(position, false)
+        }
+
+        fun SelectAll(){
+            checkbox.isChecked = true
+            notifyDataSetChanged()
 
 
         }

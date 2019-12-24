@@ -70,6 +70,7 @@ class MainActivity : AppCompatActivity() {
 
 
         }
+
         val noteText = intent.getStringExtra("note")
         val titleText = intent.getStringExtra("title")
         val dateText = intent.getStringExtra("date")
@@ -89,6 +90,7 @@ class MainActivity : AppCompatActivity() {
                 notedbHandler.addNote(noteText, notes.size)
                 titleDbHandler.addTitle(titleText, titles.size)
                 dateDbHandler.addDate(dateText,dates.size)
+
                 Log.d("itemDeletedSize",notes.size.toString() )
 
 
@@ -97,7 +99,6 @@ class MainActivity : AppCompatActivity() {
                 notes[position] = noteText
                 titles[position] = titleText
                 dates[position] = dateText
-
                 notedbHandler.updateNote(noteText, position+1)
                 dateDbHandler.updateNote(dateText, position+1)
                 titleDbHandler.updateNote(titleText, position+1)
@@ -118,7 +119,8 @@ class MainActivity : AppCompatActivity() {
                 notedbHandler, titleDbHandler, dateDbHandler)
             noteadapter = adapter as NoteAdapter
             addItemDecoration(VerticalSpacing(50))
-            (adapter as NoteAdapter).notifyDataSetChanged()
+           // (adapter as NoteAdapter).notifyDataSetChanged()
+            //recycledViewPool.setMaxRecycledViews(R.id.button, 0)
         }
 
 
