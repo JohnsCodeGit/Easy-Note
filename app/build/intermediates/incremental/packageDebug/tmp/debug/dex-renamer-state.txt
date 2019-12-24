@@ -1,4 +1,4 @@
-#Mon Dec 23 22:06:53 EST 2019
+#Tue Dec 24 13:20:39 EST 2019
 base.0=/home/john/AndroidStudioProjects/Notes/app/build/intermediates/dex/debug/mergeDexDebug/out/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

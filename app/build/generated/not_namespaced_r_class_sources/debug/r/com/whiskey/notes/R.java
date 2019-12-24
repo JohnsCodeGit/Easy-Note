@@ -4683,12 +4683,12 @@ public final class R {
   public static final class id {
     public static final int ALT=0x7f080000;
     public static final int CTRL=0x7f080001;
-    public static final int FUNCTION=0x7f080002;
-    public static final int LConst=0x7f080003;
-    public static final int META=0x7f080004;
-    public static final int SHIFT=0x7f080005;
-    public static final int SYM=0x7f080006;
-    public static final int Theme=0x7f080007;
+    public static final int Delete=0x7f080002;
+    public static final int FUNCTION=0x7f080003;
+    public static final int LConst=0x7f080004;
+    public static final int META=0x7f080005;
+    public static final int SHIFT=0x7f080006;
+    public static final int SYM=0x7f080007;
     public static final int action_bar=0x7f080008;
     public static final int action_bar_activity_content=0x7f080009;
     public static final int action_bar_container=0x7f08000a;
