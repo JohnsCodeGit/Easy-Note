@@ -39,8 +39,7 @@ class ViewNoteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.view_note)
-        val date = Calendar.getInstance().time
-        val formatter = SimpleDateFormat("MM/dd/yyyy @ hh:mm aaa")
+
         val dateText = intent.getStringExtra("date")
         eDate.text = "Modified: $dateText"
         dates = intent.getStringArrayListExtra("dates")
@@ -190,7 +189,9 @@ class ViewNoteActivity : AppCompatActivity() {
             val date = Calendar.getInstance().time
             val formatter = SimpleDateFormat("MM/dd/yyyy @ hh:mm aaa")
             val dateText = formatter.format(date).toString()
-
+            notes = intent.getStringArrayListExtra("notess")
+            dates = intent.getStringArrayListExtra("datess")
+            titles = intent.getStringArrayListExtra("titless")
             mainIntent.putExtra("note", noteText)
             mainIntent.putExtra("title", noteTitle)
             mainIntent.putStringArrayListExtra("notes", notes)

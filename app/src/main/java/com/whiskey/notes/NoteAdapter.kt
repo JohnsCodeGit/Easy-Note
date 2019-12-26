@@ -253,13 +253,16 @@ class NoteAdapter(
                     bDelete.visibility = View.GONE
                     checkedItems.clear()
                     mCheckItems.clear()
-                    intent.putExtra("title", titles[position])
-                    intent.putExtra("note", notes[position])
-                    intent.putExtra("date", dates[position])
+                    intent.putExtra("title", searchList2[position])
+                    intent.putExtra("note", searchList[position])
+                    intent.putExtra("date", searchList3[position])
+                    intent.putStringArrayListExtra("titless", titles)
+                    intent.putStringArrayListExtra("notess", notes)
+                    intent.putStringArrayListExtra("datess", dates)
                     intent.putExtra("position", position)
-                    intent.putStringArrayListExtra("notes", notes)
-                    intent.putStringArrayListExtra("titles", titles)
-                    intent.putStringArrayListExtra("dates", dates)
+                    intent.putStringArrayListExtra("notes", searchList)
+                    intent.putStringArrayListExtra("titles", searchList2)
+                    intent.putStringArrayListExtra("dates", searchList3)
                     startActivity(holder.customView.context, intent, null)
 
                 }

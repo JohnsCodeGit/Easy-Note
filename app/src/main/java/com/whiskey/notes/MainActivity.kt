@@ -67,7 +67,9 @@ class MainActivity : AppCompatActivity() {
             intent.putStringArrayListExtra("dates", dates)
             startActivity(intent)
         }
-
+        searchList.clear()
+        searchList2.clear()
+        searchList3.clear()
         if(notedbHandler.getNoteSize() != 0.toLong() ) {
             notes = notedbHandler.getAllNote()
             titles = titleDbHandler.getAllTitle()
@@ -146,9 +148,17 @@ class MainActivity : AppCompatActivity() {
         val searchItem = menu.findItem(R.id.search)
         val manager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = searchItem.actionView as SearchView
-
+        searchView.queryHint = "Search in Notes..."
         searchView.setSearchableInfo(manager.getSearchableInfo(componentName))
-
+        searchView.setOnCloseListener {
+            searchList.clear()
+            searchList2.clear()
+            searchList3.clear()
+            searchList = notedbHandler.getAllNote()
+            searchList2 = titleDbHandler.getAllTitle()
+            searchList3 = dateDbHandler.getAllDate()
+            true
+        }
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
 
