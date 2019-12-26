@@ -83,7 +83,7 @@ class NotesDbHelper (context: Context,
         return DatabaseUtils.queryNumEntries(db, TABLE_NAME)
     }
     companion object {
-        private const val DATABASE_VERSION = 27
+        private const val DATABASE_VERSION = 29
         private const val DATABASE_NAME = "notesDB.db"
         const val TABLE_NAME = "notes"
         const val COLUMN_ID = "_id"

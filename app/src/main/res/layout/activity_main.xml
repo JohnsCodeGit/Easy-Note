@@ -119,7 +119,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:visibility="visible"
-        app:backgroundTint="@color/light_Grey"
+        app:backgroundTint="@color/colorAccent"
         app:srcCompat="@drawable/ic_action_name"
         tools:visibility="visible" />
 

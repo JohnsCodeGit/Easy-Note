@@ -76,7 +76,7 @@ class TitlesDbHelper (context: Context,
     }
 
     companion object {
-        private const val DATABASE_VERSION = 27
+        private const val DATABASE_VERSION = 29
         private const val DATABASE_NAME = "titleDB.db"
         const val TABLE_NAME = "titles"
         const val COLUMN_ID = "_id"

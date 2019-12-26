@@ -1114,7 +1114,6 @@ id eNote
 id eTitle
 id eTxtNote
 id eTxtTitle
-id edit
 id editTxtNote
 id editTxtTitle
 id edit_query
@@ -1197,6 +1196,7 @@ id scrollIndicatorDown
 id scrollIndicatorUp
 id scrollView
 id scrollable
+id search
 id search_badge
 id search_bar
 id search_button
@@ -1344,6 +1344,7 @@ layout notification_template_custom_big
 layout notification_template_icon_group
 layout notification_template_part_chronometer
 layout notification_template_part_time
+layout search_layout
 layout select_dialog_item_material
 layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material
@@ -1352,6 +1353,7 @@ layout support_simple_spinner_dropdown_item
 layout theme_layout
 layout view_note
 menu edit_menu
+menu main_menu
 menu main_menu_delete
 menu menu
 menu menu_main

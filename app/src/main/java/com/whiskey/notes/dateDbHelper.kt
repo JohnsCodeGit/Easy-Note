@@ -76,7 +76,7 @@ class dateDbHelper (context: Context,
 
     }
     companion object {
-        private const val DATABASE_VERSION = 27
+        private const val DATABASE_VERSION = 29
         private const val DATABASE_NAME = "dateDB.db"
         const val TABLE_NAME = "dates"
         const val COLUMN_ID = "_id"

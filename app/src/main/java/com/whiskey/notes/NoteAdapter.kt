@@ -11,15 +11,12 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.Toast
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
@@ -41,23 +38,25 @@ class NoteAdapter(
     var notedbHandler: NotesDbHelper,
     var titleDbHandler: TitlesDbHelper,
     var dateDbHandler: dateDbHelper,
-    var recyclerviewMain: RecyclerView
+    var recyclerviewMain: RecyclerView,
+    var searchList: ArrayList<String>,
+    var searchList2: ArrayList<String>,
+    var searchList3: ArrayList<String>
 
 )
-    : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
+    : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), Filterable {
     var checkedItems= ArrayList<Int>()
     private var checkedVisible = false
     private var isAllChecked = false
     private var mCheckItems = SparseBooleanArray()
 
-    override fun getItemCount() = notes.size
+    override fun getItemCount() = searchList.size
 
     fun HideItems(){
         checkedVisible = false
         checkedItems.clear()
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
-
         val layoutInflater = LayoutInflater.from(parent.context)
         val customView = layoutInflater.inflate(R.layout.note_row_item, parent, false)
 
@@ -74,13 +73,14 @@ class NoteAdapter(
 
     @SuppressLint("ClickableViewAccessibility", "NewApi")
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        val itemNote = notes[position]
-        val itemTitle = titles[position]
 
-        val dateText = dates[position]
-        holder.customView.dateText.text = dateText
+        val itemNote  = searchList[position]
+        val itemTitle = searchList2[position]
+        val dateText  = searchList3[position]
+
+        holder.customView.dateText.text  = dateText
         holder.customView.itemTitle.text = itemTitle
-        holder.customView.itemNote.text = itemNote
+        holder.customView.itemNote.text  = itemNote
 
         //DO NOT TOUCH
         if(notes.size == checkedItems.size){
@@ -200,12 +200,7 @@ class NoteAdapter(
             if(notes.size == 0){
                 checkedVisible = false
             }
-            if(bDelete.visibility == View.GONE){
-                holder.customView.checkBox.visibility = View.GONE
-                holder.customView.button.visibility = View.GONE
-                buttonLayout.visibility = View.GONE
 
-            }
             //Show or hide check boxes
             if(checkedVisible) {
 
@@ -215,8 +210,6 @@ class NoteAdapter(
                 deleteAll.visibility = View.VISIBLE
                 buttonLayout.visibility = View.VISIBLE
                 fab.isVisible = false
-
-
 
             }
             else if(!checkedVisible) {
@@ -275,6 +268,11 @@ class NoteAdapter(
 
 
     }
+    fun clearAllItems(){
+        checkedItems.clear()
+        mCheckItems.clear()
+
+    }
 
     fun SelectAll(){
         isAllChecked = true
@@ -299,13 +297,15 @@ class NoteAdapter(
                 notes.clear()
                 titles.clear()
                 dates.clear()
-                checkedItems.clear()
+                searchList.clear()
+                searchList3.clear()
+                searchList2.clear()
                 notedbHandler.deleteAll()
                 titleDbHandler.deleteAll()
                 dateDbHandler.deleteAll()
                 checkedVisible = false
                 HideItems()
-                mCheckItems.clear()
+                clearAllItems()
 
                 delete.visibility = View.GONE
                 btn.visibility = View.GONE
@@ -348,6 +348,9 @@ class NoteAdapter(
                         notes.removeAt(checkedItems[0]-i)
                         titles.removeAt(checkedItems[0]-i)
                         dates.removeAt(checkedItems[0]-i)
+                        searchList.removeAt(checkedItems[0]-i)
+                        searchList2.removeAt(checkedItems[0]-i)
+                        searchList3.removeAt(checkedItems[0]-i)
                         Log.d("itemDeleted3", checkedItems[0].toString())
                         //notifyItemRemoved(checkedItems[0]-i)
                         checkedItems.removeAt(0)
@@ -358,8 +361,7 @@ class NoteAdapter(
 
                 }
                 checkedVisible = false
-                checkedItems.clear()
-                mCheckItems.clear()
+                clearAllItems()
                 HideItems()
                 delete.visibility = View.GONE
                 btn.visibility = View.GONE
@@ -425,6 +427,45 @@ class NoteAdapter(
 
     }
 
+    override fun getFilter(): Filter {
+        searchList.clear()
+        searchList2.clear()
+        searchList3.clear()
+        return object:Filter(){
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                if(constraint == null || constraint.isEmpty()){
+                    searchList.addAll(notes)
+                    searchList2.addAll(titles)
+                    searchList3.addAll(dates)
+                }
+                else{
+
+                    var filterPattern = constraint.toString().toLowerCase().trim()
+                    for(note: String in notes){
+                        if(note.toLowerCase().contains(filterPattern)){
+                            searchList.add(note)
+                            searchList2.add(titles[notes.indexOf(note)])
+                            searchList3.add(dates[notes.indexOf(note)])
+                            Log.d("addedSearch", searchList2.toString())
+                        }
+                    }
+
+
+                }
+                var filterResult = FilterResults()
+                filterResult.values = (searchList)
+
+                return filterResult
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+//                var list =(results!!.values as ArrayList<String>)
+
+                notifyDataSetChanged()
+            }
+
+        }
+    }
 
 
 

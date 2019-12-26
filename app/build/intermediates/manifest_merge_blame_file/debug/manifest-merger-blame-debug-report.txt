@@ -11,7 +11,7 @@
 9-->/home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml
 10
 11    <application
-11-->/home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:5:5-62:19
+11-->/home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:5:5-72:19
 12        android:allowBackup="true"
 12-->/home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:6:9-35
 13        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -107,6 +107,19 @@
 61                android:value=".MainActivity" />
 61-->/home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:31:13-42
 62        </activity>
-63    </application>
-64
-65</manifest>
+63        <activity
+63-->/home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:62:9-71:20
+64            android:name="com.whiskey.notes.com.whiskey.notes.SearchActivity"
+64-->/home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:63:13-61
+65            android:theme="@style/AppTheme.NoActionBar" >
+65-->/home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:66:13-56
+66            <meta-data
+66-->/home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:30:9-31:44
+67                android:name="android.support.PARENT_ACTIVITY"
+67-->/home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:30:20-66
+68                android:value=".MainActivity" />
+68-->/home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:31:13-42
+69        </activity>
+70    </application>
+71
+72</manifest>

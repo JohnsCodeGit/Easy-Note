@@ -2,6 +2,8 @@ package com.whiskey.notes
 
 
 import android.annotation.TargetApi
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Rect
@@ -13,20 +15,22 @@ import android.view.MenuItem
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
-import com.whiskey.notes.com.whiskey.notes.ThemeActivity
-import com.whiskey.notes.com.whiskey.notes.TitlesDbHelper
-import com.whiskey.notes.com.whiskey.notes.dateDbHelper
+import com.whiskey.notes.com.whiskey.notes.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
     var notes = ArrayList<String>()
-    var titles = ArrayList<String>()
-    var dates = ArrayList<String>()
+    private var titles = ArrayList<String>()
+    private var dates = ArrayList<String>()
+    private var searchList = ArrayList<String>()
+    private var searchList2 = ArrayList<String>()
+    private var searchList3 = ArrayList<String>()
+
     private lateinit  var noteadapter: NoteAdapter
     private val notedbHandler = NotesDbHelper(this, null)
     private val titleDbHandler = TitlesDbHelper(this, null)
@@ -53,10 +57,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        toolbar.setBackgroundColor(Color.parseColor("#222227"))
+        toolbar.setBackgroundColor(Color.parseColor("#111116"))
         setSupportActionBar(toolbar)
         toolbar.setTitleTextColor(Color.WHITE)
-        window.statusBarColor = Color.parseColor("#222227")
+        window.statusBarColor = Color.parseColor("#111116")
         fab.setOnClickListener { val intent = Intent(this, NewNoteActivity::class.java)
             intent.putStringArrayListExtra("notes", notes)
             intent.putStringArrayListExtra("titles", titles)
@@ -68,6 +72,9 @@ class MainActivity : AppCompatActivity() {
             notes = notedbHandler.getAllNote()
             titles = titleDbHandler.getAllTitle()
             dates = dateDbHandler.getAllDate()
+            searchList = notedbHandler.getAllNote()
+            searchList2 = titleDbHandler.getAllTitle()
+            searchList3 = dateDbHandler.getAllDate()
 
 
         }
@@ -88,6 +95,9 @@ class MainActivity : AppCompatActivity() {
                 notes.add(noteText)
                 titles.add(titleText)
                 dates.add(dateText)
+                searchList.add(noteText)
+                searchList2.add(titleText)
+                searchList3.add(dateText)
                 notedbHandler.addNote(noteText, notes.size)
                 titleDbHandler.addTitle(titleText, titles.size)
                 dateDbHandler.addDate(dateText,dates.size)
@@ -100,6 +110,9 @@ class MainActivity : AppCompatActivity() {
                 notes[position] = noteText
                 titles[position] = titleText
                 dates[position] = dateText
+                searchList[position] = noteText
+                searchList2[position] = titleText
+                searchList3[position] = dateText
                 notedbHandler.updateNote(noteText, position+1)
                 dateDbHandler.updateNote(dateText, position+1)
                 titleDbHandler.updateNote(titleText, position+1)
@@ -116,7 +129,7 @@ class MainActivity : AppCompatActivity() {
             layoutManager = layoutM
             val buttonLayout: ConstraintLayout = constrain
             adapter  = NoteAdapter(notes, titles, delete, deleteAll, buttonLayout, fab, dates, this.context,
-                notedbHandler, titleDbHandler, dateDbHandler, recyclerView_main)
+                notedbHandler, titleDbHandler, dateDbHandler, recyclerView_main, searchList, searchList2, searchList3)
             noteadapter = adapter as NoteAdapter
             addItemDecoration(VerticalSpacing(50))
            // (adapter as NoteAdapter).notifyDataSetChanged()
@@ -125,13 +138,32 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-    fun scroll(){
-        recyclerView_main.setPadding(0, 56, 0, 0)
-    }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
-       // menuInflater.inflate(R.menu.main_menu_delete, menu)
+       menuInflater.inflate(R.menu.main_menu, menu)
+        val searchItem = menu.findItem(R.id.search)
+        val manager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = searchItem.actionView as SearchView
+
+        searchView.setSearchableInfo(manager.getSearchableInfo(componentName))
+
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+
+                return false
+
+            }
+
+            @RequiresApi(Build.VERSION_CODES.N)
+            override fun onQueryTextChange(newText: String?): Boolean {
+                noteadapter.filter.filter(newText)
+
+                return true
+            }
+
+        })
 
         return true
     }
@@ -147,10 +179,10 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
-           if (id == R.id.Delete){
-               val intent = Intent(this, ThemeActivity::class.java)
-
-               startActivity(intent)
+           if (id == R.id.search){
+//               val intent = Intent(this, SearchActivity::class.java)
+//
+//               startActivity(intent)
            }
         return super.onOptionsItemSelected(item)
     }
