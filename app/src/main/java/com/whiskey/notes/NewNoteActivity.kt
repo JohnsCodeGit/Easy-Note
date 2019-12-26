@@ -50,6 +50,7 @@ class NewNoteActivity : AppCompatActivity() {
 
 
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_note)
@@ -57,8 +58,10 @@ class NewNoteActivity : AppCompatActivity() {
         titles = intent.getStringArrayListExtra("titles")
         dates = intent.getStringArrayListExtra("dates")
         toolbar.setTitleTextColor(Color.WHITE)
-        toolbar.setBackgroundColor(Color.parseColor("#000000"))
+        toolbar.setBackgroundColor(Color.parseColor("#222227"))
         setSupportActionBar(toolbar)
+        window.statusBarColor = Color.parseColor("#222227")
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
@@ -69,7 +72,7 @@ class NewNoteActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu, menu)
+        menuInflater.inflate(R.menu.edit_menu, menu)
         return true
     }
 

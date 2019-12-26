@@ -58,9 +58,10 @@ class ViewNoteActivity : AppCompatActivity() {
         toolbar.inflateMenu(R.menu.menu)
 
             eNote.hint = "Notes"
+        window.statusBarColor = Color.parseColor("#222227")
 
         toolbar.setTitleTextColor(Color.WHITE)
-        toolbar.setBackgroundColor(Color.parseColor("#000000"))
+        toolbar.setBackgroundColor(Color.parseColor("#222227"))
         setSupportActionBar(toolbar)
         toolbar.inflateMenu(R.menu.menu)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

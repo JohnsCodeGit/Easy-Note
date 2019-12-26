@@ -5,7 +5,6 @@ import android.annotation.TargetApi
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Rect
-import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -15,7 +14,6 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
@@ -29,10 +27,11 @@ class MainActivity : AppCompatActivity() {
     var notes = ArrayList<String>()
     var titles = ArrayList<String>()
     var dates = ArrayList<String>()
-    lateinit  var noteadapter: NoteAdapter
+    private lateinit  var noteadapter: NoteAdapter
     private val notedbHandler = NotesDbHelper(this, null)
     private val titleDbHandler = TitlesDbHelper(this, null)
     private val dateDbHandler = dateDbHelper(this, null)
+    private val layoutM = LinearLayoutManager(this)
 
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
@@ -54,10 +53,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        toolbar.setBackgroundColor(Color.BLACK)
+        toolbar.setBackgroundColor(Color.parseColor("#222227"))
         setSupportActionBar(toolbar)
         toolbar.setTitleTextColor(Color.WHITE)
-        window.statusBarColor = Color.BLACK
+        window.statusBarColor = Color.parseColor("#222227")
         fab.setOnClickListener { val intent = Intent(this, NewNoteActivity::class.java)
             intent.putStringArrayListExtra("notes", notes)
             intent.putStringArrayListExtra("titles", titles)
@@ -107,18 +106,17 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
-
+        actionBar?.elevation = 0.toFloat()
         val delete = btnDelete
         val deleteAll = radioButton
         recyclerView_main.apply {
             setBackgroundColor(Color.TRANSPARENT)
-            val layoutM = LinearLayoutManager(this.context)
             layoutM.stackFromEnd = true
             layoutM.reverseLayout = true
             layoutManager = layoutM
             val buttonLayout: ConstraintLayout = constrain
             adapter  = NoteAdapter(notes, titles, delete, deleteAll, buttonLayout, fab, dates, this.context,
-                notedbHandler, titleDbHandler, dateDbHandler)
+                notedbHandler, titleDbHandler, dateDbHandler, recyclerView_main)
             noteadapter = adapter as NoteAdapter
             addItemDecoration(VerticalSpacing(50))
            // (adapter as NoteAdapter).notifyDataSetChanged()
@@ -127,7 +125,9 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-
+    fun scroll(){
+        recyclerView_main.setPadding(0, 56, 0, 0)
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
@@ -163,6 +163,7 @@ class MainActivity : AppCompatActivity() {
         constrain.visibility = View.GONE
         radioButton.isChecked = false
         radioButton.isSelected = false
+
         noteadapter.HideItems()
         noteadapter.notifyDataSetChanged()
 

@@ -1,13 +1,14 @@
 package com.whiskey.notes
 
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.os.Handler
 import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -18,13 +19,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
 import com.whiskey.notes.com.whiskey.notes.TitlesDbHelper
 import com.whiskey.notes.com.whiskey.notes.dateDbHelper
 import kotlinx.android.synthetic.main.note_row_item.view.*
-
 
 
 @RequiresApi(Build.VERSION_CODES.N)
@@ -39,15 +40,14 @@ class NoteAdapter(
     var context: Context,
     var notedbHandler: NotesDbHelper,
     var titleDbHandler: TitlesDbHelper,
-    var dateDbHandler: dateDbHelper
+    var dateDbHandler: dateDbHelper,
+    var recyclerviewMain: RecyclerView
 
 )
     : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
     var checkedItems= ArrayList<Int>()
     private var checkedVisible = false
     private var isAllChecked = false
-    //var pref: SharedPreferences = null
-
     private var mCheckItems = SparseBooleanArray()
 
     override fun getItemCount() = notes.size
@@ -72,6 +72,7 @@ class NoteAdapter(
 
 
 
+    @SuppressLint("ClickableViewAccessibility", "NewApi")
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val itemNote = notes[position]
         val itemTitle = titles[position]
@@ -207,12 +208,14 @@ class NoteAdapter(
             }
             //Show or hide check boxes
             if(checkedVisible) {
+
                 holder.customView.checkBox.visibility = View.VISIBLE
                 bDelete.visibility = View.VISIBLE
                 holder.customView.button.visibility = View.VISIBLE
                 deleteAll.visibility = View.VISIBLE
                 buttonLayout.visibility = View.VISIBLE
                 fab.isVisible = false
+
 
 
             }
@@ -391,12 +394,21 @@ class NoteAdapter(
             customView.checkBox.isChecked = mCheckItems.get(position, false)
         }
 
+        @SuppressLint("ClickableViewAccessibility", "NewApi")
         override fun onLongClick(v: View?): Boolean {
             //Changed the state of check box visibility
             checkedVisible = true
             customView.checkBox.isChecked = true
-
             notifyDataSetChanged()
+            recyclerviewMain.isLayoutFrozen = true
+            recyclerviewMain.setOnTouchListener { v, event ->
+
+                if(event.action == MotionEvent.ACTION_UP){
+                    recyclerviewMain.isLayoutFrozen = false
+
+                }
+                false
+            }
             return true
         }
 
