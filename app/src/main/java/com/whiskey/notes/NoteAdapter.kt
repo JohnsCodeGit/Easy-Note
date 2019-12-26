@@ -259,7 +259,7 @@ class NoteAdapter(
                     intent.putStringArrayListExtra("titless", titles)
                     intent.putStringArrayListExtra("notess", notes)
                     intent.putStringArrayListExtra("datess", dates)
-                    intent.putExtra("position", position)
+                    intent.putExtra("position", notes.indexOf(searchList[position]))
                     intent.putStringArrayListExtra("notes", searchList)
                     intent.putStringArrayListExtra("titles", searchList2)
                     intent.putStringArrayListExtra("dates", searchList3)
