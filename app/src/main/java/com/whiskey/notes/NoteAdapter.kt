@@ -438,7 +438,9 @@ class NoteAdapter(
         searchList2.clear()
         searchList3.clear()
         return object:Filter(){
+
             override fun performFiltering(constraint: CharSequence?): FilterResults {
+
                 if(constraint == null || constraint.isEmpty()){
                     searchList.addAll(notes)
                     searchList2.addAll(titles)
@@ -448,11 +450,8 @@ class NoteAdapter(
 
                     var filterPattern = constraint.toString().toLowerCase().trim()
                     for(note: String in notes){
-                        var noteItem = note
-                        noteItem = note.replace("\n", " ")
+                        var noteItem = note.replace("\n", " ")
                         noteItem.replace("\t", " ")
-                        noteItem.replace("\\s+".toRegex(), " ").trim()
-                        noteItem.replace("  ", " ")
                         Log.d("noteItemText", noteItem)
 
                         if(noteItem.toLowerCase().contains(filterPattern) && noteItem.isNotBlank()){
