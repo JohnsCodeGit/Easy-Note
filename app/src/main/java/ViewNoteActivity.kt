@@ -47,7 +47,7 @@ class ViewNoteActivity : AppCompatActivity() {
         titles = intent.getStringArrayListExtra("titles")
         note = intent.getStringExtra("note")
         title = intent.getStringExtra("title")
-        position = intent.getIntExtra("position", position)
+        position = intent.getIntExtra("position", 0)
 
         intent.putStringArrayListExtra("notes", notes)
         intent.putStringArrayListExtra("titles", titles)
@@ -156,7 +156,7 @@ class ViewNoteActivity : AppCompatActivity() {
     }
     fun Activity.hideKeyboard() {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(this.findViewById<EditText>(R.id.eNote).getWindowToken(), 0)
+        imm.hideSoftInputFromWindow(this.findViewById<EditText>(R.id.eNote).windowToken, 0)
     }
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onSupportNavigateUp():Boolean{

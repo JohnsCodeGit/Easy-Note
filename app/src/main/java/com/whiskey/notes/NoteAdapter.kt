@@ -259,7 +259,10 @@ class NoteAdapter(
                     intent.putStringArrayListExtra("titless", titles)
                     intent.putStringArrayListExtra("notess", notes)
                     intent.putStringArrayListExtra("datess", dates)
-                    intent.putExtra("position", notes.indexOf(searchList[position]))
+                    if(notes == searchList){
+                        intent.putExtra("position", position)
+                    }else
+                        intent.putExtra("position", notes.indexOf(searchList[position]))
                     intent.putStringArrayListExtra("notes", searchList)
                     intent.putStringArrayListExtra("titles", searchList2)
                     intent.putStringArrayListExtra("dates", searchList3)
@@ -445,7 +448,14 @@ class NoteAdapter(
 
                     var filterPattern = constraint.toString().toLowerCase().trim()
                     for(note: String in notes){
-                        if(note.toLowerCase().contains(filterPattern)){
+                        var noteItem = note
+                        noteItem = note.replace("\n", " ")
+                        noteItem.replace("\t", " ")
+                        noteItem.replace("\\s+".toRegex(), " ").trim()
+                        noteItem.replace("  ", " ")
+                        Log.d("noteItemText", noteItem)
+
+                        if(noteItem.toLowerCase().contains(filterPattern) && noteItem.isNotBlank()){
                             searchList.add(note)
                             searchList2.add(titles[notes.indexOf(note)])
                             searchList3.add(dates[notes.indexOf(note)])

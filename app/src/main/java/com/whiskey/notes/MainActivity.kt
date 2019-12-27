@@ -1,6 +1,7 @@
 package com.whiskey.notes
 
 
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.SearchManager
 import android.content.Context
@@ -19,6 +20,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.whiskey.notes.com.whiskey.notes.*
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -36,7 +38,7 @@ class MainActivity : AppCompatActivity() {
     private val titleDbHandler = TitlesDbHelper(this, null)
     private val dateDbHandler = dateDbHelper(this, null)
     private val layoutM = LinearLayoutManager(this)
-
+    private lateinit var fabs: FloatingActionButton
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
 
@@ -67,6 +69,7 @@ class MainActivity : AppCompatActivity() {
             intent.putStringArrayListExtra("dates", dates)
             startActivity(intent)
         }
+        fabs = fab
         searchList.clear()
         searchList2.clear()
         searchList3.clear()
@@ -142,6 +145,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    @SuppressLint("RestrictedApi")
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
 
        menuInflater.inflate(R.menu.main_menu, menu)
@@ -159,7 +163,9 @@ class MainActivity : AppCompatActivity() {
             searchList3 = dateDbHandler.getAllDate()
             true
         }
+
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
+
             override fun onQueryTextSubmit(query: String?): Boolean {
 
                 return false
@@ -168,7 +174,11 @@ class MainActivity : AppCompatActivity() {
 
             @RequiresApi(Build.VERSION_CODES.N)
             override fun onQueryTextChange(newText: String?): Boolean {
-                noteadapter.filter.filter(newText)
+                var text: String = newText.toString().trim()
+
+                    noteadapter.filter.filter(text)
+
+
 
                 return true
             }
@@ -184,6 +194,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    @SuppressLint("RestrictedApi")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -191,7 +202,7 @@ class MainActivity : AppCompatActivity() {
         val id = item.itemId
            if (id == R.id.search){
 //               val intent = Intent(this, SearchActivity::class.java)
-//
+                fabs.visibility = View.GONE
 //               startActivity(intent)
            }
         return super.onOptionsItemSelected(item)
