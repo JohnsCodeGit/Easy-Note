@@ -26,12 +26,14 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
-    var notes = ArrayList<String>()
-    private var titles = ArrayList<String>()
-    private var dates = ArrayList<String>()
-    private var searchList = ArrayList<String>()
-    private var searchList2 = ArrayList<String>()
-    private var searchList3 = ArrayList<String>()
+//    var notes = ArrayList<String>()
+//    private var titles = ArrayList<String>()
+//    private var dates = ArrayList<String>()
+//    private var searchList = ArrayList<String>()
+//    private var searchList2 = ArrayList<String>()
+//    private var searchList3 = ArrayList<String>()
+    private var noteList = ArrayList<NoteModel>()
+    private var searchItems = ArrayList<NoteModel>()
 
     private lateinit  var noteadapter: NoteAdapter
     private val notedbHandler = NotesDbHelper(this, null)
@@ -39,18 +41,19 @@ class MainActivity : AppCompatActivity() {
     private val dateDbHandler = dateDbHelper(this, null)
     private val layoutM = LinearLayoutManager(this)
     private lateinit var fabs: FloatingActionButton
+    private lateinit var noteItem: NoteModel
+
     override fun onSaveInstanceState(outState: Bundle?) {
         super.onSaveInstanceState(outState)
 
+        outState?.putParcelableArrayList("noteList", noteList)
 
-        outState?.putStringArrayList("savedNotes", notes)
-        outState?.putStringArrayList("savedTitles", titles)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
 
-        notes = savedInstanceState?.getStringArrayList("savedNotes") as ArrayList<String>
-        titles = savedInstanceState.getStringArrayList("savedTitles") as ArrayList<String>
+        noteList = savedInstanceState?.getParcelableArrayList<NoteModel>("noteList")  as ArrayList<NoteModel>
+
 
     }
 
@@ -64,22 +67,20 @@ class MainActivity : AppCompatActivity() {
         toolbar.setTitleTextColor(Color.WHITE)
         window.statusBarColor = Color.parseColor("#111116")
         fab.setOnClickListener { val intent = Intent(this, NewNoteActivity::class.java)
-            intent.putStringArrayListExtra("notes", notes)
-            intent.putStringArrayListExtra("titles", titles)
-            intent.putStringArrayListExtra("dates", dates)
+
+            intent.putParcelableArrayListExtra("noteList", noteList)
             startActivity(intent)
         }
         fabs = fab
-        searchList.clear()
-        searchList2.clear()
-        searchList3.clear()
+
+        searchItems.clear()
+
         if(notedbHandler.getNoteSize() != 0.toLong() ) {
-            notes = notedbHandler.getAllNote()
-            titles = titleDbHandler.getAllTitle()
-            dates = dateDbHandler.getAllDate()
-            searchList = notedbHandler.getAllNote()
-            searchList2 = titleDbHandler.getAllTitle()
-            searchList3 = dateDbHandler.getAllDate()
+
+            noteList = notedbHandler.getAllNote()
+
+            searchItems = notedbHandler.getAllNote()
+
 
 
         }
@@ -90,37 +91,42 @@ class MainActivity : AppCompatActivity() {
 
         if((noteText != null || titleText != null) && dateText != null) {
             Log.d("NOTETEXT", noteText)
-            notes = intent.getStringArrayListExtra("notes")
-            titles = intent.getStringArrayListExtra("titles")
-            dates = intent.getStringArrayListExtra("dates")
+
+
+            noteList = intent.getParcelableArrayListExtra("noteList")
+
+
             val position: Int = intent.getIntExtra("position", -1)
 
             Log.d("notePosition", position.toString())
             if(position == -1 && (noteText.isNotEmpty() || titleText.isNotEmpty())) {
-                notes.add(noteText)
-                titles.add(titleText)
-                dates.add(dateText)
-                searchList.add(noteText)
-                searchList2.add(titleText)
-                searchList3.add(dateText)
-                notedbHandler.addNote(noteText, notes.size)
-                titleDbHandler.addTitle(titleText, titles.size)
-                dateDbHandler.addDate(dateText,dates.size)
+                //
+                noteItem = NoteModel(noteText, titleText, dateText)
 
-                Log.d("itemDeletedSize",notes.size.toString() )
+
+                noteList.add(noteItem)
+                searchItems.add(noteItem)
+
+                notedbHandler.addNote(noteText, titleText, dateText, noteList.size)
+
+                Log.d("itemAddedNoteItem", noteItem.toString())
 
 
             }
             else if(position != -1 && (noteText.isNotEmpty() || titleText.isNotEmpty())){
-                notes[position] = noteText
-                titles[position] = titleText
-                dates[position] = dateText
-                searchList[position] = noteText
-                searchList2[position] = titleText
-                searchList3[position] = dateText
-                notedbHandler.updateNote(noteText, position+1)
-                dateDbHandler.updateNote(dateText, position+1)
-                titleDbHandler.updateNote(titleText, position+1)
+                //
+                noteList[position].note = noteText
+                noteList[position].title = titleText
+                noteList[position].date = dateText
+
+                searchItems[position].note = noteText
+                searchItems[position].title = titleText
+                searchItems[position].date = dateText
+                //
+
+
+                notedbHandler.updateNote(noteText, titleText, dateText, position+1)
+
             }
 
         }
@@ -133,12 +139,11 @@ class MainActivity : AppCompatActivity() {
             layoutM.reverseLayout = true
             layoutManager = layoutM
             val buttonLayout: ConstraintLayout = constrain
-            adapter  = NoteAdapter(notes, titles, delete, deleteAll, buttonLayout, fab, dates, this.context,
-                notedbHandler, titleDbHandler, dateDbHandler, recyclerView_main, searchList, searchList2, searchList3)
+            adapter  = NoteAdapter(delete, deleteAll, buttonLayout, fab, this.context,
+                notedbHandler, recyclerView_main, noteList, searchItems)
             noteadapter = adapter as NoteAdapter
             addItemDecoration(VerticalSpacing(50))
-           // (adapter as NoteAdapter).notifyDataSetChanged()
-            //recycledViewPool.setMaxRecycledViews(R.id.button, 0)
+
         }
 
 
@@ -155,12 +160,11 @@ class MainActivity : AppCompatActivity() {
         searchView.queryHint = "Search in Notes..."
         searchView.setSearchableInfo(manager.getSearchableInfo(componentName))
         searchView.setOnCloseListener {
-            searchList.clear()
-            searchList2.clear()
-            searchList3.clear()
-            searchList = notedbHandler.getAllNote()
-            searchList2 = titleDbHandler.getAllTitle()
-            searchList3 = dateDbHandler.getAllDate()
+
+            searchItems.clear()
+
+            searchItems = notedbHandler.getAllNote()
+
             true
         }
 

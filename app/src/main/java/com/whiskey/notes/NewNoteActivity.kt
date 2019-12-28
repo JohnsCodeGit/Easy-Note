@@ -16,6 +16,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.graphics.toColor
+import com.whiskey.notes.com.whiskey.notes.NoteModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.add_note.*
 import kotlinx.android.synthetic.main.note_row_item.*
@@ -25,9 +26,8 @@ import kotlin.collections.ArrayList
 import kotlinx.android.synthetic.main.add_note.toolbar as toolbar1
 
 class NewNoteActivity : AppCompatActivity() {
-    var notes = ArrayList<String>()
-    var titles = ArrayList<String>()
-    var dates = ArrayList<String>()
+
+    var noteList = ArrayList<NoteModel>()
 
 
     fun alertDialog(){
@@ -54,9 +54,11 @@ class NewNoteActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_note)
-        notes = intent.getStringArrayListExtra("notes")
-        titles = intent.getStringArrayListExtra("titles")
-        dates = intent.getStringArrayListExtra("dates")
+
+
+        noteList = intent.getParcelableArrayListExtra("noteList")
+
+
         toolbar.setTitleTextColor(Color.WHITE)
         toolbar.setBackgroundColor(Color.parseColor("#111116"))
         setSupportActionBar(toolbar)
@@ -92,9 +94,8 @@ class NewNoteActivity : AppCompatActivity() {
             val noteTitle = eTxtTitle.text.toString()
             intent.putExtra("note", noteText)
             intent.putExtra("title", noteTitle)
-            intent.putStringArrayListExtra("notes", notes)
-            intent.putStringArrayListExtra("titles", titles)
-            intent.putStringArrayListExtra("dates", dates)
+
+            intent.putParcelableArrayListExtra("noteList", noteList)
 
             val date = Calendar.getInstance().time
             val formatter = SimpleDateFormat("MM/dd/yyyy @ hh:mm aaa")

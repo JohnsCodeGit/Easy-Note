@@ -18,7 +18,9 @@ class NotesDbHelper (context: Context,
                 + " ("
                 + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COLUMN_INDEX + " INT, "
-                + COLUMN_NAME + " TEXT"
+                + COLUMN_NAME + " TEXT,"
+                + COLUMN_TITLE + " TEXT,"
+                + COLUMN_DATE + " TEXT"
                 + ")"
                 )
         db.execSQL(CREATE_PRODUCTS_TABLE)
@@ -27,23 +29,30 @@ class NotesDbHelper (context: Context,
         db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
         onCreate(db)
     }
-    fun addNote(note: String, index: Int) {
+    fun addNote(note: String, title: String, date: String, index: Int) {
         val values = ContentValues()
         values.put(COLUMN_NAME, note)
+        values.put(COLUMN_TITLE, title)
+        values.put(COLUMN_DATE, date)
+
         val db = this.writableDatabase
         values.put(COLUMN_INDEX, index)
         db.insert(TABLE_NAME, null, values)
         db.close()
     }
-    fun getAllNote(): ArrayList<String> {
-        val notes = ArrayList<String>()
+    fun getAllNote(): ArrayList<NoteModel> {
+        val notes = ArrayList<NoteModel>()
 
         val cursor = this.readableDatabase.rawQuery(SELECT_NOTE, null)
         if(cursor.moveToFirst()){
             while (!cursor.isAfterLast){
                 if (cursor.getString(cursor.getColumnIndex(COLUMN_NAME)) != null) {
                     val note: String = cursor.getString(cursor.getColumnIndex(COLUMN_NAME))
-                    notes.add(note)
+                    val title: String = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE))
+                    val date: String = cursor.getString(cursor.getColumnIndex(COLUMN_DATE))
+                    var noteItem = NoteModel(note, title, date)
+
+                    notes.add(noteItem)
 
                 }
                 cursor.moveToNext()
@@ -56,10 +65,11 @@ class NotesDbHelper (context: Context,
         val db = this.writableDatabase
         db.execSQL("delete from $TABLE_NAME")
     }
-    fun updateNote(note: String, position: Int){
+    fun updateNote(note: String, title: String, date: String, position: Int){
         val newValues = ContentValues()
         newValues.put(COLUMN_NAME, note)
-
+        newValues.put(COLUMN_TITLE, title)
+        newValues.put(COLUMN_DATE, date)
         val db = this.writableDatabase
         db.update(TABLE_NAME, newValues, "$COLUMN_INDEX=$position", null)
         db.close()
@@ -83,12 +93,14 @@ class NotesDbHelper (context: Context,
         return DatabaseUtils.queryNumEntries(db, TABLE_NAME)
     }
     companion object {
-        private const val DATABASE_VERSION = 29
-        private const val DATABASE_NAME = "notesDB.db"
-        const val TABLE_NAME = "notes"
+        private const val DATABASE_VERSION = 2
+        private const val DATABASE_NAME = "noteDatabaseDB.db"
+        const val TABLE_NAME = "notesTable"
         const val COLUMN_ID = "_id"
-        const val COLUMN_NAME = "note"
-        const val SELECT_NOTE = "SELECT * FROM notes"
+        const val COLUMN_NAME = "noteCol"
+        const val COLUMN_TITLE = "titleCol"
+        const val COLUMN_DATE = "dateCol"
+        const val SELECT_NOTE = "SELECT * FROM notesTable"
         const val COLUMN_INDEX = "item"
 
     }

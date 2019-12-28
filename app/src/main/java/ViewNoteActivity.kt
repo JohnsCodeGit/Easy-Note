@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.whiskey.notes.com.whiskey.notes.NoteModel
 import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
 import com.whiskey.notes.com.whiskey.notes.TitlesDbHelper
 import com.whiskey.notes.com.whiskey.notes.dateDbHelper
@@ -25,9 +26,10 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class ViewNoteActivity : AppCompatActivity() {
-    var notes = ArrayList<String>()
-    var titles = ArrayList<String>()
-    var dates = ArrayList<String>()
+//    var notes = ArrayList<String>()
+//    var titles = ArrayList<String>()
+//    var dates = ArrayList<String>()
+    private var noteList = ArrayList<NoteModel>()
     lateinit var note: String
     lateinit var title: String
 
@@ -42,16 +44,13 @@ class ViewNoteActivity : AppCompatActivity() {
 
         val dateText = intent.getStringExtra("date")
         eDate.text = "Modified: $dateText"
-        dates = intent.getStringArrayListExtra("dates")
-        notes = intent.getStringArrayListExtra("notes")
-        titles = intent.getStringArrayListExtra("titles")
+
+        noteList = intent.getParcelableArrayListExtra("searchItems")
         note = intent.getStringExtra("note")
         title = intent.getStringExtra("title")
         position = intent.getIntExtra("position", 0)
+            intent.putParcelableArrayListExtra("noteList", noteList)
 
-        intent.putStringArrayListExtra("notes", notes)
-        intent.putStringArrayListExtra("titles", titles)
-        intent.putStringArrayListExtra("dates", dates)
             eTitle.hint = "Note Title"
             eTitle.setHintTextColor(Color.DKGRAY)
         toolbar.inflateMenu(R.menu.menu)
@@ -128,7 +127,7 @@ class ViewNoteActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here.
-        val id = item.getItemId()
+        val id = item.itemId
 
         if (id == R.id.save) {
             //save function
@@ -136,11 +135,11 @@ class ViewNoteActivity : AppCompatActivity() {
             val formatter = SimpleDateFormat("MM/dd/yyyy @ hh:mm aaa")
             val dateText = formatter.format(date).toString()
             val notedbHandler = NotesDbHelper(this, null)
-            val titleDbHandler = TitlesDbHelper(this, null)
-            val dateDbHandler = dateDbHelper(this, null)
-            notedbHandler.updateNote(eNote.text.toString(), position + 1)
-            dateDbHandler.updateNote(dateText, position + 1)
-            titleDbHandler.updateNote(eTitle.text.toString(), position + 1)
+
+            notedbHandler.updateNote(eNote.text.toString(), eTitle.text.toString(),
+                                     eDate.text.toString(), position + 1)
+
+
             eDate.text = "Modified: $dateText"
             ResetView()
             return true
@@ -189,14 +188,13 @@ class ViewNoteActivity : AppCompatActivity() {
             val date = Calendar.getInstance().time
             val formatter = SimpleDateFormat("MM/dd/yyyy @ hh:mm aaa")
             val dateText = formatter.format(date).toString()
-            notes = intent.getStringArrayListExtra("notess")
-            dates = intent.getStringArrayListExtra("datess")
-            titles = intent.getStringArrayListExtra("titless")
+
+            noteList = intent.getParcelableArrayListExtra("noteList")
+
+            mainIntent.putExtra("noteList", noteList)
             mainIntent.putExtra("note", noteText)
             mainIntent.putExtra("title", noteTitle)
-            mainIntent.putStringArrayListExtra("notes", notes)
-            mainIntent.putStringArrayListExtra("titles", titles)
-            mainIntent.putStringArrayListExtra("dates", dates)
+
             mainIntent.putExtra("date", dateText)
             mainIntent.putExtra("position", position)
 
