@@ -26,19 +26,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
-//    var notes = ArrayList<String>()
-//    private var titles = ArrayList<String>()
-//    private var dates = ArrayList<String>()
-//    private var searchList = ArrayList<String>()
-//    private var searchList2 = ArrayList<String>()
-//    private var searchList3 = ArrayList<String>()
+
     private var noteList = ArrayList<NoteModel>()
     private var searchItems = ArrayList<NoteModel>()
 
     private lateinit  var noteadapter: NoteAdapter
     private val notedbHandler = NotesDbHelper(this, null)
-    private val titleDbHandler = TitlesDbHelper(this, null)
-    private val dateDbHandler = dateDbHelper(this, null)
+
     private val layoutM = LinearLayoutManager(this)
     private lateinit var fabs: FloatingActionButton
     private lateinit var noteItem: NoteModel
@@ -91,17 +85,13 @@ class MainActivity : AppCompatActivity() {
 
         if((noteText != null || titleText != null) && dateText != null) {
             Log.d("NOTETEXT", noteText)
-
-
-            noteList = intent.getParcelableArrayListExtra("noteList")
-
+            noteItem = NoteModel(noteText, titleText, dateText)
 
             val position: Int = intent.getIntExtra("position", -1)
 
             Log.d("notePosition", position.toString())
             if(position == -1 && (noteText.isNotEmpty() || titleText.isNotEmpty())) {
                 //
-                noteItem = NoteModel(noteText, titleText, dateText)
 
 
                 noteList.add(noteItem)
@@ -114,18 +104,11 @@ class MainActivity : AppCompatActivity() {
 
             }
             else if(position != -1 && (noteText.isNotEmpty() || titleText.isNotEmpty())){
-                //
-                noteList[position].note = noteText
-                noteList[position].title = titleText
-                noteList[position].date = dateText
 
-                searchItems[position].note = noteText
-                searchItems[position].title = titleText
-                searchItems[position].date = dateText
-                //
+                searchItems[position] = noteItem
 
+                noteList[position]= noteItem
 
-                notedbHandler.updateNote(noteText, titleText, dateText, position+1)
 
             }
 
@@ -205,14 +188,11 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
            if (id == R.id.search){
-//               val intent = Intent(this, SearchActivity::class.java)
                 fabs.visibility = View.GONE
-//               startActivity(intent)
            }
         return super.onOptionsItemSelected(item)
     }
-//    private var chkBox: CheckBox = findViewById(R.id.checkBox)
-//    private var but: Button = findViewById(R.id.button)
+
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onBackPressed() {
         btnDelete.visibility = View.GONE

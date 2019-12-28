@@ -21,8 +21,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.whiskey.notes.com.whiskey.notes.NoteModel
 import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
-import com.whiskey.notes.com.whiskey.notes.TitlesDbHelper
-import com.whiskey.notes.com.whiskey.notes.dateDbHelper
 import kotlinx.android.synthetic.main.note_row_item.view.*
 
 
@@ -182,10 +180,12 @@ class NoteAdapter(
                 if (deleteAll.isChecked){
 
                     DeleteAll(holder.customView, deleteAll, bDelete)
+                    notifyDataSetChanged()
 
                 }else {
 
                     DeleteItems(holder.customView, deleteAll, bDelete)
+                    notifyDataSetChanged()
 
                 }
 
@@ -242,7 +242,6 @@ class NoteAdapter(
                     }
                 }
                 else {
-                    //TODO: Pass noteList and searchItems into activity
                     val intent = Intent(holder.customView.context, ViewNoteActivity::class.java)
                     holder.customView.checkBox.visibility = View.GONE
                     holder.customView.button.visibility = View.GONE
@@ -252,14 +251,15 @@ class NoteAdapter(
                     intent.putExtra("title", searchItems[position].title)
                     intent.putExtra("note", searchItems[position].note)
                     intent.putExtra("date", searchItems[position].date)
-
                     intent.putParcelableArrayListExtra("noteList", noteList)
                     intent.putParcelableArrayListExtra("searchItems", searchItems)
 
                     if(noteList == searchItems){
                         intent.putExtra("position", position)
+                        Log.d("same", position.toString())
                     }else {
                         intent.putExtra("position", noteList.indexOf(searchItems[position]))
+                        Log.d("Not Same", noteList.indexOf(searchItems[position]).toString())
                     }
 
 
@@ -349,7 +349,7 @@ class NoteAdapter(
                         searchItems.removeAt(checkedItems[0]-i)
 
                         Log.d("itemDeleted3", checkedItems[0].toString())
-                        //notifyItemRemoved(checkedItems[0]-i)
+//                        notifyItemRemoved(checkedItems[0]-i)
                         checkedItems.removeAt(0)
                         Log.d("itemDeleted List", (checkedItems).toString())
 
@@ -367,7 +367,6 @@ class NoteAdapter(
                 deleteAll.isSelected = false
                 unSelectAll()
                 deleteAll.isChecked = false
-
 
             }
             .setNegativeButton("No") { dialog, id ->

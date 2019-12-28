@@ -9,6 +9,7 @@ import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -18,23 +19,26 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.whiskey.notes.com.whiskey.notes.NoteModel
 import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
-import com.whiskey.notes.com.whiskey.notes.TitlesDbHelper
-import com.whiskey.notes.com.whiskey.notes.dateDbHelper
+
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.view_note.*
 import java.util.*
 import kotlin.collections.ArrayList
 
 class ViewNoteActivity : AppCompatActivity() {
-//    var notes = ArrayList<String>()
-//    var titles = ArrayList<String>()
-//    var dates = ArrayList<String>()
-    private var noteList = ArrayList<NoteModel>()
+
+    private var date = Calendar.getInstance().time
+    @RequiresApi(Build.VERSION_CODES.N)
+    val formatter = SimpleDateFormat("MM/dd/yyyy @ hh:mm aaa")
+    @RequiresApi(Build.VERSION_CODES.N)
+    val dateText = formatter.format(date).toString()
+
     lateinit var note: String
     lateinit var title: String
 
     var position: Int = 0
     var menuVisible = false
+    private val notedbHandler = NotesDbHelper(this, null)
 
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -45,14 +49,12 @@ class ViewNoteActivity : AppCompatActivity() {
         val dateText = intent.getStringExtra("date")
         eDate.text = "Modified: $dateText"
 
-        noteList = intent.getParcelableArrayListExtra("searchItems")
         note = intent.getStringExtra("note")
         title = intent.getStringExtra("title")
         position = intent.getIntExtra("position", 0)
-            intent.putParcelableArrayListExtra("noteList", noteList)
 
-            eTitle.hint = "Note Title"
-            eTitle.setHintTextColor(Color.DKGRAY)
+        eTitle.hint = "Note Title"
+        eTitle.setHintTextColor(Color.DKGRAY)
         toolbar.inflateMenu(R.menu.menu)
 
             eNote.hint = "Notes"
@@ -95,6 +97,25 @@ class ViewNoteActivity : AppCompatActivity() {
 
         }
 
+        bullet.setOnCheckedChangeListener { buttonView, isChecked ->
+
+            if(isChecked){
+                val lines: Array<String> = note.split("\n").toTypedArray()
+                for (i in lines.indices){
+//                    if(i == 0) {
+//                        eNote.lines[i];
+//                    } else if (TextUtils.isEmpty(lines[i].trim()) {
+//                            eNote.setText(lines[i]);
+//                        } else {
+//                        pad.append("\n" + "\u2022" + "  " + lines[i]);
+//                    }
+                }
+
+            }
+
+
+        }
+
 
     }
     fun Share(title: String, note: String){
@@ -134,10 +155,8 @@ class ViewNoteActivity : AppCompatActivity() {
             val date = Calendar.getInstance().time
             val formatter = SimpleDateFormat("MM/dd/yyyy @ hh:mm aaa")
             val dateText = formatter.format(date).toString()
-            val notedbHandler = NotesDbHelper(this, null)
 
-            notedbHandler.updateNote(eNote.text.toString(), eTitle.text.toString(),
-                                     eDate.text.toString(), position + 1)
+
 
 
             eDate.text = "Modified: $dateText"
@@ -182,18 +201,9 @@ class ViewNoteActivity : AppCompatActivity() {
 
         }else{
             val mainIntent = Intent(this, MainActivity::class.java)
-            val noteText = note
-            val noteTitle = title
-
-            val date = Calendar.getInstance().time
-            val formatter = SimpleDateFormat("MM/dd/yyyy @ hh:mm aaa")
-            val dateText = formatter.format(date).toString()
-
-            noteList = intent.getParcelableArrayListExtra("noteList")
-
-            mainIntent.putExtra("noteList", noteList)
-            mainIntent.putExtra("note", noteText)
-            mainIntent.putExtra("title", noteTitle)
+            Save()
+            mainIntent.putExtra("note", note)
+            mainIntent.putExtra("title", title)
 
             mainIntent.putExtra("date", dateText)
             mainIntent.putExtra("position", position)
@@ -201,5 +211,15 @@ class ViewNoteActivity : AppCompatActivity() {
             startActivity(mainIntent)
         }
 
+    }
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun Save(){
+
+
+        date = Calendar.getInstance().time
+
+
+        notedbHandler.updateNote(eNote.text.toString(), eTitle.text.toString(),
+            eDate.text.toString(), position + 1)
     }
 }

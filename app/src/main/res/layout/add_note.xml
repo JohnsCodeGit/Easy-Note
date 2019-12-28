@@ -50,7 +50,7 @@
             android:textColorHighlight="#2196F3"
             android:textColorHint="#777777"
             android:textColorLink="#FFFFFF"
-            android:textCursorDrawable="@android:color/white"
+            android:textCursorDrawable="@null"
             android:textIsSelectable="true"
             android:textSize="24sp" />
 
@@ -69,7 +69,7 @@
             android:textColorHighlight="#2196F3"
             android:textColorHint="#777777"
             android:textColorLink="#FFFFFF"
-            android:textCursorDrawable="@android:color/white"
+            android:textCursorDrawable="@null"
             android:textIsSelectable="true" />
 
 

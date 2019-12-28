@@ -25,44 +25,15 @@
             android:name=".NewNoteActivity"
             android:label="New Note"
             android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize"
 
             >
         <meta-data android:name="android.support.PARENT_ACTIVITY"
             android:value=".MainActivity"/>
         </activity>
         <activity
-            android:name=".EditNoteActivity"
-            android:label="Edit Note"
-            android:theme="@style/AppTheme.NoActionBar"
-
-            >
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ViewNoteActivity"/>
-        </activity>
-        <activity
             android:name=".ViewNoteActivity"
-            android:windowSoftInputMode="adjustPan"
-
-            android:theme="@style/AppTheme.NoActionBar"
-
-            >
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
-        </activity>
-        <activity
-            android:name=".com.whiskey.notes.ThemeActivity"
-
-
-            android:theme="@style/AppTheme.NoActionBar"
-
-            >
-            <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
-        </activity>
-        <activity
-            android:name=".com.whiskey.notes.SearchActivity"
-
-
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/AppTheme.NoActionBar"
 
             >

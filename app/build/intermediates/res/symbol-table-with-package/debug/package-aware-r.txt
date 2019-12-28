@@ -1076,6 +1076,7 @@ id blocking
 id bottom
 id btnDelete
 id btnShowAlert
+id bullet
 id button
 id buttonPanel
 id center
@@ -1140,6 +1141,7 @@ id icon
 id icon_group
 id ifRoom
 id image
+id indent
 id info
 id invisible
 id italic
@@ -1168,6 +1170,7 @@ id normal
 id notification_background
 id notification_main_column
 id notification_main_column_container
+id number
 id outline
 id packed
 id parallax
@@ -1252,6 +1255,7 @@ id title
 id titleDividerNoCustom
 id title_template
 id toolbar
+id toolbar2
 id top
 id topPanel
 id touch_outside
@@ -1334,6 +1338,7 @@ layout design_navigation_item_subheader
 layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_password_icon
+layout drawer_layout
 layout edit_note
 layout mtrl_layout_snackbar
 layout mtrl_layout_snackbar_include

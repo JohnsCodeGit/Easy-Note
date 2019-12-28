@@ -58,7 +58,7 @@
             style="@style/Base.Widget.MaterialComponents.TextInputEditText"
             android:layout_width="0dp"
 
-            android:layout_height="572dp"
+            android:layout_height="0dp"
             android:autofillHints=""
             android:background="@android:color/transparent"
             android:backgroundTint="@android:color/transparent"
@@ -69,6 +69,8 @@
             android:inputType="textMultiLine"
             android:maxLength="5000"
             android:maxLines="100"
+            android:padding="12dp"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
             android:scrollbarSize="10dp"
             android:scrollbarStyle="outsideOverlay"
             android:scrollbars="vertical"
@@ -77,12 +79,12 @@
             android:textColorHighlight="#2196F3"
             android:textColorHint="#777777"
             android:textColorLink="#FFFFFF"
-            android:textCursorDrawable="@android:color/white"
+            android:textCursorDrawable="@null"
             android:textIsSelectable="true"
             android:verticalScrollbarPosition="right"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/toolbar2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/eTitle"
             app:layout_constraintVertical_bias="0.0" />
@@ -94,6 +96,8 @@
             android:layout_marginTop="8dp"
             android:background="@android:color/transparent"
             android:ems="10"
+            android:textCursorDrawable="@null"
+
             android:gravity="top|left"
             android:inputType="none"
             android:maxLength="28"
@@ -107,6 +111,50 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             app:layout_constraintVertical_bias="0.0" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar2"
+            android:layout_width="0.1mm"
+            android:layout_height="0.1mm"
+            android:background="#111116"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:contentInsetStart="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/toolbar"
+            app:layout_constraintVertical_bias="1.0">
+
+            <ToggleButton
+                android:id="@+id/bullet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:background="@android:color/transparent"
+                android:textColor="@color/colorPrimary"
+                tools:layout_editor_absoluteX="323dp"
+                tools:layout_editor_absoluteY="4dp" />
+
+            <ToggleButton
+                android:id="@+id/number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:textColor="@color/colorPrimary"
+                tools:layout_editor_absoluteX="162dp"
+                tools:layout_editor_absoluteY="4dp" />
+
+            <ToggleButton
+                android:id="@+id/indent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:background="@android:color/transparent"
+                android:textColor="@color/colorPrimary"
+                tools:layout_editor_absoluteY="4dp" />
+        </androidx.appcompat.widget.Toolbar>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

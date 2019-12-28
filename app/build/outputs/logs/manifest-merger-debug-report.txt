@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:2:1-74:12
-INJECTED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:2:1-74:12
-INJECTED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:2:1-74:12
-INJECTED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:2:1-74:12
+ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:2:1-45:12
+INJECTED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:2:1-45:12
+INJECTED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:2:1-45:12
+INJECTED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:2:1-45:12
 MERGED from [com.google.android.material:material:1.0.0] /home/john/.gradle/caches/transforms-2/files-2.1/b3c970aca904ae2d480d925a6ea32492/material-1.0.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.appcompat:appcompat:1.0.2] /home/john/.gradle/caches/transforms-2/files-2.1/853e86070d3be1044e072def7b653d24/appcompat-1.0.2/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.core:core-ktx:1.0.2] /home/john/.gradle/caches/transforms-2/files-2.1/76c52dcb42552abe977d418a158e244c/core-ktx-1.0.2/AndroidManifest.xml:2:1-7:12
@@ -36,25 +36,25 @@ MERGED from [androidx.interpolator:interpolator:1.0.0] /home/john/.gradle/caches
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /home/john/.gradle/caches/transforms-2/files-2.1/004fb91108e1b1927119709e2ff43030/lifecycle-livedata-2.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] /home/john/.gradle/caches/transforms-2/files-2.1/3a3ed459510bf208b94d56b861c80196/lifecycle-livedata-core-2.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.arch.core:core-runtime:2.0.0] /home/john/.gradle/caches/transforms-2/files-2.1/ab93a8dbadb16e1d4464b7fe897665b9/core-runtime-2.0.0/AndroidManifest.xml:17:1-22:12
-INJECTED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:2:1-74:12
-INJECTED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:2:1-74:12
-INJECTED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:2:1-74:12
+INJECTED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:2:1-45:12
+INJECTED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:2:1-45:12
+INJECTED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:2:1-45:12
 	package
 		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:3:5-32
 		INJECTED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml
 		INJECTED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml
 	android:versionName
 		INJECTED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml
-		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:2:1-74:12
+		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:2:1-45:12
 		INJECTED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml
 	android:versionCode
 		INJECTED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml
-		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:2:1-74:12
+		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:2:1-45:12
 		INJECTED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml
 	xmlns:android
 		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:2:11-69
 application
-ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:5:5-72:19
+ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:5:5-43:19
 MERGED from [com.google.android.material:material:1.0.0] /home/john/.gradle/caches/transforms-2/files-2.1/b3c970aca904ae2d480d925a6ea32492/material-1.0.0/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.0.0] /home/john/.gradle/caches/transforms-2/files-2.1/b3c970aca904ae2d480d925a6ea32492/material-1.0.0/AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] /home/john/.gradle/caches/transforms-2/files-2.1/c4b4b829cc770abdd306eef91b3e77f9/constraintlayout-1.1.3/AndroidManifest.xml:9:5-20
@@ -98,47 +98,29 @@ ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.x
 	android:name
 		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:21:27-74
 activity#com.whiskey.notes.NewNoteActivity
-ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:24:9-32:20
+ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:24:9-33:20
 	android:label
 		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:26:13-37
+	android:windowSoftInputMode
+		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:28:13-55
 	android:theme
 		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:27:13-56
 	android:name
 		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:25:13-44
 meta-data#android.support.PARENT_ACTIVITY
-ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:30:9-31:44
+ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:31:9-32:44
 	android:value
-		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:31:13-42
+		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:32:13-42
 	android:name
-		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:30:20-66
-activity#com.whiskey.notes.EditNoteActivity
-ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:33:9-41:20
-	android:label
-		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:35:13-38
-	android:theme
-		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:36:13-56
-	android:name
-		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:34:13-45
+		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:31:20-66
 activity#com.whiskey.notes.ViewNoteActivity
-ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:42:9-51:20
+ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:34:9-42:20
 	android:windowSoftInputMode
-		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:44:13-52
+		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:36:13-55
 	android:theme
-		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:46:13-56
+		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:37:13-56
 	android:name
-		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:43:13-45
-activity#com.whiskey.notes.com.whiskey.notes.ThemeActivity
-ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:52:9-61:20
-	android:theme
-		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:56:13-56
-	android:name
-		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:53:13-60
-activity#com.whiskey.notes.com.whiskey.notes.SearchActivity
-ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:62:9-71:20
-	android:theme
-		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:66:13-56
-	android:name
-		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:63:13-61
+		ADDED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml:35:13-45
 uses-sdk
 INJECTED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /home/john/AndroidStudioProjects/Notes/app/src/main/AndroidManifest.xml
