@@ -22,7 +22,7 @@ import kotlin.collections.ArrayList
 
 class NewNoteActivity : AppCompatActivity() {
 
-    fun alertDialog(){
+    private fun alertDialog(){
         val dialogBuilder = AlertDialog.Builder(this,R.style.MyDialogTheme)
 
         // set message of alert dialog
@@ -41,13 +41,11 @@ class NewNoteActivity : AppCompatActivity() {
 
 
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_note)
 
         toolbar.setTitleTextColor(Color.WHITE)
-        toolbar.setBackgroundColor(Color.parseColor("#111116"))
         setSupportActionBar(toolbar)
         window.statusBarColor = Color.parseColor("#111116")
 
@@ -69,15 +67,14 @@ class NewNoteActivity : AppCompatActivity() {
 
 
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here.
-        val id = item.getItemId()
+        val id = item.itemId
 
         if (id == R.id.save) {
 
             //save function
-            R.id.save.toColor()
+            //R.id.save.toColor()
             val intent = Intent(this, MainActivity::class.java)
             val noteText = eTxtNote.text.toString()
             val noteTitle = eTxtTitle.text.toString()
@@ -98,7 +95,7 @@ class NewNoteActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        alertDialog()
+        this.alertDialog()
 
     }
 }

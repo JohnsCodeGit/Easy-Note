@@ -17,7 +17,7 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/black"
+            android:background="@color/dark"
 
             android:theme="@style/AppTheme.AppBarOverlay"
             app:layout_constraintBottom_toBottomOf="parent"

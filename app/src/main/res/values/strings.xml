@@ -9,4 +9,5 @@
     <string name="background">Background</string>
     <string name="dark">Dark</string>
     <string name="light">Light</string>
+    <string name="Modified">Modified</string>
 </resources>

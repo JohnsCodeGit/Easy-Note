@@ -46,10 +46,10 @@ public final class R {
     public static final class color {
         private color() {}
 
-        public static final int notification_action_color_filter = 0x7f05006c;
-        public static final int notification_icon_bg_color = 0x7f05006d;
-        public static final int ripple_material_light = 0x7f050077;
-        public static final int secondary_text_default_material_light = 0x7f050079;
+        public static final int notification_action_color_filter = 0x7f05006d;
+        public static final int notification_icon_bg_color = 0x7f05006e;
+        public static final int ripple_material_light = 0x7f050078;
+        public static final int secondary_text_default_material_light = 0x7f05007a;
     }
     public static final class dimen {
         private dimen() {}
@@ -157,7 +157,7 @@ public final class R {
     public static final class string {
         private string() {}
 
-        public static final int status_bar_notification_info_overflow = 0x7f0e003f;
+        public static final int status_bar_notification_info_overflow = 0x7f0e0040;
     }
     public static final class style {
         private style() {}

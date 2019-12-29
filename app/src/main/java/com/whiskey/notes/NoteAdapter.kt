@@ -4,7 +4,6 @@ package com.whiskey.notes
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
@@ -12,7 +11,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
@@ -24,7 +22,6 @@ import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
 import kotlinx.android.synthetic.main.note_row_item.view.*
 
 
-@RequiresApi(Build.VERSION_CODES.N)
 class NoteAdapter(
 
     var bDelete: Button,
@@ -49,7 +46,7 @@ class NoteAdapter(
 
     override fun getItemCount() = searchItems.size
 
-    fun HideItems(){
+    fun hideItems(){
         checkedVisible = false
         checkedItems.clear()
     }
@@ -68,7 +65,6 @@ class NoteAdapter(
 
 
 
-    @SuppressLint("ClickableViewAccessibility", "NewApi")
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
 
         holder.customView.dateText.text  = searchItems[position].date
@@ -179,12 +175,12 @@ class NoteAdapter(
 
                 if (deleteAll.isChecked){
 
-                    DeleteAll(holder.customView, deleteAll, bDelete)
+                    deleteAll(holder.customView, deleteAll, bDelete)
                     notifyDataSetChanged()
 
                 }else {
 
-                    DeleteItems(holder.customView, deleteAll, bDelete)
+                    deleteItems(holder.customView, deleteAll, bDelete)
                     notifyDataSetChanged()
 
                 }
@@ -288,7 +284,7 @@ class NoteAdapter(
         isAllChecked = false
         notifyDataSetChanged()
     }
-    fun DeleteAll(view:View,delete: CheckBox, btn: Button){
+    private fun deleteAll(view:View, delete: CheckBox, btn: Button){
         val dialogBuilder =
             AlertDialog.Builder(view.context, R.style.MyDialogTheme)
 
@@ -305,7 +301,7 @@ class NoteAdapter(
                 notedbHandler.deleteAll()
 
                 checkedVisible = false
-                HideItems()
+                hideItems()
                 clearAllItems()
 
                 delete.visibility = View.GONE
@@ -325,7 +321,7 @@ class NoteAdapter(
         alert.show()
     }
 
-    fun DeleteItems(view: View, delete: CheckBox, btn: Button){
+    private fun deleteItems(view: View, delete: CheckBox, btn: Button){
         val dialogBuilder =
             AlertDialog.Builder(view.context, R.style.MyDialogTheme)
 
@@ -359,7 +355,7 @@ class NoteAdapter(
                 }
                 checkedVisible = false
                 clearAllItems()
-                HideItems()
+                hideItems()
                 delete.visibility = View.GONE
                 btn.visibility = View.GONE
                 buttonLayout.visibility = View.GONE
@@ -392,7 +388,7 @@ class NoteAdapter(
             customView.checkBox.isChecked = mCheckItems.get(position, false)
         }
 
-        @SuppressLint("ClickableViewAccessibility", "NewApi")
+        @SuppressLint("ClickableViewAccessibility")
         override fun onLongClick(v: View?): Boolean {
             //Changed the state of check box visibility
             checkedVisible = true

@@ -2,7 +2,6 @@ package com.whiskey.notes
 
 
 import android.annotation.SuppressLint
-import android.annotation.TargetApi
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
@@ -32,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit  var noteadapter: NoteAdapter
     private val notedbHandler = NotesDbHelper(this, null)
-
+    private lateinit var searchView: SearchView
     private val layoutM = LinearLayoutManager(this)
     private lateinit var fabs: FloatingActionButton
     private lateinit var noteItem: NoteModel
@@ -51,12 +50,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    @TargetApi(Build.VERSION_CODES.N)
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        toolbar.setBackgroundColor(Color.parseColor("#111116"))
         setSupportActionBar(toolbar)
         toolbar.setTitleTextColor(Color.WHITE)
         window.statusBarColor = Color.parseColor("#111116")
@@ -139,14 +135,13 @@ class MainActivity : AppCompatActivity() {
        menuInflater.inflate(R.menu.main_menu, menu)
         val searchItem = menu.findItem(R.id.search)
         val manager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView = searchItem.actionView as SearchView
+        searchView = searchItem.actionView as SearchView
         searchView.queryHint = "Search in Notes..."
         searchView.setSearchableInfo(manager.getSearchableInfo(componentName))
         searchView.setOnCloseListener {
-
             searchItems.clear()
-
             searchItems = notedbHandler.getAllNote()
+            fab.visibility = View.VISIBLE
 
             true
         }
@@ -187,21 +182,22 @@ class MainActivity : AppCompatActivity() {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
-           if (id == R.id.search){
-                fabs.visibility = View.GONE
+           if (id == R.id.search) {
+               fab.visibility = View.GONE
            }
         return super.onOptionsItemSelected(item)
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
+    @SuppressLint("RestrictedApi")
     override fun onBackPressed() {
         btnDelete.visibility = View.GONE
         radioButton.visibility = View.GONE
         constrain.visibility = View.GONE
         radioButton.isChecked = false
         radioButton.isSelected = false
+        fab.visibility = View.VISIBLE
 
-        noteadapter.HideItems()
+        noteadapter.hideItems()
         noteadapter.notifyDataSetChanged()
 
 
