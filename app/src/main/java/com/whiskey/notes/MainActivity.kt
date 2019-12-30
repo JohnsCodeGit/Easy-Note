@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var fabs: FloatingActionButton
     private lateinit var noteItem: NoteModel
 
-    override fun onSaveInstanceState(outState: Bundle?) {
+    override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
         outState?.putParcelableArrayList("noteList", noteList)
@@ -101,9 +101,14 @@ class MainActivity : AppCompatActivity() {
             }
             else if(position != -1 && (noteText.isNotEmpty() || titleText.isNotEmpty())){
 
-                searchItems[position] = noteItem
+                searchItems.removeAt(position)
+                noteList.removeAt(position)
+                notedbHandler.deleteItem(position+1)
 
-                noteList[position]= noteItem
+
+                noteList.add(noteItem)
+                searchItems.add(noteItem)
+                notedbHandler.addNote(noteItem.note, noteItem.title, noteItem.date, noteList.size)
 
 
             }
@@ -183,7 +188,7 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
            if (id == R.id.search) {
-               fab.visibility = View.GONE
+              // fab.visibility = View.GONE
            }
         return super.onOptionsItemSelected(item)
     }
