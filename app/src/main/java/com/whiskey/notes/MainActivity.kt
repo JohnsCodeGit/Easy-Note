@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 //    private lateinit var searchView: SearchView
 //    private val layoutM = LinearLayoutManager(this)
 //    private lateinit var fabs: FloatingActionButton
-//    private lateinit var noteItem: NoteModel
+    private lateinit var noteItem: NoteModel
 
     var selectedFragment: Fragment = HomeFragment()
 
@@ -71,21 +71,17 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId){
 
                 R.id.nav_home ->{
-                    this.supportFragmentManager.beginTransaction().remove(selectedFragment).commit()
                     selectedFragment = HomeFragment()
                 }
                 R.id.nav_fav ->{
-                    this.supportFragmentManager.beginTransaction().remove(selectedFragment).commit()
 
                     selectedFragment = FavoriteFragment()
                 }
                 R.id.nav_groups ->{
-                    this.supportFragmentManager.beginTransaction().remove(selectedFragment).commit()
 
                     selectedFragment = HomeFragment()
                 }
                 R.id.nav_trash ->{
-                    this.supportFragmentManager.beginTransaction().remove(selectedFragment).commit()
 
                     selectedFragment = TrashFragment()
                 }
@@ -95,13 +91,53 @@ class MainActivity : AppCompatActivity() {
         true
         }
 
-        noteList = notedbHandler.getAllNote()
 
-        searchItems = notedbHandler.getAllNote()
         val viewpager = ViewPager(this)
         viewpager.offscreenPageLimit = 0
 
+        noteList = notedbHandler.getAllNote()
 
+        searchItems = notedbHandler.getAllNote()
+        val noteText = intent.getStringExtra("note")
+        val titleText = intent.getStringExtra("title")
+        val dateText = intent.getStringExtra("date")
+        if(((noteText != null && noteText.isNotBlank()) ||
+                    (titleText != null)) && dateText != null) {
+            Log.d("NOTETEXT", noteText)
+            noteItem = NoteModel(noteText.toString(), titleText.toString(), dateText)
+
+            val position: Int = intent.getIntExtra("position", -1)
+
+            Log.d("notePosition", position.toString())
+            if(position == -1 && (noteText!!.isNotEmpty() || titleText!!.isNotEmpty())) {
+                //
+
+
+                noteList.add(noteItem)
+                searchItems.add(noteItem)
+
+                notedbHandler.addNote(noteText, titleText.toString(), dateText, noteList.size)
+
+                Log.d("itemAddedNoteItem", noteItem.toString())
+
+
+            }
+            else if(position != -1 && (noteText!!.isNotEmpty() || titleText!!.isNotEmpty())){
+
+                searchItems.removeAt(position)
+                noteList.removeAt(position)
+                notedbHandler.deleteItem(position+1)
+
+
+                noteList.add(noteItem)
+                searchItems.add(noteItem)
+                notedbHandler.addNote(noteItem.note, noteItem.title, noteItem.date, noteList.size)
+
+
+            }
+
+
+        }
 
     }
 

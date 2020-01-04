@@ -41,20 +41,15 @@ class HomeFragment : Fragment(){
     private lateinit var searchView: SearchView
     private val layoutM = LinearLayoutManager(activity)
     private lateinit var fabs: FloatingActionButton
-    private lateinit var noteItem: NoteModel
     private lateinit var deleteButton: Button
     private lateinit var mView: View
     private lateinit var checkBox: CheckBox
     private lateinit var constraintLayout: ConstraintLayout
     private lateinit var recyclerView: RecyclerView
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        noteadapter  = NoteAdapter(btnDelete, radioButton, constrain, fabButton, this.context!!,
-//            notedbHandler, recyclerView, noteList, searchItems)
+
         fabButton.setOnClickListener {
             val intent = Intent(activity, NewNoteActivity::class.java)
 
@@ -81,45 +76,7 @@ class HomeFragment : Fragment(){
 
         }
 
-        val noteText = activity?.intent?.getStringExtra("note")
-        val titleText = activity?.intent?.getStringExtra("title")
-        val dateText = activity?.intent?.getStringExtra("date")
 
-        if((noteText != null || titleText != null) && dateText != null) {
-            Log.d("NOTETEXT", noteText)
-            noteItem = NoteModel(noteText.toString(), titleText.toString(), dateText)
-
-            val position: Int = activity?.intent!!.getIntExtra("position", -1)
-
-            Log.d("notePosition", position.toString())
-            if(position == -1 && (noteText!!.isNotEmpty() || titleText!!.isNotEmpty())) {
-                //
-
-
-                noteList.add(noteItem)
-                searchItems.add(noteItem)
-
-                notedbHandler.addNote(noteText, titleText.toString(), dateText, noteList.size)
-
-                Log.d("itemAddedNoteItem", noteItem.toString())
-
-
-            }
-            else if(position != -1 && (noteText!!.isNotEmpty() || titleText!!.isNotEmpty())){
-
-                searchItems.removeAt(position)
-                noteList.removeAt(position)
-                notedbHandler.deleteItem(position+1)
-
-
-                noteList.add(noteItem)
-                searchItems.add(noteItem)
-                notedbHandler.addNote(noteItem.note, noteItem.title, noteItem.date, noteList.size)
-
-
-            }
-
-        }
 
         val deleteAll = activity?.findViewById<CheckBox>(R.id.radioButton)!!
         val constraint = activity?.findViewById<ConstraintLayout>(R.id.constrain)!!
@@ -135,7 +92,7 @@ class HomeFragment : Fragment(){
             noteadapter  = NoteAdapter(deleteButton, deleteAll, constraint, fab, this.context,
                 notedbHandler, recyclerView, noteList, searchItems)
             adapter= noteadapter
-            addItemDecoration(VerticalSpacing(50))
+            addItemDecoration(VerticalSpacing(25))
 
         }
     }
@@ -207,9 +164,6 @@ class HomeFragment : Fragment(){
             true
     }
 
-
-
-
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener{
 
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -234,10 +188,5 @@ class HomeFragment : Fragment(){
     super.onCreateOptionsMenu(menu, menuInflater)
     }
 
-
-
-//    override fun handleOnBackPressed() {
-//        (recyclerView_main.adapter as NoteAdapter).hideItems()
-//    }
 
 }
