@@ -8,8 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 
 
-class NotesDbHelper (context: Context,
-                     factory: SQLiteDatabase.CursorFactory?) :
+class NotesDbHelper(
+    context: Context?,
+    factory: SQLiteDatabase.CursorFactory?) :
     SQLiteOpenHelper(context, DATABASE_NAME,
         factory, DATABASE_VERSION) {
     override fun onCreate(db: SQLiteDatabase) {
@@ -93,7 +94,7 @@ class NotesDbHelper (context: Context,
         return DatabaseUtils.queryNumEntries(db, TABLE_NAME)
     }
     companion object {
-        private const val DATABASE_VERSION = 2
+        private const val DATABASE_VERSION = 3
         private const val DATABASE_NAME = "noteDatabaseDB.db"
         const val TABLE_NAME = "notesTable"
         const val COLUMN_ID = "_id"

@@ -20,6 +20,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.whiskey.notes.com.whiskey.notes.NoteModel
 import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
 import kotlinx.android.synthetic.main.note_row_item.view.*
+import kotlinx.coroutines.*
+import java.util.concurrent.TimeUnit
+import java.util.logging.Handler
 
 
 class NoteAdapter(
@@ -49,6 +52,9 @@ class NoteAdapter(
     fun hideItems(){
         checkedVisible = false
         checkedItems.clear()
+        mCheckItems.clear()
+        notifyDataSetChanged()
+
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -62,8 +68,6 @@ class NoteAdapter(
         holder.customView.checkBox.setOnCheckedChangeListener(null)
 
     }
-
-
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
 
@@ -188,32 +192,35 @@ class NoteAdapter(
 
             }
 
+             fun Hide(){
+                if(checkedVisible) {
+
+                    holder.customView.checkBox.visibility = View.VISIBLE
+                    bDelete.visibility = View.VISIBLE
+                    holder.customView.button.visibility = View.VISIBLE
+                    deleteAll.visibility = View.VISIBLE
+                    buttonLayout.visibility = View.VISIBLE
+                    fab.isVisible = false
+                }
+                else if(!checkedVisible) {
+                    holder.customView.checkBox.visibility = View.GONE
+                    bDelete.visibility = View.GONE
+                    holder.customView.button.visibility = View.GONE
+                    deleteAll.visibility = View.GONE
+                    fab.isVisible = true
+                    checkedItems.clear()
+                    mCheckItems.clear()
+                }
+
+            }
+
             if(noteList.size == 0){
                 checkedVisible = false
             }
 
             //Show or hide check boxes
-            if(checkedVisible) {
-
-                holder.customView.checkBox.visibility = View.VISIBLE
-                bDelete.visibility = View.VISIBLE
-                holder.customView.button.visibility = View.VISIBLE
-                deleteAll.visibility = View.VISIBLE
-                buttonLayout.visibility = View.VISIBLE
-                fab.isVisible = false
-
-            }
-            else if(!checkedVisible) {
-                holder.customView.checkBox.visibility = View.GONE
-                bDelete.visibility = View.GONE
-                holder.customView.button.visibility = View.GONE
-                deleteAll.visibility = View.GONE
-                fab.isVisible = true
-                checkedItems.clear()
-                mCheckItems.clear()
-
-            }
-
+           Hide()
+            Log.d("checkedVisible", checkedVisible.toString())
 
             holder.customView.setOnClickListener {
 
@@ -289,7 +296,7 @@ class NoteAdapter(
             AlertDialog.Builder(view.context, R.style.MyDialogTheme)
 
         // set message of alert dialog
-        dialogBuilder.setMessage("Do you want to delete the selected notes?")
+        dialogBuilder.setMessage("Do you want to delete all notes?")
 
             .setCancelable(false)
             .setPositiveButton("Yes") {
@@ -370,6 +377,7 @@ class NoteAdapter(
             }
         val alert = dialogBuilder.create()
         alert.show()
+
     }
 
     inner class NoteViewHolder(val customView: View) : RecyclerView.ViewHolder(customView),

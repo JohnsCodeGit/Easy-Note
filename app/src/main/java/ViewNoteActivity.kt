@@ -73,24 +73,27 @@ class ViewNoteActivity : AppCompatActivity() {
             showSoftKeyboard(this.findViewById(R.id.eNote))
 
         }
-        eNote.setOnFocusChangeListener { v, hasFocus ->
-            eNote.hasFocus()
-            eNote.isSelected = true
-            eNote.isCursorVisible = true
-            menuVisible = true
-            invalidateOptionsMenu()
+        eNote.setOnFocusChangeListener { _, hasFocus ->
 
+            if(hasFocus) {
+                eNote.hasFocus()
+                eNote.isSelected = true
+                eNote.isCursorVisible = true
+                menuVisible = true
+                invalidateOptionsMenu()
+            }
         }
-        eTitle.setOnFocusChangeListener { v, hasFocus ->
-            eTitle.hasFocus()
+        eTitle.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                eTitle.hasFocus()
 
-            eTitle.isSelected = true
-            menuVisible = true
-            invalidateOptionsMenu()
-
+                eTitle.isSelected = true
+                menuVisible = true
+                invalidateOptionsMenu()
+            }
         }
 
-        bullet.setOnCheckedChangeListener { buttonView, isChecked ->
+        bullet.setOnCheckedChangeListener { _, isChecked ->
 
             if(isChecked){
                 val lines: Array<String> = note.split("\n").toTypedArray()

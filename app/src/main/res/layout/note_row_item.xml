@@ -70,6 +70,7 @@
         android:layout_height="31dp"
         android:layout_marginStart="8dp"
         android:background="@android:color/transparent"
+        android:shadowColor="@android:color/transparent"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

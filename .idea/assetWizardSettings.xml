@@ -47,8 +47,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$USER_HOME$/Pictures/share_white_96x96.png" />
-                                      <entry key="outputName" value="share_icon_2" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Pictures/iconfinder_63_311154.png" />
+                                      <entry key="outputName" value="fgroup_icon" />
                                       <entry key="theme" value="HOLO_DARK" />
                                       <entry key="themeColor" value="ffffff" />
                                     </map>
