@@ -1,3 +1,5 @@
+@file:Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+
 package com.whiskey.notes
 
 
@@ -38,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     private var searchItems = ArrayList<NoteModel>()
     private lateinit var barLay: ConstraintLayout
     private val notedbHandler = NotesDbHelper(this, null)
-    private var favDbHandler = FavoriteDB(null, null)
+    private var favDbHandler = FavoriteDB(this, null)
 
     private lateinit var noteItem: NoteModel
 
@@ -111,44 +113,59 @@ class MainActivity : AppCompatActivity() {
         viewpager.offscreenPageLimit = 0
 
         noteList = notedbHandler.getAllNote()
-
         searchItems = notedbHandler.getAllNote()
-        val noteText = intent.getStringExtra("note")
-        val titleText = intent.getStringExtra("title")
-        val dateText = intent.getStringExtra("date")
+
+        var noteText = intent.getStringExtra("note")
+        var titleText = intent.getStringExtra("title")
+        var dateText = intent.getStringExtra("date")
+        val bool = intent.getIntExtra("bool", 0)
+
+
+        fun Boolean.toInt() = if (this) 1 else 0
+
         if(((noteText != null && noteText.isNotBlank()) ||
                     (titleText != null)) && dateText != null) {
-            Log.d("NOTETEXT", noteText)
+            Log.d("NOTETEXT", noteText.toString())
+            noteText = noteText.toString()
+            titleText = titleText.toString()
+            dateText = dateText.toString()
+
             noteItem = NoteModel(noteText.toString(), titleText.toString(), dateText)
 
             val position: Int = intent.getIntExtra("position", -1)
 
             Log.d("notePosition", position.toString())
-            if(position == -1 && (noteText!!.isNotEmpty() || titleText!!.isNotEmpty())) {
-                //
- 
+            if(position == -1 && (noteText.isNotEmpty() || titleText.isNotEmpty())) {
 
                 noteList.add(noteItem)
                 searchItems.add(noteItem)
 
-                notedbHandler.addNote(noteText, titleText.toString(), dateText, noteList.size)
+                notedbHandler.addNote(noteText, titleText.toString(), dateText, false.toInt(), noteList.size)
 //                favDbHandler.addNote(noteText, titleText.toString(), dateText, noteList.size)
                 Log.d("itemAddedNoteItem", noteItem.toString())
 
 
             }
-            else if(position != -1 && (noteText!!.isNotEmpty() || titleText!!.isNotEmpty())){
+            else if(position != -1 && (noteText.isNotEmpty() || titleText.isNotEmpty())){
 
                 searchItems.removeAt(position)
                 noteList.removeAt(position)
                 notedbHandler.deleteItem(position+1)
-
+                favDbHandler.deleteItem(position+1)
 
                 noteList.add(noteItem)
                 searchItems.add(noteItem)
-                notedbHandler.addNote(noteItem.note, noteItem.title, noteItem.date, noteList.size)
-//                favDbHandler.addNote(noteItem.note, noteItem.title, noteItem.date, noteList.size)
-
+                notedbHandler.addNote(noteItem.note, noteItem.title, noteItem.date, bool, noteList.size)
+                if (bool == 1) {
+                    favDbHandler.deleteItem(position+1)
+                    favDbHandler.addNote(
+                        noteItem.note,
+                        noteItem.title,
+                        noteItem.date,
+                        noteList.size
+                    )
+                }
+                Log.d("boolean", bool.toString())
             }
 
 
@@ -156,18 +173,15 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
-
-
     @SuppressLint("RestrictedApi")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        val id = item.itemId
-           if (id == R.id.search) {
+        //val id = item.itemId
+//           if (id == R.id.search) {
               // fab.visibility = View.GONE
-           }
+//           }
         return super.onOptionsItemSelected(item)
     }
 

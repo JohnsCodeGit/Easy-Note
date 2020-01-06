@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.whiskey.notes.com.whiskey.notes.FavoriteDB
 import com.whiskey.notes.com.whiskey.notes.NoteModel
 import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
 import kotlinx.android.synthetic.main.note_row_item.view.*
@@ -36,7 +37,6 @@ class NoteAdapter(
     var notedbHandler: NotesDbHelper,
 
     var recyclerviewMain: RecyclerView,
-
     var noteList: ArrayList<NoteModel>,
     var searchItems: ArrayList<NoteModel>
 
@@ -46,6 +46,7 @@ class NoteAdapter(
     private var checkedVisible = false
     private var isAllChecked = false
     private var mCheckItems = SparseBooleanArray()
+    var favoriteDB: FavoriteDB = FavoriteDB(this.context, null)
 
     override fun getItemCount() = searchItems.size
 
@@ -304,7 +305,7 @@ class NoteAdapter(
 
                 searchItems.clear()
                 noteList.clear()
-
+                favoriteDB.deleteAll()
                 notedbHandler.deleteAll()
 
                 checkedVisible = false
@@ -347,7 +348,7 @@ class NoteAdapter(
                     }
                     else{
                         notedbHandler.deleteItem(checkedItems[0]+1-i)
-
+                        favoriteDB.deleteItem(checkedItems[0]+1-i)
                         noteList.removeAt(checkedItems[0]-i)
                         searchItems.removeAt(checkedItems[0]-i)
 

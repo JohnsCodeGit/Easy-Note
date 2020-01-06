@@ -2,6 +2,7 @@ package com.whiskey.notes.com.whiskey.notes
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.DatabaseUtils
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
@@ -21,7 +22,8 @@ class NotesDbHelper(
                 + COLUMN_INDEX + " INT, "
                 + COLUMN_NAME + " TEXT,"
                 + COLUMN_TITLE + " TEXT,"
-                + COLUMN_DATE + " TEXT"
+                + COLUMN_DATE + " TEXT,"
+                + COLUMN_FAV + " INT"
                 + ")"
                 )
         db.execSQL(CREATE_PRODUCTS_TABLE)
@@ -30,11 +32,12 @@ class NotesDbHelper(
         db.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
         onCreate(db)
     }
-    fun addNote(note: String, title: String, date: String, index: Int) {
+    fun addNote(note: String, title: String, date: String, fav: Int, index: Int) {
         val values = ContentValues()
         values.put(COLUMN_NAME, note)
         values.put(COLUMN_TITLE, title)
         values.put(COLUMN_DATE, date)
+        values.put(COLUMN_FAV, fav)
 
         val db = this.writableDatabase
         values.put(COLUMN_INDEX, index)
@@ -51,7 +54,7 @@ class NotesDbHelper(
                     val note: String = cursor.getString(cursor.getColumnIndex(COLUMN_NAME))
                     val title: String = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE))
                     val date: String = cursor.getString(cursor.getColumnIndex(COLUMN_DATE))
-                    var noteItem = NoteModel(note, title, date)
+                    val noteItem = NoteModel(note, title, date)
 
                     notes.add(noteItem)
 
@@ -66,15 +69,17 @@ class NotesDbHelper(
         val db = this.writableDatabase
         db.execSQL("delete from $TABLE_NAME")
     }
-    fun updateNote(note: String, title: String, date: String, position: Int){
+    fun updateNote(note: String, title: String, date: String, fav: Int, position: Int){
         val newValues = ContentValues()
         newValues.put(COLUMN_NAME, note)
         newValues.put(COLUMN_TITLE, title)
         newValues.put(COLUMN_DATE, date)
+        newValues.put(COLUMN_FAV, fav)
         val db = this.writableDatabase
         db.update(TABLE_NAME, newValues, "$COLUMN_INDEX=$position", null)
         db.close()
     }
+
 
 
     fun deleteItem(item: Int){
@@ -86,22 +91,39 @@ class NotesDbHelper(
             "UPDATE $TABLE_NAME  SET $COLUMN_INDEX  = $COLUMN_INDEX -1   WHERE  + $COLUMN_INDEX >  $items "
 
         )
-
+        db.close()
         Log.d("itemDeletedDataBase", item.toString())
+    }
+    fun getFav(position: Int): Int{
+        val db = this.writableDatabase
+        val c: Cursor = db.rawQuery("SELECT $COLUMN_FAV FROM $TABLE_NAME WHERE $COLUMN_INDEX == $position", null)
+        val bool:Int
+        bool = if (c.moveToFirst()) {
+            c.getInt(c.getColumnIndex(COLUMN_FAV))
+        } else 0
+
+
+        c.close()
+        db.close()
+        Log.d("boolDB", bool.toString())
+        return bool
+
+
     }
     fun getNoteSize(): Long{
         val db = this.readableDatabase
         return DatabaseUtils.queryNumEntries(db, TABLE_NAME)
     }
     companion object {
-        private const val DATABASE_VERSION = 3
-        private const val DATABASE_NAME = "noteDatabaseDB.db"
-        const val TABLE_NAME = "notesTable"
+        private const val DATABASE_VERSION = 1
+        private const val DATABASE_NAME = "AppDatabase3.db"
+        const val TABLE_NAME = "MainTable1"
         const val COLUMN_ID = "_id"
         const val COLUMN_NAME = "noteCol"
         const val COLUMN_TITLE = "titleCol"
         const val COLUMN_DATE = "dateCol"
-        const val SELECT_NOTE = "SELECT * FROM notesTable"
+        const val COLUMN_FAV = "favCol"
+        const val SELECT_NOTE = "SELECT * FROM $TABLE_NAME"
         const val COLUMN_INDEX = "item"
 
     }

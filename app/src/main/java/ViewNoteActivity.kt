@@ -9,42 +9,53 @@ import android.content.Intent
 import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
+import android.provider.ContactsContract
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import com.whiskey.notes.com.whiskey.notes.FavoriteDB
+import com.whiskey.notes.com.whiskey.notes.NoteModel
 import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
 
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.view_note.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 class ViewNoteActivity : AppCompatActivity() {
 
     private var date = Calendar.getInstance().time
     private val formatter = SimpleDateFormat("MM/dd/yyyy @ hh:mm aaa")
     private val dateText = formatter.format(date).toString()
-
+    private var noteList = ArrayList<NoteModel>()
     lateinit var note: String
     lateinit var title: String
-
+    var boolean: Int = 0
     var position: Int = 0
     var menuVisible = false
     private val notedbHandler = NotesDbHelper(this, null)
+    private val favDB = FavoriteDB(this, null)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.view_note)
 
+
+
         val dateText = intent.getStringExtra("date")
         eDate.text = ("Modified: $dateText").toString()
+        Log.d("bool", (notedbHandler.getFav(position)).toString())
 
         note = intent.getStringExtra("note")
         title = intent.getStringExtra("title")
         position = intent.getIntExtra("position", 0)
+        noteList = intent.getParcelableArrayListExtra("noteList")
 
         eTitle.hint = "Note Title"
         eTitle.setHintTextColor(Color.DKGRAY)
@@ -54,7 +65,7 @@ class ViewNoteActivity : AppCompatActivity() {
         window.statusBarColor = Color.parseColor("#111116")
 
         toolbar.setTitleTextColor(Color.WHITE)
-
+        boolean = notedbHandler.getFav(position+1)
         setSupportActionBar(toolbar)
         toolbar.inflateMenu(R.menu.menu)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -164,6 +175,17 @@ class ViewNoteActivity : AppCompatActivity() {
             share(eTitle.text.toString(), eNote.text.toString())
 
         }
+        else if (id == R.id.fav){
+
+            item.icon = ContextCompat.getDrawable(this, R.drawable.fav_icon_1)
+            boolean = 1
+            favDB.addNote(eNote.text.toString(), eTitle.text.toString(),
+                dateText,position + 1)
+            notedbHandler.updateNote(eNote.text.toString(), eTitle.text.toString(),
+                dateText, boolean,position + 1)
+            Log.d("boolean", boolean.toString())
+
+        }
 
         return super.onOptionsItemSelected(item)
 
@@ -179,13 +201,21 @@ class ViewNoteActivity : AppCompatActivity() {
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
 
-        val menuItem = menu?.findItem(R.id.save)
 
-        menuItem?.isVisible = menuVisible
         return true
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
+        val menuItem = menu?.findItem(R.id.save)
+        val favItem = menu?.findItem(R.id.fav)
+        menuItem?.isVisible = menuVisible
+
+
+            if (notedbHandler.getFav(position+1) == 1) {
+                favItem!!.icon = ContextCompat.getDrawable(this, R.drawable.fav_icon_1)
+                Log.d("boolVal", notedbHandler.getFav(position+1).toString())
+            }
+
         return true
     }
 
@@ -198,7 +228,7 @@ class ViewNoteActivity : AppCompatActivity() {
             save()
             mainIntent.putExtra("note", note)
             mainIntent.putExtra("title", title)
-
+            mainIntent.putExtra("bool", boolean)
             mainIntent.putExtra("date", dateText)
             mainIntent.putExtra("position", position)
 
@@ -207,9 +237,11 @@ class ViewNoteActivity : AppCompatActivity() {
 
     }
     private fun save(){
+
+
         date = Calendar.getInstance().time
 
         notedbHandler.updateNote(eNote.text.toString(), eTitle.text.toString(),
-            dateText, position + 1)
+            dateText, boolean,position + 1)
     }
 }

@@ -37,6 +37,7 @@
                                               <map>
                                                 <entry key="color" value="000000" />
                                                 <entry key="opacityPercent" value="80" />
+                                                <entry key="paddingPercent" value="-10" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -47,8 +48,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$USER_HOME$/Pictures/iconfinder_63_311154.png" />
-                                      <entry key="outputName" value="fgroup_icon" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Pictures/gold-star-icon-57.png" />
+                                      <entry key="outputName" value="fav_icon_1" />
                                       <entry key="theme" value="HOLO_DARK" />
                                       <entry key="themeColor" value="ffffff" />
                                     </map>

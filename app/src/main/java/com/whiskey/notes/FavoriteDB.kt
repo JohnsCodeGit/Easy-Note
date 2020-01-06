@@ -74,9 +74,9 @@ factory, DATABASE_VERSION) {
         db.close()
     }
 
-
     fun deleteItem(item: Int){
         val db = this.writableDatabase
+
         val items = item.toString()
         db.delete(TABLE_NAME, "item = $items", null)
 
@@ -84,7 +84,7 @@ factory, DATABASE_VERSION) {
             "UPDATE $TABLE_NAME  SET $COLUMN_INDEX  = $COLUMN_INDEX -1   WHERE  + $COLUMN_INDEX >  $items "
 
         )
-
+        db.close()
         Log.d("itemDeletedDataBase", item.toString())
     }
     fun getNoteSize(): Long{
