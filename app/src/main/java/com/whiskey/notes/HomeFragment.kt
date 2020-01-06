@@ -72,8 +72,6 @@ class HomeFragment : Fragment(){
 
             searchItems = notedbHandler.getAllNote()
 
-
-
         }
 
 

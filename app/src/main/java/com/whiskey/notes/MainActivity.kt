@@ -37,11 +37,9 @@ class MainActivity : AppCompatActivity() {
     private var noteList = ArrayList<NoteModel>()
     private var searchItems = ArrayList<NoteModel>()
     private lateinit var barLay: ConstraintLayout
-    private lateinit  var noteadapter: NoteAdapter
-   private val notedbHandler = NotesDbHelper(this, null)
-//    private lateinit var searchView: SearchView
-//    private val layoutM = LinearLayoutManager(this)
-//    private lateinit var fabs: FloatingActionButton
+    private val notedbHandler = NotesDbHelper(this, null)
+    private var favDbHandler = FavoriteDB(null, null)
+
     private lateinit var noteItem: NoteModel
 
     var selectedFragment: Fragment = HomeFragment()
@@ -58,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = findViewById(R.id.bot_view)
         if(savedInstanceState == null){
             this.supportFragmentManager.beginTransaction()
-                .replace(R.id.frag_container, selectedFragment).commit()
+                .replace(R.id.frag_container, selectedFragment, "Home").commit()
 
         }
         navView.setOnNavigationItemSelectedListener{
@@ -72,22 +70,39 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.nav_home ->{
                     selectedFragment = HomeFragment()
+                    toolbar.title = "Home"
+                    this.supportFragmentManager.beginTransaction()
+                        .replace(R.id.frag_container, selectedFragment, "Home").commit()
+
                 }
                 R.id.nav_fav ->{
 
                     selectedFragment = FavoriteFragment()
+                    toolbar.title = "Favorites"
+                    this.supportFragmentManager.beginTransaction()
+                        .replace(R.id.frag_container, selectedFragment, "Favorites").commit()
+
+
                 }
                 R.id.nav_groups ->{
 
                     selectedFragment = HomeFragment()
+                    toolbar.title = "Groups"
+                    this.supportFragmentManager.beginTransaction()
+                        .replace(R.id.frag_container, selectedFragment, "Groups").commit()
+
+
                 }
                 R.id.nav_trash ->{
 
                     selectedFragment = TrashFragment()
+                    toolbar.title = "Trash"
+                    this.supportFragmentManager.beginTransaction()
+                        .replace(R.id.frag_container, selectedFragment, "Trash").commit()
+
+
                 }
             }
-            this.supportFragmentManager.beginTransaction()
-                .replace(R.id.frag_container, selectedFragment).commit()
         true
         }
 
@@ -111,13 +126,13 @@ class MainActivity : AppCompatActivity() {
             Log.d("notePosition", position.toString())
             if(position == -1 && (noteText!!.isNotEmpty() || titleText!!.isNotEmpty())) {
                 //
-
+ 
 
                 noteList.add(noteItem)
                 searchItems.add(noteItem)
 
                 notedbHandler.addNote(noteText, titleText.toString(), dateText, noteList.size)
-
+//                favDbHandler.addNote(noteText, titleText.toString(), dateText, noteList.size)
                 Log.d("itemAddedNoteItem", noteItem.toString())
 
 
@@ -132,7 +147,7 @@ class MainActivity : AppCompatActivity() {
                 noteList.add(noteItem)
                 searchItems.add(noteItem)
                 notedbHandler.addNote(noteItem.note, noteItem.title, noteItem.date, noteList.size)
-
+//                favDbHandler.addNote(noteItem.note, noteItem.title, noteItem.date, noteList.size)
 
             }
 
@@ -158,9 +173,16 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("RestrictedApi")
     override fun onBackPressed() {
-
+        val frag1 = supportFragmentManager.findFragmentByTag("Home")
+        val frag2 = supportFragmentManager.findFragmentByTag("Favorites")
+        Log.d("selectedFrag", frag1.toString())
         val home = HomeFragment()
-        home.HideDeleteMenu(findViewById(R.id.LConst))
+        val fav = FavoriteFragment()
+        if(frag1 != null)
+            home.HideDeleteMenu(findViewById(R.id.LConst))
+
+        if (frag2 != null)
+            fav.HideDeleteMenu(findViewById(R.id.LConstR))
     }
 
 
