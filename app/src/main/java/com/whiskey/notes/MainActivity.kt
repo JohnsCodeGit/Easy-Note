@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
     var selectedFragment: Fragment = HomeFragment()
 
-
+    //TODO: DELETING FAVS DELTES WHOLE NOTE
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -180,6 +180,7 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         val frag1 = supportFragmentManager.findFragmentByTag("Home")
         val frag2 = supportFragmentManager.findFragmentByTag("Favorites")
+        val frag3 = supportFragmentManager.findFragmentByTag("Trash")
         Log.d("selectedFrag", frag1.toString())
         val home = HomeFragment()
         val fav = FavoriteFragment()
@@ -188,6 +189,8 @@ class MainActivity : AppCompatActivity() {
 
         if (frag2 != null)
             fav.HideDeleteMenu(findViewById(R.id.LConstR))
+        if (frag3 != null)
+            fav.HideDeleteMenu(findViewById(R.id.LConstT))
     }
 
 

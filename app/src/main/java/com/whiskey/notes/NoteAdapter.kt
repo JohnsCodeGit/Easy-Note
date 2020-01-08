@@ -20,6 +20,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.whiskey.notes.com.whiskey.notes.FavoriteDB
 import com.whiskey.notes.com.whiskey.notes.NoteModel
 import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
+import com.whiskey.notes.com.whiskey.notes.TrashDB
 import kotlinx.android.synthetic.main.note_row_item.view.*
 import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
@@ -46,7 +47,7 @@ class NoteAdapter(
     private var checkedVisible = false
     private var isAllChecked = false
     private var mCheckItems = SparseBooleanArray()
-    var favoriteDB: FavoriteDB = FavoriteDB(this.context, null)
+    var trashDB: TrashDB = TrashDB(this.context, null)
 
     override fun getItemCount() = searchItems.size
 
@@ -302,10 +303,23 @@ class NoteAdapter(
             .setCancelable(false)
             .setPositiveButton("Yes") {
                     dialog, id-> dialog.dismiss()
+                for(i in 0 until noteList.size){
+                    if(checkedItems.size == 0) {
+                        break
+                    }else {
+                        trashDB.addNote(
+                            noteList[checkedItems[0] + 1 - i].note,
+                            noteList[checkedItems[0] + 1 - i].title,
+                            noteList[checkedItems[0] + 1 - i].date,
+                            noteList.size
+                        )
+                        checkedItems.removeAt(0)
+                    }
+
+                }
 
                 searchItems.clear()
                 noteList.clear()
-                favoriteDB.deleteAll()
                 notedbHandler.deleteAll()
 
                 checkedVisible = false
@@ -347,8 +361,12 @@ class NoteAdapter(
                         break
                     }
                     else{
+                        trashDB.addNote(
+                            noteList[checkedItems[0]-i].note,
+                            noteList[checkedItems[0]-i].title,
+                            noteList[checkedItems[0]-i].date,
+                            noteList.size)
                         notedbHandler.deleteItem(checkedItems[0]+1-i)
-                        favoriteDB.deleteItem(checkedItems[0]+1-i)
                         noteList.removeAt(checkedItems[0]-i)
                         searchItems.removeAt(checkedItems[0]-i)
 
@@ -440,9 +458,9 @@ class NoteAdapter(
                 }
                 else{
 
-                    var filterPattern = constraint.toString().toLowerCase().trim()
+                    val filterPattern = constraint.toString().toLowerCase().trim()
                     for(item: NoteModel in noteList){
-                        var noteItem = item.note.replace("\n", " ")
+                        val noteItem = item.note.replace("\n", " ")
                         noteItem.replace("\t", " ")
                         Log.d("noteItemText", noteItem)
 
@@ -458,7 +476,7 @@ class NoteAdapter(
 
 
                 }
-                var filterResult = FilterResults()
+                val filterResult = FilterResults()
                 filterResult.values = (searchItems)
 
                 return filterResult
