@@ -14,17 +14,10 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.whiskey.notes.R
 import com.whiskey.notes.ViewNoteActivity
-import com.whiskey.notes.com.whiskey.notes.NoteModel
-import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
 import kotlinx.android.synthetic.main.note_row_item.view.*
-import kotlinx.coroutines.*
-import java.util.concurrent.TimeUnit
-import java.util.logging.Handler
 
 
 class FavoriteAdapter(
@@ -34,7 +27,7 @@ class FavoriteAdapter(
     var buttonLayout: ConstraintLayout,
 
     var context: Context,
-    var notedbHandler: FavoriteDB,
+    var favDBHandler: NotesDbHelper,
 
     var recyclerviewMain: RecyclerView,
 
@@ -44,10 +37,14 @@ class FavoriteAdapter(
 )
     : RecyclerView.Adapter<FavoriteAdapter.NoteViewHolder>(), Filterable {
     var checkedItems= ArrayList<Int>()
+    var notes = ArrayList<NoteModel>()
     private var checkedVisible = false
     private var isAllChecked = false
     private var mCheckItems = SparseBooleanArray()
-
+    private val noteDB = NotesDbHelper(this.context, null)
+    private lateinit var title: String
+    private lateinit var note: String
+    private lateinit var date: String
     override fun getItemCount() = searchItems.size
 
     fun hideItems(){
@@ -75,6 +72,12 @@ class FavoriteAdapter(
         holder.customView.dateText.text  = searchItems[position].date
         holder.customView.itemTitle.text = searchItems[position].title
         holder.customView.itemNote.text  = searchItems[position].note
+
+        title = holder.customView.itemTitle.text.toString()
+        note = holder.customView.itemNote.text.toString()
+        date = holder.customView.dateText.text.toString()
+
+        notes = noteDB.getAllNote()
 
         //DO NOT TOUCH
         if(searchItems.size == checkedItems.size){
@@ -185,7 +188,7 @@ class FavoriteAdapter(
 
                 }else {
 
-                    deleteItems(holder.customView, deleteAll, bDelete)
+                    deleteItems(holder.customView, deleteAll, bDelete, position)
                     notifyDataSetChanged()
 
                 }
@@ -304,7 +307,7 @@ class FavoriteAdapter(
                 searchItems.clear()
                 noteList.clear()
 
-                notedbHandler.deleteAll()
+                favDBHandler.deleteAll()
 
                 checkedVisible = false
                 hideItems()
@@ -326,7 +329,7 @@ class FavoriteAdapter(
         alert.show()
     }
 
-    private fun deleteItems(view: View, delete: CheckBox, btn: Button){
+    private fun deleteItems(view: View, delete: CheckBox, btn: Button, position: Int){
         val dialogBuilder =
             AlertDialog.Builder(view.context, R.style.MyDialogTheme)
 
@@ -344,8 +347,8 @@ class FavoriteAdapter(
                         break
                     }
                     else{
-                        notedbHandler.deleteItem(checkedItems[0]+1-i)
-
+                        favDBHandler.deleteItem(checkedItems[0]+1-i)
+                        noteDB.updateNote(note, title, date, 0, notes.indexOf(searchItems[position]))
                         noteList.removeAt(checkedItems[0]-i)
                         searchItems.removeAt(checkedItems[0]-i)
 

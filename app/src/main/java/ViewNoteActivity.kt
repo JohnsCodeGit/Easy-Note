@@ -36,6 +36,7 @@ class ViewNoteActivity : AppCompatActivity() {
     lateinit var note: String
     lateinit var title: String
     var boolean: Int = 0
+    var bool: Boolean = false
     var position: Int = 0
     var menuVisible = false
     private val notedbHandler = NotesDbHelper(this, null)
@@ -177,12 +178,24 @@ class ViewNoteActivity : AppCompatActivity() {
         }
         else if (id == R.id.fav){
 
-            item.icon = ContextCompat.getDrawable(this, R.drawable.fav_icon_1)
-            boolean = 1
-            favDB.addNote(eNote.text.toString(), eTitle.text.toString(),
-                dateText,position + 1)
-            notedbHandler.updateNote(eNote.text.toString(), eTitle.text.toString(),
-                dateText, boolean,position + 1)
+            bool = !bool
+            if(bool) {
+                boolean = 1
+                item.icon = ContextCompat.getDrawable(this, R.drawable.fav_icon_1)
+
+                notedbHandler.updateNote(
+                    eNote.text.toString(), eTitle.text.toString(),
+                    dateText, boolean, position + 1
+                )
+            }
+            else{
+                boolean = 0
+                item.icon = ContextCompat.getDrawable(this, R.drawable.fav_icon_empty)
+                notedbHandler.updateNote(
+                    eNote.text.toString(), eTitle.text.toString(),
+                    dateText, boolean, position + 1
+                )
+            }
             Log.d("boolean", boolean.toString())
 
         }
@@ -213,6 +226,7 @@ class ViewNoteActivity : AppCompatActivity() {
 
             if (notedbHandler.getFav(position+1) == 1) {
                 favItem!!.icon = ContextCompat.getDrawable(this, R.drawable.fav_icon_1)
+                bool = true
                 Log.d("boolVal", notedbHandler.getFav(position+1).toString())
             }
 

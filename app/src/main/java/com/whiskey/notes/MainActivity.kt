@@ -151,20 +151,11 @@ class MainActivity : AppCompatActivity() {
                 searchItems.removeAt(position)
                 noteList.removeAt(position)
                 notedbHandler.deleteItem(position+1)
-                favDbHandler.deleteItem(position+1)
 
                 noteList.add(noteItem)
                 searchItems.add(noteItem)
                 notedbHandler.addNote(noteItem.note, noteItem.title, noteItem.date, bool, noteList.size)
-                if (bool == 1) {
-                    favDbHandler.deleteItem(position+1)
-                    favDbHandler.addNote(
-                        noteItem.note,
-                        noteItem.title,
-                        noteItem.date,
-                        noteList.size
-                    )
-                }
+
                 Log.d("boolean", bool.toString())
             }
 

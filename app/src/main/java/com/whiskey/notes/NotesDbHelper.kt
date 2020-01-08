@@ -110,6 +110,30 @@ class NotesDbHelper(
 
 
     }
+    fun getAllFav(): ArrayList<NoteModel>{
+        val db = this.writableDatabase
+        val favs = ArrayList<NoteModel>()
+        val one = 1
+        val cursor: Cursor = db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COLUMN_FAV == $one", null)
+        if(cursor.moveToFirst()){
+            while (!cursor.isAfterLast){
+                if (cursor.getString(cursor.getColumnIndex(COLUMN_NAME)) != null) {
+                    val note: String = cursor.getString(cursor.getColumnIndex(COLUMN_NAME))
+                    val title: String = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE))
+                    val date: String = cursor.getString(cursor.getColumnIndex(COLUMN_DATE))
+                    val noteItem = NoteModel(note, title, date)
+
+                    favs.add(noteItem)
+
+                }
+                cursor.moveToNext()
+            }
+        }
+        cursor.close()
+        return favs
+
+
+    }
     fun getNoteSize(): Long{
         val db = this.readableDatabase
         return DatabaseUtils.queryNumEntries(db, TABLE_NAME)

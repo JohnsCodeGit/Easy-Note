@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Context
 import android.content.Context.*
-import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -16,26 +15,19 @@ import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.whiskey.notes.NewNoteActivity
-import com.whiskey.notes.NoteAdapter
 import com.whiskey.notes.R
 import com.whiskey.notes.VerticalSpacing
-import kotlinx.android.synthetic.main.fragment_fav.*
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class FavoriteFragment : Fragment() {
     private var noteList = ArrayList<NoteModel>()
     private var searchItems = ArrayList<NoteModel>()
     private lateinit  var noteadapter: FavoriteAdapter
-    private var notedbHandler = FavoriteDB(null, null)
+    private var notedbHandler = NotesDbHelper(null, null)
     private lateinit var searchView: SearchView
     private val layoutM = LinearLayoutManager(activity)
     private lateinit var deleteButton: Button
@@ -54,13 +46,13 @@ class FavoriteFragment : Fragment() {
 
         if(notedbHandler.getNoteSize() != 0.toLong() ) {
 
-            noteList = notedbHandler.getAllNote()
+            noteList = notedbHandler.getAllFav()
 
-            searchItems = notedbHandler.getAllNote()
+            searchItems = notedbHandler.getAllFav()
 
         }
 
-
+        Log.d("favList", noteList.toString())
 
         val deleteAll = activity?.findViewById<CheckBox>(R.id.radioButton)!!
         val constraint = activity?.findViewById<ConstraintLayout>(R.id.constrain)!!
@@ -110,7 +102,7 @@ class FavoriteFragment : Fragment() {
     }
 
     override fun onAttach(context: Context) {
-        notedbHandler = FavoriteDB(activity,null)
+        notedbHandler = NotesDbHelper(activity,null)
         super.onAttach(context)
     }
 
@@ -154,7 +146,7 @@ class FavoriteFragment : Fragment() {
 
             @RequiresApi(Build.VERSION_CODES.N)
             override fun onQueryTextChange(newText: String?): Boolean {
-                var text: String = newText.toString().trim()
+                val text: String = newText.toString().trim()
 
                 noteadapter.filter.filter(text)
 
