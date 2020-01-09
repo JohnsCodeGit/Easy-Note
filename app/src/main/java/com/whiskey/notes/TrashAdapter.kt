@@ -16,7 +16,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.whiskey.notes.R
-import com.whiskey.notes.ViewNoteActivity
 import kotlinx.android.synthetic.main.note_row_item.view.*
 
 
@@ -32,7 +31,8 @@ class TrashAdapter(
     var recyclerviewMain: RecyclerView,
 
     var noteList: ArrayList<NoteModel>,
-    var searchItems: ArrayList<NoteModel>
+    var searchItems: ArrayList<NoteModel>,
+    var restoreButton: ImageButton
 
 )
     : RecyclerView.Adapter<TrashAdapter.NoteViewHolder>(), Filterable {
@@ -178,6 +178,56 @@ class TrashAdapter(
 
             }
 
+            restoreButton.setOnClickListener {
+                val dialogBuilder =
+                    AlertDialog.Builder(this.context, R.style.MyDialogTheme)
+
+                // set message of alert dialog
+                dialogBuilder.setMessage("Do you want to restore the selected notes?")
+
+                    .setCancelable(false)
+                    .setPositiveButton("Yes") { dialog, id ->
+                        dialog.dismiss()
+                        checkedItems.sort()
+
+                        for (i in 0 until checkedItems.size) {
+                            if (checkedItems.size == 0) {
+                                break
+                            } else {
+                                val noteItem = noteList[checkedItems[0] - i].note
+                                val titleItem = noteList[checkedItems[0] - i].title
+                                val dateItem = noteList[checkedItems[0] - i].date
+                                noteDB.addNote(noteItem, titleItem, dateItem, 0, notes.size)
+
+                                trashDB.deleteItem(checkedItems[0] + 1 - i)
+                                noteList.removeAt(checkedItems[0] - i)
+                                searchItems.removeAt(checkedItems[0] - i)
+
+//                        notifyItemRemoved(checkedItems[0]-i)
+                                checkedItems.removeAt(0)
+
+
+                            }
+
+                        }
+                        checkedVisible = false
+                        clearAllItems()
+                        hideItems()
+                        deleteAll.visibility = View.GONE
+                        bDelete.visibility = View.GONE
+                        buttonLayout.visibility = View.GONE
+                        deleteAll.isSelected = false
+                        unSelectAll()
+                        deleteAll.isChecked = false
+
+                    }
+                    .setNegativeButton("No") { dialog, id ->
+                        dialog.cancel()
+                    }
+                val alert = dialogBuilder.create()
+                alert.show()
+            }
+
             // Delete items
             bDelete.setOnClickListener {
 
@@ -298,7 +348,7 @@ class TrashAdapter(
             AlertDialog.Builder(view.context, R.style.MyDialogTheme)
 
         // set message of alert dialog
-        dialogBuilder.setMessage("Do you want to delete all notes?")
+        dialogBuilder.setMessage("Do you want to PERMANENTLY delete all notes?")
 
             .setCancelable(false)
             .setPositiveButton("Yes") {
@@ -334,7 +384,7 @@ class TrashAdapter(
             AlertDialog.Builder(view.context, R.style.MyDialogTheme)
 
         // set message of alert dialog
-        dialogBuilder.setMessage("Do you want to delete the selected notes?")
+        dialogBuilder.setMessage("Do you want to PERMANENTLY delete the selected notes?")
 
             .setCancelable(false)
             .setPositiveButton("Yes") {
@@ -447,8 +497,8 @@ class TrashAdapter(
 
                         if(item.note.toLowerCase().trim().contains(filterPattern)
                             || item.title.toLowerCase().trim().contains(filterPattern)
-                            || item.date.toLowerCase().trim().contains(filterPattern)
-                            && noteItem.isNotBlank()){
+                            && (item.title.isNotBlank() || item.note.isNotBlank())
+                        ) {
                             searchItems.add(item)
 
                             Log.d("addedSearch", searchItems.toString())
@@ -457,7 +507,7 @@ class TrashAdapter(
 
 
                 }
-                var filterResult = FilterResults()
+                val filterResult = FilterResults()
                 filterResult.values = (searchItems)
 
                 return filterResult

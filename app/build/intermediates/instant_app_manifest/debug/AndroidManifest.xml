@@ -45,7 +45,7 @@
                 android:value=".NavActivity" />
         </activity>
         <activity
-            android:name="com.whiskey.notes.ViewNoteActivity"
+            android:name="com.whiskey.notes.com.whiskey.notes.ViewNoteActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" >
             <meta-data

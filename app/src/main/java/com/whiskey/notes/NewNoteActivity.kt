@@ -4,20 +4,14 @@ package com.whiskey.notes
 import android.content.Intent
 import android.graphics.Color
 import android.icu.text.SimpleDateFormat
-import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.graphics.toColor
-import com.whiskey.notes.com.whiskey.notes.NoteModel
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.add_note.*
-import kotlinx.android.synthetic.main.view_note.*
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class NewNoteActivity : AppCompatActivity() {
@@ -47,7 +41,7 @@ class NewNoteActivity : AppCompatActivity() {
 
         toolbar.setTitleTextColor(Color.WHITE)
         setSupportActionBar(toolbar)
-        window.statusBarColor = Color.parseColor("#111116")
+//        window.statusBarColor = Color.parseColor("#13151a")
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -82,7 +76,7 @@ class NewNoteActivity : AppCompatActivity() {
             intent.putExtra("title", noteTitle)
 
             val date = Calendar.getInstance().time
-            val formatter = SimpleDateFormat("MM/dd/yyyy @ hh:mm aaa")
+            val formatter = SimpleDateFormat("MM/dd/yyyy, hh:mm aaa")
             val dateText = formatter.format(date).toString()
 
             intent.putExtra("date", dateText)

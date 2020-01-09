@@ -1114,6 +1114,7 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable restore_icon
 drawable save_icon
 drawable share_icon
 drawable share_icon_2
@@ -1196,6 +1197,7 @@ id blocking
 id bot_view
 id bottom
 id btnDelete
+id btnRestore
 id btnShowAlert
 id bullet
 id button
@@ -1592,6 +1594,7 @@ string path_password_eye
 string path_password_eye_mask_strike_through
 string path_password_eye_mask_visible
 string path_password_strike_through
+string restore
 string search_menu_title
 string share
 string status_bar_notification_info_overflow

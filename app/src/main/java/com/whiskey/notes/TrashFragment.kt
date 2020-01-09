@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.ImageButton
 import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
@@ -31,6 +32,7 @@ class TrashFragment : Fragment() {
     private lateinit var searchView: SearchView
     private val layoutM = LinearLayoutManager(activity)
     private lateinit var deleteButton: Button
+    private lateinit var restoreButton: ImageButton
     private lateinit var mView: View
     private lateinit var checkBox: CheckBox
     private lateinit var constraintLayout: ConstraintLayout
@@ -42,6 +44,7 @@ class TrashFragment : Fragment() {
         deleteButton = mView.findViewById(R.id.btnDelete)
         checkBox = mView.findViewById(R.id.radioButton)
         constraintLayout = mView.findViewById(R.id.constrain)
+        restoreButton = mView.findViewById(R.id.btnRestore)
         searchItems.clear()
 
         if(trashDB.getNoteSize() != 0.toLong() ) {
@@ -65,7 +68,8 @@ class TrashFragment : Fragment() {
             layoutManager = layoutM
 
             noteadapter  = TrashAdapter(deleteButton, deleteAll, constraint, this.context,
-                trashDB, recyclerView, noteList, searchItems)
+                trashDB, recyclerView, noteList, searchItems, restoreButton
+            )
             adapter= noteadapter
             addItemDecoration(VerticalSpacing(25))
 

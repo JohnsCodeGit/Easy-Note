@@ -10,13 +10,15 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.whiskey.notes.R
-import com.whiskey.notes.ViewNoteActivity
 import kotlinx.android.synthetic.main.note_row_item.view.*
 
 
@@ -188,7 +190,7 @@ class FavoriteAdapter(
 
                 }else {
 
-                    deleteItems(holder.customView, deleteAll, bDelete, position)
+                    deleteItems(holder.customView, deleteAll, bDelete)
                     notifyDataSetChanged()
 
                 }
@@ -260,11 +262,11 @@ class FavoriteAdapter(
                     intent.putParcelableArrayListExtra("searchItems", searchItems)
 
                     if(noteList == searchItems){
-                        intent.putExtra("position", position)
+                        intent.putExtra("position", notes.indexOf(noteList[position]))
                         Log.d("same", position.toString())
                     }else {
-                        intent.putExtra("position", noteList.indexOf(searchItems[position]))
-                        Log.d("Not Same", noteList.indexOf(searchItems[position]).toString())
+                        intent.putExtra("position", notes.indexOf(searchItems[position]))
+                        Log.d("Not Same", notes.indexOf(searchItems[position]).toString())
                     }
 
 
@@ -303,11 +305,36 @@ class FavoriteAdapter(
             .setCancelable(false)
             .setPositiveButton("Yes") {
                     dialog, id-> dialog.dismiss()
+                for (i in 0 until checkedItems.size) {
+                    if (checkedItems.size == 0) {
+                        break
+                    } else {
+                        val noteModel = NoteModel(
+                            (noteList[checkedItems[0] - i]).note,
+                            (noteList[checkedItems[0] - i]).title,
+                            (noteList[checkedItems[0] - i]).date
+                        )
 
+                        noteDB.updateNote(
+                            noteModel,
+                            0,
+                            notes.indexOf(noteList[checkedItems[0] - i]) + 1
+                        )
+                        noteList.removeAt(checkedItems[0] - i)
+                        searchItems.removeAt(checkedItems[0] - i)
+
+                        Log.d("itemDeleted3", checkedItems[0].toString())
+//                        notifyItemRemoved(checkedItems[0]-i)
+                        checkedItems.removeAt(0)
+                        Log.d("itemDeleted List", (checkedItems).toString())
+
+
+                    }
+
+                }
                 searchItems.clear()
                 noteList.clear()
 
-                favDBHandler.deleteAll()
 
                 checkedVisible = false
                 hideItems()
@@ -329,7 +356,7 @@ class FavoriteAdapter(
         alert.show()
     }
 
-    private fun deleteItems(view: View, delete: CheckBox, btn: Button, position: Int){
+    private fun deleteItems(view: View, delete: CheckBox, btn: Button) {
         val dialogBuilder =
             AlertDialog.Builder(view.context, R.style.MyDialogTheme)
 
@@ -347,8 +374,17 @@ class FavoriteAdapter(
                         break
                     }
                     else{
-                        favDBHandler.deleteItem(checkedItems[0]+1-i)
-                        noteDB.updateNote(note, title, date, 0, notes.indexOf(searchItems[position]))
+                        val noteModel = NoteModel(
+                            (noteList[checkedItems[0] - i]).note,
+                            (noteList[checkedItems[0] - i]).title,
+                            (noteList[checkedItems[0] - i]).date
+                        )
+
+                        noteDB.updateNote(
+                            noteModel,
+                            0,
+                            notes.indexOf(noteList[checkedItems[0] - i]) + 1
+                        )
                         noteList.removeAt(checkedItems[0]-i)
                         searchItems.removeAt(checkedItems[0]-i)
 
@@ -447,8 +483,8 @@ class FavoriteAdapter(
 
                         if(item.note.toLowerCase().trim().contains(filterPattern)
                             || item.title.toLowerCase().trim().contains(filterPattern)
-                            || item.date.toLowerCase().trim().contains(filterPattern)
-                            && noteItem.isNotBlank()){
+                            && (item.title.isNotBlank() || item.note.isNotBlank())
+                        ) {
                             searchItems.add(item)
 
                             Log.d("addedSearch", searchItems.toString())
@@ -457,7 +493,7 @@ class FavoriteAdapter(
 
 
                 }
-                var filterResult = FilterResults()
+                val filterResult = FilterResults()
                 filterResult.values = (searchItems)
 
                 return filterResult

@@ -37,7 +37,7 @@
                                               <map>
                                                 <entry key="color" value="000000" />
                                                 <entry key="opacityPercent" value="80" />
-                                                <entry key="paddingPercent" value="-10" />
+                                                <entry key="paddingPercent" value="5" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -48,8 +48,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$USER_HOME$/Pictures/gold-star-icon-57.png" />
-                                      <entry key="outputName" value="fav_icon_1" />
+                                      <entry key="imageAsset" value="C:\Users\John\Pictures\restore.png" />
+                                      <entry key="outputName" value="restore_icon" />
                                       <entry key="theme" value="HOLO_DARK" />
                                       <entry key="themeColor" value="ffffff" />
                                     </map>
@@ -78,7 +78,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="foregroundImage" value="$USER_HOME$/Downloads/plus.png" />
+                                      <entry key="foregroundImage" value="C:\Users\John\Downloads\plus.png" />
                                       <entry key="outputName" value="add_item" />
                                     </map>
                                   </option>

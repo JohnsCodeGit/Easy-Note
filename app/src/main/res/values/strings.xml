@@ -22,6 +22,7 @@
     <string name="favorite">Favorites</string>
     <string name="trash">Trash</string>
     <string name="groups">Groups</string>
+    <string name="restore">Restore</string>
 
 
 </resources>

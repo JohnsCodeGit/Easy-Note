@@ -14,6 +14,7 @@
         android:layout_marginStart="24dp"
         android:background="@android:color/transparent"
         android:gravity="top|start"
+        android:maxEms="1"
         android:maxLines="1"
         android:paddingTop="5dp"
         android:textColor="@android:color/black"
@@ -25,16 +26,18 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/checkBox"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.100000024" />
 
     <TextView
         android:id="@+id/itemNote"
         android:layout_width="256dp"
-        android:layout_height="46dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:gravity="top|start"
         android:lines="3"
-        android:minLines="2"
+        android:maxEms="3"
+        android:maxLines="3"
+        android:minLines="3"
         android:textColor="@android:color/black"
         android:textCursorDrawable="@color/colorPrimary"
         android:textSize="18sp"
@@ -91,9 +94,9 @@
         android:textStyle="italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.12"
+        app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9" />
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

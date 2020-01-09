@@ -80,6 +80,21 @@ class NotesDbHelper(
         db.close()
     }
 
+    fun updateNote(noteItem: NoteModel, fav: Int, position: Int) {
+        val newValues = ContentValues()
+        val note = noteItem.note
+        val title = noteItem.title
+        val date = noteItem.date
+
+        newValues.put(COLUMN_NAME, note)
+        newValues.put(COLUMN_TITLE, title)
+        newValues.put(COLUMN_DATE, date)
+        newValues.put(COLUMN_FAV, fav)
+        val db = this.writableDatabase
+        db.update(TABLE_NAME, newValues, "$COLUMN_INDEX=$position", null)
+        db.close()
+    }
+
 
 
     fun deleteItem(item: Int){
@@ -110,6 +125,7 @@ class NotesDbHelper(
 
 
     }
+
     fun getAllFav(): ArrayList<NoteModel>{
         val db = this.writableDatabase
         val favs = ArrayList<NoteModel>()

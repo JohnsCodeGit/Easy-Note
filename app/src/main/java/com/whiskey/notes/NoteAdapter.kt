@@ -10,21 +10,21 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.whiskey.notes.com.whiskey.notes.FavoriteDB
 import com.whiskey.notes.com.whiskey.notes.NoteModel
 import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
 import com.whiskey.notes.com.whiskey.notes.TrashDB
+import com.whiskey.notes.com.whiskey.notes.ViewNoteActivity
 import kotlinx.android.synthetic.main.note_row_item.view.*
-import kotlinx.coroutines.*
-import java.util.concurrent.TimeUnit
-import java.util.logging.Handler
 
 
 class NoteAdapter(
@@ -100,7 +100,7 @@ class NoteAdapter(
 
                     for(i in 0 until noteList.size){
 
-                        if(checkedItems.contains(i)){}
+                        if (checkedItems.contains(i))
                         else {
                             checkedItems.add(i)
                             mCheckItems.put(i, true)
@@ -370,7 +370,6 @@ class NoteAdapter(
                         noteList.removeAt(checkedItems[0]-i)
                         searchItems.removeAt(checkedItems[0]-i)
 
-                        Log.d("itemDeleted3", checkedItems[0].toString())
 //                        notifyItemRemoved(checkedItems[0]-i)
                         checkedItems.removeAt(0)
                         Log.d("itemDeleted List", (checkedItems).toString())
@@ -466,8 +465,8 @@ class NoteAdapter(
 
                         if(item.note.toLowerCase().trim().contains(filterPattern)
                             || item.title.toLowerCase().trim().contains(filterPattern)
-                            || item.date.toLowerCase().trim().contains(filterPattern)
-                            && noteItem.isNotBlank()){
+                            && (item.title.isNotBlank() || item.note.isNotBlank())
+                        ) {
                             searchItems.add(item)
 
                             Log.d("addedSearch", searchItems.toString())
