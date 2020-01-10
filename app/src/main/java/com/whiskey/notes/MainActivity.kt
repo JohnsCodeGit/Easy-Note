@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.whiskey.notes.R.color
-import com.whiskey.notes.com.whiskey.notes.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -128,8 +127,9 @@ class MainActivity : AppCompatActivity() {
                 Log.d("itemAddedNoteItem", noteItem.toString())
 
 
-            }
-            else if(position != -1 && (noteText.isNotEmpty() || titleText.isNotEmpty())){
+            } else if (position == -2 && (noteText.isNotEmpty() || titleText.isNotEmpty())) {
+
+            } else if ((position != -1 || position != -2) && (noteText.isNotEmpty() || titleText.isNotEmpty())) {
 
                 searchItems.removeAt(position)
                 noteList.removeAt(position)

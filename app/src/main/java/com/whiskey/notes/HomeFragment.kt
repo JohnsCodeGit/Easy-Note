@@ -21,8 +21,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.whiskey.notes.com.whiskey.notes.NoteModel
-import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment(){
@@ -166,7 +164,7 @@ class HomeFragment : Fragment(){
 
             @RequiresApi(Build.VERSION_CODES.N)
             override fun onQueryTextChange(newText: String?): Boolean {
-                var text: String = newText.toString().trim()
+                val text: String = newText.toString().trim()
 
                 noteadapter.filter.filter(text)
 

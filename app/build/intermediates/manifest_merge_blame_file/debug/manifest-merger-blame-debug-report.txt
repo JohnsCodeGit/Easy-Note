@@ -11,92 +11,97 @@
 9-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml
 10
 11    <application
-11-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:5:5-45:19
+11-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:5:5-46:19
 12        android:allowBackup="true"
 12-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:6:9-35
 13        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 13-->[androidx.core:core:1.1.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\a83bef444c9240faa8e56c19819ce9ad\core-1.1.0\AndroidManifest.xml:24:18-86
 14        android:debuggable="true"
-15        android:icon="@mipmap/ic_launcher"
-15-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:7:9-43
-16        android:label="@string/app_name"
-16-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:8:9-41
-17        android:roundIcon="@mipmap/ic_launcher_round"
-17-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:9:9-54
-18        android:supportsRtl="true"
-18-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:10:9-35
-19        android:testOnly="true"
-20        android:theme="@style/AppTheme.NoActionBar" >
-20-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:11:9-52
-21
-22        <!-- <activity -->
-23        <!-- android:name=".NavActivity" -->
-24        <!-- android:label="@string/app_name" -->
-25        <!-- android:theme="@style/AppTheme.NoActionBar"> </activity> -->
-26        <activity
-26-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:16:9-26:20
-27            android:name="com.whiskey.notes.MainActivity"
-27-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:17:13-41
-28            android:label="@string/menu_home"
-28-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:18:13-46
-29            android:launchMode="singleTop"
-29-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:19:13-43
-30            android:theme="@style/AppTheme.NoActionBar" >
-30-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:20:13-56
-31            <intent-filter>
-31-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:21:13-25:29
-32                <action android:name="android.intent.action.MAIN" />
-32-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:22:17-69
-32-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:22:25-66
-33
-34                <category android:name="android.intent.category.LAUNCHER" />
-34-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:24:17-77
-34-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:24:27-74
-35            </intent-filter>
-36        </activity>
-37        <activity
-37-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:27:9-35:20
-38            android:name="com.whiskey.notes.NewNoteActivity"
-38-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:28:13-44
-39            android:label="New Note"
-39-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:29:13-37
-40            android:theme="@style/AppTheme.NoActionBar"
-40-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:30:13-56
-41            android:windowSoftInputMode="adjustResize" >
-41-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:31:13-55
-42            <meta-data
-42-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:32:13-34:49
-43                android:name="android.support.PARENT_ACTIVITY"
-43-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:33:17-63
-44                android:value=".MainActivity" />
-44-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:34:17-46
-45        </activity>
-46        <activity
-46-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:36:9-43:20
-47            android:name="com.whiskey.notes.com.whiskey.notes.ViewNoteActivity"
-47-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:37:13-63
-48            android:theme="@style/AppTheme.NoActionBar"
-48-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:38:13-56
-49            android:windowSoftInputMode="adjustResize" >
-49-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:39:13-55
-50            <meta-data
-50-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:32:13-34:49
-51                android:name="android.support.PARENT_ACTIVITY"
-51-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:33:17-63
-52                android:value=".MainActivity" />
-52-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:34:17-46
-53        </activity>
-54
-55        <provider
-55-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\94064be6316943264e15284092724adf\lifecycle-process-2.0.0\AndroidManifest.xml:23:9-27:43
-56            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
-56-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\94064be6316943264e15284092724adf\lifecycle-process-2.0.0\AndroidManifest.xml:24:13-79
-57            android:authorities="com.whiskey.notes.lifecycle-process"
-57-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\94064be6316943264e15284092724adf\lifecycle-process-2.0.0\AndroidManifest.xml:25:13-69
-58            android:exported="false"
-58-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\94064be6316943264e15284092724adf\lifecycle-process-2.0.0\AndroidManifest.xml:26:13-37
-59            android:multiprocess="true" />
-59-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\94064be6316943264e15284092724adf\lifecycle-process-2.0.0\AndroidManifest.xml:27:13-40
-60    </application>
-61
-62</manifest>
+15        android:fullBackupContent="@xml/backup_descriptor"
+15-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:12:9-59
+16        android:icon="@mipmap/ic_launcher"
+16-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:7:9-43
+17        android:label="@string/app_name"
+17-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:8:9-41
+18        android:roundIcon="@mipmap/ic_launcher_round"
+18-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:9:9-54
+19        android:supportsRtl="true"
+19-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:10:9-35
+20        android:testOnly="true"
+21        android:theme="@style/AppTheme.NoActionBar" >
+21-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:11:9-52
+22
+23        <!-- <activity -->
+24        <!-- android:name=".NavActivity" -->
+25        <!-- android:label="@string/app_name" -->
+26        <!-- android:theme="@style/AppTheme.NoActionBar"> </activity> -->
+27        <activity
+27-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:17:9-27:20
+28            android:name="com.whiskey.notes.MainActivity"
+28-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:18:13-41
+29            android:label="@string/menu_home"
+29-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:19:13-46
+30            android:launchMode="singleTop"
+30-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:20:13-43
+31            android:theme="@style/AppTheme.NoActionBar" >
+31-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:21:13-56
+32            <intent-filter>
+32-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:22:13-26:29
+33                <action android:name="android.intent.action.MAIN" />
+33-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:23:17-69
+33-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:23:25-66
+34                <action android:name="android.intent.action.VIEW" />
+34-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:24:17-69
+34-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:24:25-66
+35
+36                <category android:name="android.intent.category.LAUNCHER" />
+36-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:25:17-77
+36-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:25:27-74
+37            </intent-filter>
+38        </activity>
+39        <activity
+39-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:28:9-36:20
+40            android:name="com.whiskey.notes.NewNoteActivity"
+40-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:29:13-44
+41            android:label="New Note"
+41-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:30:13-37
+42            android:theme="@style/AppTheme.NoActionBar"
+42-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:31:13-56
+43            android:windowSoftInputMode="adjustResize" >
+43-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:32:13-55
+44            <meta-data
+44-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:33:13-35:49
+45                android:name="android.support.PARENT_ACTIVITY"
+45-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:34:17-63
+46                android:value=".MainActivity" />
+46-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:35:17-46
+47        </activity>
+48        <activity
+48-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:37:9-44:20
+49            android:name="com.whiskey.notes.ViewNoteActivity"
+49-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:38:13-45
+50            android:theme="@style/AppTheme.NoActionBar"
+50-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:39:13-56
+51            android:windowSoftInputMode="adjustResize" >
+51-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:40:13-55
+52            <meta-data
+52-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:33:13-35:49
+53                android:name="android.support.PARENT_ACTIVITY"
+53-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:34:17-63
+54                android:value=".MainActivity" />
+54-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:35:17-46
+55        </activity>
+56
+57        <provider
+57-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\94064be6316943264e15284092724adf\lifecycle-process-2.0.0\AndroidManifest.xml:23:9-27:43
+58            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
+58-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\94064be6316943264e15284092724adf\lifecycle-process-2.0.0\AndroidManifest.xml:24:13-79
+59            android:authorities="com.whiskey.notes.lifecycle-process"
+59-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\94064be6316943264e15284092724adf\lifecycle-process-2.0.0\AndroidManifest.xml:25:13-69
+60            android:exported="false"
+60-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\94064be6316943264e15284092724adf\lifecycle-process-2.0.0\AndroidManifest.xml:26:13-37
+61            android:multiprocess="true" />
+61-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\94064be6316943264e15284092724adf\lifecycle-process-2.0.0\AndroidManifest.xml:27:13-40
+62    </application>
+63
+64</manifest>

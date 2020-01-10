@@ -18,10 +18,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.whiskey.notes.com.whiskey.notes.NoteModel
-import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
-import com.whiskey.notes.com.whiskey.notes.ViewNoteActivity
 import kotlinx.android.synthetic.main.note_row_item.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class DeleteAdapter(
@@ -239,7 +238,7 @@ class DeleteAdapter(
                                 else->{}
                             }
                         }
-                        else->{true}
+
                     }
                 }
                 else {
@@ -398,7 +397,7 @@ class DeleteAdapter(
             customView.checkBox.isChecked = true
             notifyDataSetChanged()
             recyclerviewMain.isLayoutFrozen = true
-            recyclerviewMain.setOnTouchListener { v, event ->
+            recyclerviewMain.setOnTouchListener { _, event ->
 
                 if(event.action == MotionEvent.ACTION_UP){
                     recyclerviewMain.isLayoutFrozen = false
@@ -434,15 +433,17 @@ class DeleteAdapter(
                 }
                 else{
 
-                    var filterPattern = constraint.toString().toLowerCase().trim()
+                    val filterPattern =
+                        constraint.toString().toLowerCase(Locale.getDefault()).trim()
                     for(item: NoteModel in noteList){
-                        var noteItem = item.note.replace("\n", " ")
+                        val noteItem = item.note.replace("\n", " ")
                         noteItem.replace("\t", " ")
                         Log.d("noteItemText", noteItem)
 
-                        if(item.note.toLowerCase().trim().contains(filterPattern)
-                            || item.title.toLowerCase().trim().contains(filterPattern)
-                            || item.date.toLowerCase().trim().contains(filterPattern)
+                        if (item.note.toLowerCase(Locale.getDefault()).trim().contains(filterPattern)
+                            || item.title.toLowerCase(Locale.getDefault()).trim().contains(
+                                filterPattern
+                            )
                             && noteItem.isNotBlank()){
                             searchItems.add(item)
 
@@ -452,7 +453,7 @@ class DeleteAdapter(
 
 
                 }
-                var filterResult = FilterResults()
+                val filterResult = FilterResults()
                 filterResult.values = (searchItems)
 
                 return filterResult

@@ -1,4 +1,4 @@
-package com.whiskey.notes.com.whiskey.notes
+package com.whiskey.notes
 
 import android.content.ContentValues
 import android.content.Context
@@ -10,7 +10,8 @@ import android.util.Log
 class TrashDB(context: Context?,
               factory: SQLiteDatabase.CursorFactory?) :
 SQLiteOpenHelper(context, DATABASE_NAME,
-factory, DATABASE_VERSION) {
+    factory, DATABASE_VERSION
+) {
     override fun onCreate(db: SQLiteDatabase) {
         val CREATE_PRODUCTS_TABLE = (
                 "CREATE TABLE " + TABLE_NAME
@@ -92,7 +93,7 @@ factory, DATABASE_VERSION) {
         return DatabaseUtils.queryNumEntries(db, TABLE_NAME)
     }
     companion object {
-        private const val DATABASE_VERSION = 2
+        private const val DATABASE_VERSION = 3
         private const val DATABASE_NAME = "TrashDB.db"
         const val TABLE_NAME = "trash"
         const val COLUMN_ID = "_id"

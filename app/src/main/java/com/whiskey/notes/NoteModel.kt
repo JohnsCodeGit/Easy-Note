@@ -1,4 +1,4 @@
-package com.whiskey.notes.com.whiskey.notes
+package com.whiskey.notes
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

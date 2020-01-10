@@ -1,6 +1,6 @@
 @file:Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 
-package com.whiskey.notes.com.whiskey.notes
+package com.whiskey.notes
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -17,8 +17,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.whiskey.notes.MainActivity
-import com.whiskey.notes.R
 
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.view_note.*

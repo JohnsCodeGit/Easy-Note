@@ -1,8 +1,9 @@
-package com.whiskey.notes.com.whiskey.notes
+package com.whiskey.notes
 
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
@@ -12,9 +13,11 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.whiskey.notes.R
 import kotlinx.android.synthetic.main.note_row_item.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class TrashAdapter(
@@ -240,7 +243,7 @@ class TrashAdapter(
 
                 }else {
 
-                    deleteItems(holder.customView, deleteAll, bDelete, position)
+                    deleteItems(holder.customView, deleteAll, bDelete)
                     notifyDataSetChanged()
 
                 }
@@ -297,33 +300,32 @@ class TrashAdapter(
                             Log.d("itemRemoved", position.toString())
                         }
                     }
+                } else {
+                    val intent = Intent(holder.customView.context, ViewNoteActivity::class.java)
+                    holder.customView.checkBox.visibility = View.GONE
+                    holder.customView.button.visibility = View.GONE
+                    bDelete.visibility = View.GONE
+                    checkedItems.clear()
+                    mCheckItems.clear()
+                    intent.putExtra("title", searchItems[position].title)
+                    intent.putExtra("note", searchItems[position].note)
+                    intent.putExtra("date", searchItems[position].date)
+                    intent.putParcelableArrayListExtra("noteList", noteList)
+                    intent.putParcelableArrayListExtra("searchItems", searchItems)
+
+                    if (noteList == searchItems) {
+                        intent.putExtra("position", -2)
+                        Log.d("same", position.toString())
+                    } else {
+                        intent.putExtra("position", -2)
+                        Log.d("Not Same", noteList.indexOf(searchItems[position]).toString())
+                    }
+
+
+
+                    startActivity(holder.customView.context, intent, null)
+
                 }
-//                else {
-//                    val intent = Intent(holder.customView.context, ViewNoteActivity::class.java)
-//                    holder.customView.checkBox.visibility = View.GONE
-//                    holder.customView.button.visibility = View.GONE
-//                    bDelete.visibility = View.GONE
-//                    checkedItems.clear()
-//                    mCheckItems.clear()
-//                    intent.putExtra("title", searchItems[position].title)
-//                    intent.putExtra("note", searchItems[position].note)
-//                    intent.putExtra("date", searchItems[position].date)
-//                    intent.putParcelableArrayListExtra("noteList", noteList)
-//                    intent.putParcelableArrayListExtra("searchItems", searchItems)
-//
-//                    if(noteList == searchItems){
-//                        intent.putExtra("position", position)
-//                        Log.d("same", position.toString())
-//                    }else {
-//                        intent.putExtra("position", noteList.indexOf(searchItems[position]))
-//                        Log.d("Not Same", noteList.indexOf(searchItems[position]).toString())
-//                    }
-//
-//
-//
-//                    startActivity(holder.customView.context, intent, null)
-//
-//                }
             }
         }
 
@@ -385,7 +387,7 @@ class TrashAdapter(
         alert.show()
     }
 
-    private fun deleteItems(view: View, delete: CheckBox, btn: Button, position: Int){
+    private fun deleteItems(view: View, delete: CheckBox, btn: Button) {
         val dialogBuilder =
             AlertDialog.Builder(view.context, R.style.MyDialogTheme)
 
@@ -467,7 +469,7 @@ class TrashAdapter(
             customView.checkBox.isChecked = true
             notifyDataSetChanged()
             recyclerviewMain.isLayoutFrozen = true
-            recyclerviewMain.setOnTouchListener { v, event ->
+            recyclerviewMain.setOnTouchListener { _, event ->
 
                 if(event.action == MotionEvent.ACTION_UP){
                     recyclerviewMain.isLayoutFrozen = false
@@ -503,14 +505,17 @@ class TrashAdapter(
                 }
                 else{
 
-                    val filterPattern = constraint.toString().toLowerCase().trim()
+                    val filterPattern =
+                        constraint.toString().toLowerCase(Locale.getDefault()).trim()
                     for(item: NoteModel in noteList){
-                        var noteItem = item.note.replace("\n", " ")
+                        val noteItem = item.note.replace("\n", " ")
                         noteItem.replace("\t", " ")
                         Log.d("noteItemText", noteItem)
 
-                        if(item.note.toLowerCase().trim().contains(filterPattern)
-                            || item.title.toLowerCase().trim().contains(filterPattern)
+                        if (item.note.toLowerCase(Locale.getDefault()).trim().contains(filterPattern)
+                            || item.title.toLowerCase(Locale.getDefault()).trim().contains(
+                                filterPattern
+                            )
                             && (item.title.isNotBlank() || item.note.isNotBlank())
                         ) {
                             searchItems.add(item)

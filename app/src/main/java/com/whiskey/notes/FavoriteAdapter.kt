@@ -15,10 +15,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.whiskey.notes.com.whiskey.notes.NoteModel
-import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
-import com.whiskey.notes.com.whiskey.notes.ViewNoteActivity
 import kotlinx.android.synthetic.main.note_row_item.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class FavoriteAdapter(
@@ -299,7 +298,7 @@ class FavoriteAdapter(
             AlertDialog.Builder(view.context, R.style.MyDialogTheme)
 
         // set message of alert dialog
-        dialogBuilder.setMessage("Do you want to delete all notes?")
+        dialogBuilder.setMessage("Do you want to delete all notes from favorites?")
 
             .setCancelable(false)
             .setPositiveButton("Yes") {
@@ -364,7 +363,7 @@ class FavoriteAdapter(
             AlertDialog.Builder(view.context, R.style.MyDialogTheme)
 
         // set message of alert dialog
-        dialogBuilder.setMessage("Do you want to delete the selected notes?")
+        dialogBuilder.setMessage("Do you want to delete the selected notes from favorites?")
 
             .setCancelable(false)
             .setPositiveButton("Yes") {
@@ -446,7 +445,7 @@ class FavoriteAdapter(
             customView.checkBox.isChecked = true
             notifyDataSetChanged()
             recyclerviewMain.isLayoutFrozen = true
-            recyclerviewMain.setOnTouchListener { v, event ->
+            recyclerviewMain.setOnTouchListener { _, event ->
 
                 if(event.action == MotionEvent.ACTION_UP){
                     recyclerviewMain.isLayoutFrozen = false
@@ -482,14 +481,17 @@ class FavoriteAdapter(
                 }
                 else{
 
-                    val filterPattern = constraint.toString().toLowerCase().trim()
+                    val filterPattern =
+                        constraint.toString().toLowerCase(Locale.getDefault()).trim()
                     for(item: NoteModel in noteList){
                         val noteItem = item.note.replace("\n", " ")
                         noteItem.replace("\t", " ")
                         Log.d("noteItemText", noteItem)
 
-                        if(item.note.toLowerCase().trim().contains(filterPattern)
-                            || item.title.toLowerCase().trim().contains(filterPattern)
+                        if (item.note.toLowerCase(Locale.getDefault()).trim().contains(filterPattern)
+                            || item.title.toLowerCase(Locale.getDefault()).trim().contains(
+                                filterPattern
+                            )
                             && (item.title.isNotBlank() || item.note.isNotBlank())
                         ) {
                             searchItems.add(item)

@@ -20,8 +20,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.whiskey.notes.com.whiskey.notes.NoteModel
-import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class FavoriteFragment : Fragment() {

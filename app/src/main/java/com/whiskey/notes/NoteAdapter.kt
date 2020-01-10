@@ -17,11 +17,9 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.whiskey.notes.com.whiskey.notes.NoteModel
-import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
-import com.whiskey.notes.com.whiskey.notes.TrashDB
-import com.whiskey.notes.com.whiskey.notes.ViewNoteActivity
 import kotlinx.android.synthetic.main.note_row_item.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class NoteAdapter(
@@ -437,7 +435,7 @@ class NoteAdapter(
             customView.checkBox.isChecked = true
             notifyDataSetChanged()
             recyclerviewMain.isLayoutFrozen = true
-            recyclerviewMain.setOnTouchListener { v, event ->
+            recyclerviewMain.setOnTouchListener { _, event ->
 
                 if(event.action == MotionEvent.ACTION_UP){
                     recyclerviewMain.isLayoutFrozen = false
@@ -473,14 +471,17 @@ class NoteAdapter(
                 }
                 else{
 
-                    val filterPattern = constraint.toString().toLowerCase().trim()
+                    val filterPattern =
+                        constraint.toString().toLowerCase(Locale.getDefault()).trim()
                     for(item: NoteModel in noteList){
                         val noteItem = item.note.replace("\n", " ")
                         noteItem.replace("\t", " ")
                         Log.d("noteItemText", noteItem)
 
-                        if(item.note.toLowerCase().trim().contains(filterPattern)
-                            || item.title.toLowerCase().trim().contains(filterPattern)
+                        if (item.note.toLowerCase(Locale.getDefault()).trim().contains(filterPattern)
+                            || item.title.toLowerCase(Locale.getDefault()).trim().contains(
+                                filterPattern
+                            )
                             && (item.title.isNotBlank() || item.note.isNotBlank())
                         ) {
                             searchItems.add(item)

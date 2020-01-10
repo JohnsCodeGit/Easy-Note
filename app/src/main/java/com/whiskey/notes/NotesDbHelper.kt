@@ -1,4 +1,4 @@
-package com.whiskey.notes.com.whiskey.notes
+package com.whiskey.notes
 
 import android.content.ContentValues
 import android.content.Context
@@ -13,7 +13,8 @@ class NotesDbHelper(
     context: Context?,
     factory: SQLiteDatabase.CursorFactory?) :
     SQLiteOpenHelper(context, DATABASE_NAME,
-        factory, DATABASE_VERSION) {
+        factory, DATABASE_VERSION
+    ) {
     override fun onCreate(db: SQLiteDatabase) {
         val CREATE_PRODUCTS_TABLE = (
                 "CREATE TABLE " + TABLE_NAME
@@ -95,8 +96,6 @@ class NotesDbHelper(
         db.close()
     }
 
-
-
     fun deleteItem(item: Int){
         val db = this.writableDatabase
         val items = item.toString()
@@ -155,7 +154,7 @@ class NotesDbHelper(
         return DatabaseUtils.queryNumEntries(db, TABLE_NAME)
     }
     companion object {
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2
         private const val DATABASE_NAME = "AppDatabase3.db"
         const val TABLE_NAME = "MainTable1"
         const val COLUMN_ID = "_id"

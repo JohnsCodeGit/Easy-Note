@@ -20,9 +20,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.whiskey.notes.com.whiskey.notes.NoteModel
-import com.whiskey.notes.com.whiskey.notes.TrashAdapter
-import com.whiskey.notes.com.whiskey.notes.TrashDB
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class TrashFragment : Fragment() {
@@ -122,7 +119,7 @@ class TrashFragment : Fragment() {
         @Nullable container: ViewGroup?,
         @Nullable savedInstanceState: Bundle?
     ): View? {
-        setHasOptionsMenu(true)
+        setHasOptionsMenu(false)
         mView = inflater.inflate(R.layout.fragment_trash, container, false)
 
         return mView
