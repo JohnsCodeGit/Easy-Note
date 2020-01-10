@@ -3,7 +3,7 @@ package com.whiskey.notes.com.whiskey.notes
 import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Context
-import android.content.Context.*
+import android.content.Context.SEARCH_SERVICE
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -56,7 +56,7 @@ class FavoriteFragment : Fragment() {
 
         val deleteAll = activity?.findViewById<CheckBox>(R.id.radioButton)!!
         val constraint = activity?.findViewById<ConstraintLayout>(R.id.constrain)!!
-        recyclerView = view.findViewById(R.id.recyclerView_main)
+        recyclerView = view.findViewById(R.id.recyclerView_fav)
 
         recyclerView.apply {
             setBackgroundColor(Color.TRANSPARENT)
@@ -83,7 +83,7 @@ class FavoriteFragment : Fragment() {
         deleteButton = view.findViewById(R.id.btnDelete)
         checkBox = view.findViewById(R.id.radioButton)
         constraintLayout = view.findViewById(R.id.constrain)
-        recyclerView = view.findViewById(R.id.recyclerView_main)
+        recyclerView = view.findViewById(R.id.recyclerView_fav)
 
         noteadapter = recyclerView.adapter as FavoriteAdapter
 

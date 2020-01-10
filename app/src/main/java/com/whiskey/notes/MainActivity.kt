@@ -168,13 +168,14 @@ class MainActivity : AppCompatActivity() {
         Log.d("selectedFrag", frag1.toString())
         val home = HomeFragment()
         val fav = FavoriteFragment()
+        val trash = TrashFragment()
         if(frag1 != null)
             home.HideDeleteMenu(findViewById(R.id.LConst))
 
         if (frag2 != null)
             fav.HideDeleteMenu(findViewById(R.id.LConstR))
         if (frag3 != null)
-            fav.HideDeleteMenu(findViewById(R.id.LConstT))
+            trash.HideDeleteMenu(findViewById(R.id.LConstT))
     }
 
 

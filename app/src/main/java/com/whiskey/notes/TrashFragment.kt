@@ -59,7 +59,7 @@ class TrashFragment : Fragment() {
 
         val deleteAll = activity?.findViewById<CheckBox>(R.id.radioButton)!!
         val constraint = activity?.findViewById<ConstraintLayout>(R.id.constrain)!!
-        recyclerView = view.findViewById(R.id.recyclerView_main)
+        recyclerView = view.findViewById(R.id.recyclerView_trash)
 
         recyclerView.apply {
             setBackgroundColor(Color.TRANSPARENT)
@@ -87,7 +87,7 @@ class TrashFragment : Fragment() {
         deleteButton = view.findViewById(R.id.btnDelete)
         checkBox = view.findViewById(R.id.radioButton)
         constraintLayout = view.findViewById(R.id.constrain)
-        recyclerView = view.findViewById(R.id.recyclerView_main)
+        recyclerView = view.findViewById(R.id.recyclerView_trash)
 
         noteadapter = recyclerView.adapter as TrashAdapter
 

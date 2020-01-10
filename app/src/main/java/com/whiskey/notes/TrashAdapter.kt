@@ -196,7 +196,7 @@ class TrashAdapter(
                                 val titleItem = noteList[checkedItems[0] - i].title
                                 val dateItem = noteList[checkedItems[0] - i].date
                                 val noteModel = NoteModel(noteItem, titleItem, dateItem)
-                                
+
                                 notes.add(noteModel)
                                 noteDB.addNote(noteItem, titleItem, dateItem, 0, notes.size)
 

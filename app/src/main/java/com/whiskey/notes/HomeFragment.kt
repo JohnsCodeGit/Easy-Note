@@ -3,7 +3,7 @@ package com.whiskey.notes.com.whiskey.notes
 import android.annotation.SuppressLint
 import android.app.SearchManager
 import android.content.Context
-import android.content.Context.*
+import android.content.Context.SEARCH_SERVICE
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
@@ -12,17 +12,12 @@ import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.CheckBox
-import androidx.activity.OnBackPressedCallback
 import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -31,7 +26,6 @@ import com.whiskey.notes.NoteAdapter
 import com.whiskey.notes.R
 import com.whiskey.notes.VerticalSpacing
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.note_row_item.*
 
 class HomeFragment : Fragment(){
     private var noteList = ArrayList<NoteModel>()
@@ -79,7 +73,7 @@ class HomeFragment : Fragment(){
         val deleteAll = activity?.findViewById<CheckBox>(R.id.radioButton)!!
         val constraint = activity?.findViewById<ConstraintLayout>(R.id.constrain)!!
         val fab = activity?.findViewById<FloatingActionButton>(R.id.fabButton)!!
-        recyclerView = view.findViewById(R.id.recyclerView_main)
+        recyclerView = view.findViewById(R.id.recyclerView_home)
 
         recyclerView.apply {
             setBackgroundColor(Color.TRANSPARENT)
@@ -107,7 +101,7 @@ class HomeFragment : Fragment(){
             checkBox = view.findViewById(R.id.radioButton)
             fabs = view.findViewById(R.id.fabButton)
             constraintLayout = view.findViewById(R.id.constrain)
-            recyclerView = view.findViewById(R.id.recyclerView_main)
+        recyclerView = view.findViewById(R.id.recyclerView_home)
 
             noteadapter = recyclerView.adapter as NoteAdapter
 
