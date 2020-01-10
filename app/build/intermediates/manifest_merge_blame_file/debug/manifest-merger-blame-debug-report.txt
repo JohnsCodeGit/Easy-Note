@@ -11,7 +11,7 @@
 9-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml
 10
 11    <application
-11-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:5:5-51:19
+11-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:5:5-45:19
 12        android:allowBackup="true"
 12-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:6:9-35
 13        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
@@ -65,11 +65,11 @@
 41            android:windowSoftInputMode="adjustResize" >
 41-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:31:13-55
 42            <meta-data
-42-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:32:13-34:48
+42-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:32:13-34:49
 43                android:name="android.support.PARENT_ACTIVITY"
 43-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:33:17-63
-44                android:value=".NavActivity" />
-44-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:34:17-45
+44                android:value=".MainActivity" />
+44-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:34:17-46
 45        </activity>
 46        <activity
 46-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:36:9-43:20
@@ -80,38 +80,23 @@
 49            android:windowSoftInputMode="adjustResize" >
 49-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:39:13-55
 50            <meta-data
-50-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:32:13-34:48
+50-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:32:13-34:49
 51                android:name="android.support.PARENT_ACTIVITY"
 51-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:33:17-63
-52                android:value=".NavActivity" />
-52-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:34:17-45
+52                android:value=".MainActivity" />
+52-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:34:17-46
 53        </activity>
-54        <activity
-54-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:44:9-50:20
-55            android:name="com.whiskey.notes.com.whiskey.notes.StarredActivity"
-55-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:44:19-68
-56            android:theme="@style/AppTheme.NoActionBar"
-56-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:45:13-56
-57            android:windowSoftInputMode="adjustResize" >
-57-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:46:13-55
-58            <meta-data
-58-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:32:13-34:48
-59                android:name="android.support.PARENT_ACTIVITY"
-59-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:33:17-63
-60                android:value=".NavActivity" />
-60-->C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:34:17-45
-61        </activity>
-62
-63        <provider
-63-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\94064be6316943264e15284092724adf\lifecycle-process-2.0.0\AndroidManifest.xml:23:9-27:43
-64            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
-64-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\94064be6316943264e15284092724adf\lifecycle-process-2.0.0\AndroidManifest.xml:24:13-79
-65            android:authorities="com.whiskey.notes.lifecycle-process"
-65-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\94064be6316943264e15284092724adf\lifecycle-process-2.0.0\AndroidManifest.xml:25:13-69
-66            android:exported="false"
-66-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\94064be6316943264e15284092724adf\lifecycle-process-2.0.0\AndroidManifest.xml:26:13-37
-67            android:multiprocess="true" />
-67-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\94064be6316943264e15284092724adf\lifecycle-process-2.0.0\AndroidManifest.xml:27:13-40
-68    </application>
-69
-70</manifest>
+54
+55        <provider
+55-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\94064be6316943264e15284092724adf\lifecycle-process-2.0.0\AndroidManifest.xml:23:9-27:43
+56            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
+56-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\94064be6316943264e15284092724adf\lifecycle-process-2.0.0\AndroidManifest.xml:24:13-79
+57            android:authorities="com.whiskey.notes.lifecycle-process"
+57-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\94064be6316943264e15284092724adf\lifecycle-process-2.0.0\AndroidManifest.xml:25:13-69
+58            android:exported="false"
+58-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\94064be6316943264e15284092724adf\lifecycle-process-2.0.0\AndroidManifest.xml:26:13-37
+59            android:multiprocess="true" />
+59-->[androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\94064be6316943264e15284092724adf\lifecycle-process-2.0.0\AndroidManifest.xml:27:13-40
+60    </application>
+61
+62</manifest>

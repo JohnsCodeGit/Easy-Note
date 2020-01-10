@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:2:1-53:12
-INJECTED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:2:1-53:12
-INJECTED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:2:1-53:12
-INJECTED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:2:1-53:12
+ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:2:1-47:12
+INJECTED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:2:1-47:12
+INJECTED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:2:1-47:12
+INJECTED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:2:1-47:12
 MERGED from [androidx.navigation:navigation-ui-ktx:2.0.0-rc02] C:\Users\John\.gradle\caches\transforms-2\files-2.1\e8347d41e7688bf43a33f19b5dd64b13\navigation-ui-ktx-2.0.0-rc02\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.navigation:navigation-ui:2.0.0-rc02] C:\Users\John\.gradle\caches\transforms-2\files-2.1\448fdf12d2a1f08a0c321424504d6896\jetified-navigation-ui-2.0.0-rc02\AndroidManifest.xml:17:1-22:12
 MERGED from [com.google.android.material:material:1.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\4a8a2ff61729c0e607bf5eab5726c677\material-1.0.0\AndroidManifest.xml:17:1-24:12
@@ -53,25 +53,25 @@ MERGED from [androidx.lifecycle:lifecycle-process:2.0.0] C:\Users\John\.gradle\c
 MERGED from [androidx.lifecycle:lifecycle-service:2.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\0b88bb7fadefc068be3abc0910f5bb47\lifecycle-service-2.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-runtime:2.1.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\127285fce792e3e6ba6741016fb93030\lifecycle-runtime-2.1.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.savedstate:savedstate:1.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\242bedae014f734c14a25f4fdfb9c104\savedstate-1.0.0\AndroidManifest.xml:17:1-24:12
-INJECTED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:2:1-53:12
-INJECTED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:2:1-53:12
-INJECTED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:2:1-53:12
+INJECTED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:2:1-47:12
+INJECTED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:2:1-47:12
+INJECTED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:2:1-47:12
 	package
 		ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:3:5-32
 		INJECTED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:2:1-53:12
+		ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:2:1-47:12
 		INJECTED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml
 	android:versionCode
 		INJECTED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:2:1-53:12
+		ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:2:1-47:12
 		INJECTED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:2:11-69
 application
-ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:5:5-51:19
+ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:5:5-45:19
 MERGED from [com.google.android.material:material:1.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\4a8a2ff61729c0e607bf5eab5726c677\material-1.0.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.0.0] C:\Users\John\.gradle\caches\transforms-2\files-2.1\4a8a2ff61729c0e607bf5eab5726c677\material-1.0.0\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] C:\Users\John\.gradle\caches\transforms-2\files-2.1\5ced732566e368c062583722e89e05d0\constraintlayout-1.1.3\AndroidManifest.xml:9:5-20
@@ -129,9 +129,9 @@ ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.x
 	android:name
 		ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:28:13-44
 meta-data#android.support.PARENT_ACTIVITY
-ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:32:13-34:48
+ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:32:13-34:49
 	android:value
-		ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:34:17-45
+		ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:34:17-46
 	android:name
 		ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:33:17-63
 activity#com.whiskey.notes.com.whiskey.notes.ViewNoteActivity
@@ -142,14 +142,6 @@ ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.x
 		ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:38:13-56
 	android:name
 		ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:37:13-63
-activity#com.whiskey.notes.com.whiskey.notes.StarredActivity
-ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:44:9-50:20
-	android:windowSoftInputMode
-		ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:46:13-55
-	android:theme
-		ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:45:13-56
-	android:name
-		ADDED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml:44:19-68
 uses-sdk
 INJECTED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\John\StudioProjects\Notes_2.1\app\src\main\AndroidManifest.xml

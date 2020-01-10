@@ -41,7 +41,7 @@
             android:windowSoftInputMode="adjustResize" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".NavActivity" />
+                android:value=".MainActivity" />
         </activity>
         <activity
             android:name="com.whiskey.notes.com.whiskey.notes.ViewNoteActivity"
@@ -49,15 +49,7 @@
             android:windowSoftInputMode="adjustResize" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".NavActivity" />
-        </activity>
-        <activity
-            android:name="com.whiskey.notes.com.whiskey.notes.StarredActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".NavActivity" />
+                android:value=".MainActivity" />
         </activity>
 
         <provider

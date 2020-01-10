@@ -195,6 +195,9 @@ class TrashAdapter(
                                 val noteItem = noteList[checkedItems[0] - i].note
                                 val titleItem = noteList[checkedItems[0] - i].title
                                 val dateItem = noteList[checkedItems[0] - i].date
+                                val noteModel = NoteModel(noteItem, titleItem, dateItem)
+                                
+                                notes.add(noteModel)
                                 noteDB.addNote(noteItem, titleItem, dateItem, 0, notes.size)
 
                                 trashDB.deleteItem(checkedItems[0] + 1 - i)
@@ -395,12 +398,16 @@ class TrashAdapter(
                         break
                     }
                     else{
+                        Log.d(
+                            "itemDeleted3",
+                            (checkedItems[0] + 1 - i).toString() + ", " + noteList.size
+                        )
+
                         trashDB.deleteItem(checkedItems[0]+1-i)
-                        noteDB.updateNote(note, title, date, 0, notes.indexOf(searchItems[position]))
+                        //noteDB.updateNote(note, title, date, 0, notes.indexOf(searchItems[position]))
                         noteList.removeAt(checkedItems[0]-i)
                         searchItems.removeAt(checkedItems[0]-i)
 
-                        Log.d("itemDeleted3", checkedItems[0].toString())
 //                        notifyItemRemoved(checkedItems[0]-i)
                         checkedItems.removeAt(0)
                         Log.d("itemDeleted List", (checkedItems).toString())
@@ -487,7 +494,7 @@ class TrashAdapter(
                 }
                 else{
 
-                    var filterPattern = constraint.toString().toLowerCase().trim()
+                    val filterPattern = constraint.toString().toLowerCase().trim()
                     for(item: NoteModel in noteList){
                         var noteItem = item.note.replace("\n", " ")
                         noteItem.replace("\t", " ")

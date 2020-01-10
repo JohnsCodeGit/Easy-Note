@@ -44,6 +44,7 @@ class NoteAdapter(
 )
     : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), Filterable {
     var checkedItems= ArrayList<Int>()
+    var deleteList = ArrayList<NoteModel>()
     private var checkedVisible = false
     private var isAllChecked = false
     private var mCheckItems = SparseBooleanArray()
@@ -61,7 +62,6 @@ class NoteAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val customView = layoutInflater.inflate(R.layout.note_row_item, parent, false)
-
         return NoteViewHolder(customView)
 
     }
@@ -361,11 +361,19 @@ class NoteAdapter(
                         break
                     }
                     else{
+                        deleteList = trashDB.getAllNote()
+                        var noteModel = NoteModel(
+                            noteList[checkedItems[0] - i].note,
+                            noteList[checkedItems[0] - i].title,
+                            noteList[checkedItems[0] - i].date
+                        )
+                        deleteList.add(noteModel)
                         trashDB.addNote(
                             noteList[checkedItems[0]-i].note,
                             noteList[checkedItems[0]-i].title,
                             noteList[checkedItems[0]-i].date,
-                            noteList.size)
+                            deleteList.size
+                        )
                         notedbHandler.deleteItem(checkedItems[0]+1-i)
                         noteList.removeAt(checkedItems[0]-i)
                         searchItems.removeAt(checkedItems[0]-i)

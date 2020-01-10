@@ -49,7 +49,7 @@ factory, DATABASE_VERSION) {
                     val note: String = cursor.getString(cursor.getColumnIndex(COLUMN_NAME))
                     val title: String = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE))
                     val date: String = cursor.getString(cursor.getColumnIndex(COLUMN_DATE))
-                    var noteItem = NoteModel(note, title, date)
+                    val noteItem = NoteModel(note, title, date)
 
                     notes.add(noteItem)
 
@@ -92,7 +92,7 @@ factory, DATABASE_VERSION) {
         return DatabaseUtils.queryNumEntries(db, TABLE_NAME)
     }
     companion object {
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2
         private const val DATABASE_NAME = "TrashDB.db"
         const val TABLE_NAME = "trash"
         const val COLUMN_ID = "_id"
