@@ -311,17 +311,32 @@ class NoteAdapter(
             .setCancelable(false)
             .setPositiveButton("Yes") {
                     dialog, id-> dialog.dismiss()
-                for(i in 0 until noteList.size){
+                for (i in 0 until checkedItems.size) {
                     if(checkedItems.size == 0) {
                         break
-                    }else {
-                        trashDB.addNote(
-                            noteList[checkedItems[0] + 1 - i].note,
-                            noteList[checkedItems[0] + 1 - i].title,
-                            noteList[checkedItems[0] + 1 - i].date,
-                            noteList.size
+                    } else {
+                        deleteList = trashDB.getAllNote()
+                        val noteModel = NoteModel(
+                            noteList[checkedItems[0] - i].note,
+                            noteList[checkedItems[0] - i].title,
+                            noteList[checkedItems[0] - i].date
                         )
+                        deleteList.add(noteModel)
+                        trashDB.addNote(
+                            noteList[checkedItems[0] - i].note,
+                            noteList[checkedItems[0] - i].title,
+                            noteList[checkedItems[0] - i].date,
+                            deleteList.size
+                        )
+                        notedbHandler.deleteItem(checkedItems[0] + 1 - i)
+                        noteList.removeAt(checkedItems[0] - i)
+                        searchItems.removeAt(checkedItems[0] - i)
+
+//                        notifyItemRemoved(checkedItems[0]-i)
                         checkedItems.removeAt(0)
+                        Log.d("itemDeleted List", (checkedItems).toString())
+
+
                     }
 
                 }
