@@ -9,12 +9,16 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.add_note.*
 import java.util.*
 
 
 class NewNoteActivity : AppCompatActivity() {
+    lateinit var mAdView: AdView
 
     private fun alertDialog(){
         val dialogBuilder = AlertDialog.Builder(this,R.style.MyDialogTheme)
@@ -42,7 +46,10 @@ class NewNoteActivity : AppCompatActivity() {
         toolbar.setTitleTextColor(Color.WHITE)
         setSupportActionBar(toolbar)
 //        window.statusBarColor = Color.parseColor("#13151a")
-
+        MobileAds.initialize(this)
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 

@@ -17,6 +17,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.view_note.*
@@ -37,6 +40,7 @@ class ViewNoteActivity : AppCompatActivity() {
     var menuVisible = false
     private lateinit var dateT: String
     private val notedbHandler = NotesDbHelper(this, null)
+    lateinit var mAdView: AdView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +48,10 @@ class ViewNoteActivity : AppCompatActivity() {
         setContentView(R.layout.view_note)
 
 
+        MobileAds.initialize(this)
+        mAdView = findViewById(R.id.adView)
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
 
         eDate.text = ("Modified: $dateText").toString()

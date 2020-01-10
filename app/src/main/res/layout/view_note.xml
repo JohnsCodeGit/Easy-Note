@@ -125,13 +125,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/toolbar"
-            app:layout_constraintVertical_bias="1.0">
+            app:layout_constraintVertical_bias="1.0"
+            tools:ignore="InOrMmUsage">
 
             <ToggleButton
                 android:id="@+id/bullet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="start"
                 android:background="@android:color/transparent"
                 android:textColor="@color/colorPrimary"
                 tools:layout_editor_absoluteX="323dp"
@@ -151,11 +152,26 @@
                 android:id="@+id/indent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:background="@android:color/transparent"
                 android:textColor="@color/colorPrimary"
                 tools:layout_editor_absoluteY="4dp" />
         </androidx.appcompat.widget.Toolbar>
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            app:adSize="BANNER"
+            app:adUnitId="ca-app-pub-1441038997276804/4820456308"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/eNote"
+            app:layout_constraintVertical_bias="1.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

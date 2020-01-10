@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Notes</string>
     <string name="action_settings">Settings</string>
-    <string name="new_note">Enter a new note...</string>
+    <string name="new_note">Enter a new note…</string>
     <string name="Title">Title</string>
     <string name="delete">Delete</string>
     <string name="all">All</string>
@@ -17,7 +17,7 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
 
-    <string name="menu_home">Home</string>
+    <string name="menu_home">Notes</string>
 
     <string name="favorite">Favorites</string>
     <string name="trash">Trash</string>
@@ -26,6 +26,6 @@
     <string name="no_notes">No Notes</string>
     <string name="no_favorites">No Favorites</string>
     <string name="no_trash">No Trash</string>
-
+    <string name="ad_id_banner">ca-app-pub-1441038997276804/4820456308</string>
 
 </resources>

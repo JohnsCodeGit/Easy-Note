@@ -21,6 +21,23 @@
                     }
                 },
                 {
+                    "source": "C:\\Users\\John\\.gradle\\caches\\transforms-2\\files-2.1\\3876defc6fe1b899487dec1d3556521b\\jetified-navigation-ui-2.2.0-rc04\\res\\values-en-rAU\\values-en-rAU.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,161",
+                        "endColumns": "105,116",
+                        "endOffsets": "156,273"
+                    },
+                    "to": {
+                        "startLines": "29,30",
+                        "startColumns": "4,4",
+                        "startOffsets": "2762,2868",
+                        "endColumns": "105,116",
+                        "endOffsets": "2863,2980"
+                    }
+                },
+                {
                     "source": "C:\\Users\\John\\.gradle\\caches\\transforms-2\\files-2.1\\a83bef444c9240faa8e56c19819ce9ad\\core-1.1.0\\res\\values-en-rAU\\values-en-rAU.xml",
                     "from": {
                         "startLines": "2",
@@ -35,23 +52,6 @@
                         "startOffsets": "3067",
                         "endColumns": "100",
                         "endOffsets": "3163"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\John\\.gradle\\caches\\transforms-2\\files-2.1\\448fdf12d2a1f08a0c321424504d6896\\jetified-navigation-ui-2.0.0-rc02\\res\\values-en-rAU\\values-en-rAU.xml",
-                    "from": {
-                        "startLines": "2,3",
-                        "startColumns": "4,4",
-                        "startOffsets": "55,161",
-                        "endColumns": "105,116",
-                        "endOffsets": "156,273"
-                    },
-                    "to": {
-                        "startLines": "29,30",
-                        "startColumns": "4,4",
-                        "startOffsets": "2762,2868",
-                        "endColumns": "105,116",
-                        "endOffsets": "2863,2980"
                     }
                 }
             ]

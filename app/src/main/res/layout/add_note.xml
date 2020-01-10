@@ -8,6 +8,79 @@
     android:layout_height="match_parent"
     android:background="@color/Background">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:adSize="BANNER"
+            app:adUnitId="ca-app-pub-1441038997276804/4820456308"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.98" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/Background"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/adView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:context=".NewNoteActivity">
+
+
+            <EditText
+                android:id="@+id/eTxtTitle"
+                style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:backgroundTint="@android:color/transparent"
+                android:ems="10"
+                android:hint="@string/Title"
+                android:inputType="textCapSentences|textMultiLine"
+                android:paddingTop="57dp"
+                android:scrollHorizontally="false"
+                android:textColor="#ffffff"
+                android:textColorHighlight="#2196F3"
+                android:textColorHint="#777777"
+                android:textColorLink="#FFFFFF"
+                android:textCursorDrawable="@null"
+                android:textIsSelectable="true"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/eTxtNote"
+                style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:backgroundTint="@android:color/transparent"
+                android:ems="10"
+                android:hint="@string/new_note"
+                android:inputType="date|textMultiLine|number|textCapSentences|numberDecimal"
+                android:scrollHorizontally="false"
+                android:textColor="#ffffff"
+                android:textColorHighlight="#2196F3"
+                android:textColorHint="#777777"
+                android:textColorLink="#FFFFFF"
+                android:textCursorDrawable="@null"
+                android:textIsSelectable="true" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,56 +99,6 @@
             tools:visibility="visible" />
 
     </com.google.android.material.appbar.AppBarLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/Background"
-        android:orientation="vertical"
-        tools:context=".NewNoteActivity">
-
-
-        <EditText
-            android:id="@+id/eTxtTitle"
-            style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:backgroundTint="@android:color/transparent"
-            android:ems="10"
-            android:hint="@string/Title"
-            android:inputType="textCapSentences|textMultiLine"
-            android:paddingTop="57dp"
-            android:scrollHorizontally="false"
-            android:textColor="#ffffff"
-            android:textColorHighlight="#2196F3"
-            android:textColorHint="#777777"
-            android:textColorLink="#FFFFFF"
-            android:textCursorDrawable="@null"
-            android:textIsSelectable="true"
-            android:textSize="24sp" />
-
-        <EditText
-            android:id="@+id/eTxtNote"
-            style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-            android:layout_width="match_parent"
-
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:backgroundTint="@android:color/transparent"
-            android:ems="10"
-            android:hint="@string/new_note"
-            android:inputType="date|textMultiLine|number|textCapSentences|numberDecimal"
-            android:scrollHorizontally="false"
-            android:textColor="#ffffff"
-            android:textColorHighlight="#2196F3"
-            android:textColorHint="#777777"
-            android:textColorLink="#FFFFFF"
-            android:textCursorDrawable="@null"
-            android:textIsSelectable="true" />
-
-
-    </LinearLayout>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

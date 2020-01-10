@@ -39,11 +39,12 @@ class MainActivity : AppCompatActivity() {
         toolbar.setTitleTextColor(Color.WHITE)
         toolbar.setBackgroundColor(ContextCompat.getColor(this, color.dark))
 //        window.statusBarColor = Color.parseColor("#13151a")
+
         barLay = findViewById(R.id.const_layout)
         val navView: BottomNavigationView = findViewById(R.id.bot_view)
         if(savedInstanceState == null){
             this.supportFragmentManager.beginTransaction()
-                .replace(R.id.frag_container, selectedFragment, "Home").commit()
+                .replace(R.id.frag_container, selectedFragment, "Notes").commit()
 
         }
         navView.setOnNavigationItemSelectedListener{
@@ -57,9 +58,9 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.nav_home ->{
                     selectedFragment = HomeFragment()
-                    toolbar.title = "Home"
+                    toolbar.title = "Notes"
                     this.supportFragmentManager.beginTransaction()
-                        .replace(R.id.frag_container, selectedFragment, "Home").commit()
+                        .replace(R.id.frag_container, selectedFragment, "Notes").commit()
 
                 }
                 R.id.nav_fav ->{
@@ -162,7 +163,7 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("RestrictedApi")
     override fun onBackPressed() {
-        val frag1 = supportFragmentManager.findFragmentByTag("Home")
+        val frag1 = supportFragmentManager.findFragmentByTag("Notes")
         val frag2 = supportFragmentManager.findFragmentByTag("Favorites")
         val frag3 = supportFragmentManager.findFragmentByTag("Trash")
         Log.d("selectedFrag", frag1.toString())
