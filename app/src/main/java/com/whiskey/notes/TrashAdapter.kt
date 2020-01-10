@@ -102,6 +102,7 @@ class TrashAdapter(
                 if (isChecked){
                     checkedItems.clear()
 
+
                     for(i in 0 until noteList.size){
 
                         if(checkedItems.contains(i)){}
@@ -139,6 +140,9 @@ class TrashAdapter(
                 if (isChecked) {
                             if(checkedItems.contains(position)){}
                             else {
+                                holder.customView.checkBox.isChecked = true
+
+
                                 checkedItems.add(position)
                                 mCheckItems.put(position, true)
                                 Log.d("itemAdded",
@@ -249,6 +253,10 @@ class TrashAdapter(
                 }
 
 
+            }
+            if (checkedItems.contains(0) && noteList.size == 1) {
+                holder.customView.checkBox.isChecked = true
+                Log.d("forceCheck", true.toString())
             }
 
              fun Hide(){

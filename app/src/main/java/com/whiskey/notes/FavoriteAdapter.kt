@@ -142,7 +142,8 @@ class FavoriteAdapter(
                                 Log.d("itemAdded",
                                     mCheckItems[position].toString()
                                             + ", "
-                                            + position.toString())
+                                            + checkedItems.size.toString()
+                                )
                             }
                 }
                 else if(!isChecked && deleteAll.isChecked){
@@ -195,7 +196,10 @@ class FavoriteAdapter(
 
 
             }
-
+            if (checkedItems.contains(0) && noteList.size == 1) {
+                holder.customView.checkBox.isChecked = true
+                Log.d("forceCheck", checkedItems.size.toString())
+            }
              fun Hide(){
                 if(checkedVisible) {
 

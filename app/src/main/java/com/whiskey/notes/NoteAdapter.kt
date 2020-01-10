@@ -124,6 +124,7 @@ class NoteAdapter(
             }
 
             // Add checked check boxes to array to delete checked items
+            // and save checked states while scrolling
             holder.customView.checkBox.setOnCheckedChangeListener { _, isChecked ->
 
                 Log.d("itemChecked", isChecked.toString())
@@ -131,14 +132,17 @@ class NoteAdapter(
 
 
                 if (isChecked) {
+
                             if(checkedItems.contains(position)){}
                             else {
+
                                 checkedItems.add(position)
                                 mCheckItems.put(position, true)
                                 Log.d("itemAdded",
                                     mCheckItems[position].toString()
                                             + ", "
                                             + position.toString())
+
                             }
                 }
                 else if(!isChecked && deleteAll.isChecked){
@@ -191,11 +195,16 @@ class NoteAdapter(
 
 
             }
+            if (checkedItems.contains(0) && noteList.size == 1) {
+                holder.customView.checkBox.isChecked = true
+                Log.d("forceCheck", true.toString())
+            }
 
              fun Hide(){
                 if(checkedVisible) {
 
                     holder.customView.checkBox.visibility = View.VISIBLE
+                    //holder.customView.checkBox.isChecked = true
                     bDelete.visibility = View.VISIBLE
                     holder.customView.button.visibility = View.VISIBLE
                     deleteAll.visibility = View.VISIBLE
@@ -221,6 +230,7 @@ class NoteAdapter(
             //Show or hide check boxes
            Hide()
             Log.d("checkedVisible", checkedVisible.toString())
+
 
             holder.customView.setOnClickListener {
 
@@ -413,13 +423,12 @@ class NoteAdapter(
     }
 
     inner class NoteViewHolder(val customView: View) : RecyclerView.ViewHolder(customView),
-        View.OnLongClickListener, View.OnClickListener{
+        View.OnLongClickListener {
         private var checkbox = customView.checkBox
 
         init {
             customView.isLongClickable = true
             customView.setOnLongClickListener(this)
-            customView.setOnClickListener(this)
 
 
         }
@@ -432,8 +441,9 @@ class NoteAdapter(
         override fun onLongClick(v: View?): Boolean {
             //Changed the state of check box visibility
             checkedVisible = true
-            customView.checkBox.isChecked = true
             notifyDataSetChanged()
+
+            checkbox.isChecked = true
             recyclerviewMain.isLayoutFrozen = true
             recyclerviewMain.setOnTouchListener { _, event ->
 
@@ -446,15 +456,15 @@ class NoteAdapter(
             return true
         }
 
-        override fun onClick(v: View?) {
-            //Changed the state of check box visibility
-
-            if(checkedVisible){
-                checkedVisible = false
-                notifyDataSetChanged()
-            }
-
-        }
+//        override fun onClick(v: View?) {
+//            //Changed the state of check box visibility
+//
+//            if(checkedVisible){
+//                checkedVisible = false
+//                notifyDataSetChanged()
+//            }
+//
+//        }
 
 
     }
