@@ -23,6 +23,9 @@
     <string name="trash">Trash</string>
     <string name="groups">Groups</string>
     <string name="restore">Restore</string>
+    <string name="no_notes">No Notes</string>
+    <string name="no_favorites">No Favorites</string>
+    <string name="no_trash">No Trash</string>
 
 
 </resources>

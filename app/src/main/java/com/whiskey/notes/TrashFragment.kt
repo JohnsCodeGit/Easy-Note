@@ -1,4 +1,4 @@
-package com.whiskey.notes.com.whiskey.notes
+package com.whiskey.notes
 
 import android.annotation.SuppressLint
 import android.app.SearchManager
@@ -11,6 +11,7 @@ import android.view.*
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
@@ -19,8 +20,9 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.whiskey.notes.R
-import com.whiskey.notes.VerticalSpacing
+import com.whiskey.notes.com.whiskey.notes.NoteModel
+import com.whiskey.notes.com.whiskey.notes.TrashAdapter
+import com.whiskey.notes.com.whiskey.notes.TrashDB
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class TrashFragment : Fragment() {
@@ -39,6 +41,9 @@ class TrashFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val deleteAll = activity?.findViewById<CheckBox>(R.id.radioButton)!!
+        val constraint = activity?.findViewById<ConstraintLayout>(R.id.constrain)!!
+        val textView = activity?.findViewById<TextView>(R.id.textView7)!!
 
         mView = view
         deleteButton = mView.findViewById(R.id.btnDelete)
@@ -48,17 +53,17 @@ class TrashFragment : Fragment() {
         searchItems.clear()
 
         if(trashDB.getNoteSize() != 0.toLong() ) {
+            textView.visibility = View.GONE
 
             noteList = trashDB.getAllNote()
 
             searchItems = trashDB.getAllNote()
 
-        }
+        } else
+            textView.visibility = View.VISIBLE
 
         Log.d("favList", noteList.toString())
 
-        val deleteAll = activity?.findViewById<CheckBox>(R.id.radioButton)!!
-        val constraint = activity?.findViewById<ConstraintLayout>(R.id.constrain)!!
         recyclerView = view.findViewById(R.id.recyclerView_trash)
 
         recyclerView.apply {
@@ -68,7 +73,7 @@ class TrashFragment : Fragment() {
             layoutManager = layoutM
 
             noteadapter  = TrashAdapter(deleteButton, deleteAll, constraint, this.context,
-                trashDB, recyclerView, noteList, searchItems, restoreButton
+                trashDB, recyclerView, noteList, searchItems, restoreButton, textView
             )
             adapter= noteadapter
             addItemDecoration(VerticalSpacing(25))

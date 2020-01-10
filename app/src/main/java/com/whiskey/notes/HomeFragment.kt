@@ -1,4 +1,4 @@
-package com.whiskey.notes.com.whiskey.notes
+package com.whiskey.notes
 
 import android.annotation.SuppressLint
 import android.app.SearchManager
@@ -21,10 +21,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.whiskey.notes.NewNoteActivity
-import com.whiskey.notes.NoteAdapter
-import com.whiskey.notes.R
-import com.whiskey.notes.VerticalSpacing
+import com.whiskey.notes.com.whiskey.notes.NoteModel
+import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment(){
@@ -61,12 +59,13 @@ class HomeFragment : Fragment(){
         searchItems.clear()
 
         if(notedbHandler.getNoteSize() != 0.toLong() ) {
-
+            textView5.visibility = View.GONE
             noteList = notedbHandler.getAllNote()
 
             searchItems = notedbHandler.getAllNote()
 
-        }
+        } else
+            textView5.visibility = View.VISIBLE
 
 
 
@@ -82,7 +81,8 @@ class HomeFragment : Fragment(){
             layoutManager = layoutM
 
             noteadapter  = NoteAdapter(deleteButton, deleteAll, constraint, fab, this.context,
-                notedbHandler, recyclerView, noteList, searchItems)
+                notedbHandler, recyclerView, noteList, searchItems, textView5
+            )
             adapter= noteadapter
             addItemDecoration(VerticalSpacing(25))
 

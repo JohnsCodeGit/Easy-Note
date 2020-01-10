@@ -30,7 +30,8 @@ class TrashAdapter(
 
     var noteList: ArrayList<NoteModel>,
     var searchItems: ArrayList<NoteModel>,
-    var restoreButton: ImageButton
+    var restoreButton: ImageButton,
+    var textView7: TextView
 
 )
     : RecyclerView.Adapter<TrashAdapter.NoteViewHolder>(), Filterable {
@@ -371,7 +372,11 @@ class TrashAdapter(
                 unSelectAll()
                 deleteAll.isChecked = false
 
+                if (noteList.size != 0) {
+                    textView7.visibility = View.GONE
 
+                } else
+                    textView7.visibility = View.VISIBLE
             }
             .setNegativeButton("No") { dialog, id ->
                 dialog.cancel()
@@ -425,7 +430,11 @@ class TrashAdapter(
                 deleteAll.isSelected = false
                 unSelectAll()
                 deleteAll.isChecked = false
+                if (noteList.size != 0) {
+                    textView7.visibility = View.GONE
 
+                } else
+                    textView7.visibility = View.VISIBLE
             }
             .setNegativeButton("No") { dialog, id ->
                 dialog.cancel()

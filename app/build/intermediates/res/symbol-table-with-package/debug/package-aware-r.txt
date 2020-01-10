@@ -1325,7 +1325,9 @@ id rConst
 id rConsts
 id radio
 id radioButton
-id recyclerView_main
+id recyclerView_fav
+id recyclerView_home
+id recyclerView_trash
 id right
 id right_icon
 id right_side
@@ -1393,6 +1395,9 @@ id textView
 id textView2
 id textView3
 id textView4
+id textView5
+id textView6
+id textView7
 id text_input_password_toggle
 id textinput_counter
 id textinput_error
@@ -1589,6 +1594,9 @@ string nav_header_title
 string navigation_drawer_close
 string navigation_drawer_open
 string new_note
+string no_favorites
+string no_notes
+string no_trash
 string password_toggle_content_description
 string path_password_eye
 string path_password_eye_mask_strike_through

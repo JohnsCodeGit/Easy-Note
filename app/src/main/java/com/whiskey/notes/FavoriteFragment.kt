@@ -1,4 +1,4 @@
-package com.whiskey.notes.com.whiskey.notes
+package com.whiskey.notes
 
 import android.annotation.SuppressLint
 import android.app.SearchManager
@@ -11,6 +11,7 @@ import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.TextView
 import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
@@ -19,8 +20,8 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.whiskey.notes.R
-import com.whiskey.notes.VerticalSpacing
+import com.whiskey.notes.com.whiskey.notes.NoteModel
+import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class FavoriteFragment : Fragment() {
@@ -42,6 +43,7 @@ class FavoriteFragment : Fragment() {
         deleteButton = mView.findViewById(R.id.btnDelete)
         checkBox = mView.findViewById(R.id.radioButton)
         constraintLayout = mView.findViewById(R.id.constrain)
+        val textView = mView.findViewById<TextView>(R.id.textView6)
         searchItems.clear()
 
         if(notedbHandler.getNoteSize() != 0.toLong() ) {
@@ -52,6 +54,12 @@ class FavoriteFragment : Fragment() {
 
         }
 
+        if (noteList.size != 0)
+            textView.visibility = View.GONE
+        else {
+            textView.visibility = View.VISIBLE
+            Log.d("visibility", true.toString())
+        }
         Log.d("favList", noteList.toString())
 
         val deleteAll = activity?.findViewById<CheckBox>(R.id.radioButton)!!
@@ -65,7 +73,8 @@ class FavoriteFragment : Fragment() {
             layoutManager = layoutM
 
             noteadapter  = FavoriteAdapter(deleteButton, deleteAll, constraint, this.context,
-                notedbHandler, recyclerView, noteList, searchItems)
+                recyclerView, noteList, searchItems, textView
+            )
             adapter= noteadapter
             addItemDecoration(VerticalSpacing(25))
 

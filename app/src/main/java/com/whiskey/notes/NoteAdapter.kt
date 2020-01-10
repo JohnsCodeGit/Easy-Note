@@ -10,10 +10,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.Filter
-import android.widget.Filterable
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
@@ -39,11 +36,12 @@ class NoteAdapter(
 
     var recyclerviewMain: RecyclerView,
     var noteList: ArrayList<NoteModel>,
-    var searchItems: ArrayList<NoteModel>
+    var searchItems: ArrayList<NoteModel>,
+    var textView5: TextView
 
 )
     : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), Filterable {
-    var checkedItems= ArrayList<Int>()
+    private var checkedItems = ArrayList<Int>()
     var deleteList = ArrayList<NoteModel>()
     private var checkedVisible = false
     private var isAllChecked = false
@@ -62,6 +60,7 @@ class NoteAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val customView = layoutInflater.inflate(R.layout.note_row_item, parent, false)
+
         return NoteViewHolder(customView)
 
     }
@@ -76,6 +75,7 @@ class NoteAdapter(
         holder.customView.dateText.text  = searchItems[position].date
         holder.customView.itemTitle.text = searchItems[position].title
         holder.customView.itemNote.text  = searchItems[position].note
+
 
         //DO NOT TOUCH
         if(searchItems.size == checkedItems.size){
@@ -333,7 +333,11 @@ class NoteAdapter(
                 deleteAll.isSelected = false
                 unSelectAll()
                 deleteAll.isChecked = false
+                if (noteList.size != 0) {
+                    textView5.visibility = View.GONE
 
+                } else
+                    textView5.visibility = View.VISIBLE
 
             }
             .setNegativeButton("No") { dialog, id ->
@@ -362,7 +366,7 @@ class NoteAdapter(
                     }
                     else{
                         deleteList = trashDB.getAllNote()
-                        var noteModel = NoteModel(
+                        val noteModel = NoteModel(
                             noteList[checkedItems[0] - i].note,
                             noteList[checkedItems[0] - i].title,
                             noteList[checkedItems[0] - i].date
@@ -396,7 +400,11 @@ class NoteAdapter(
                 deleteAll.isSelected = false
                 unSelectAll()
                 deleteAll.isChecked = false
+                if (noteList.size != 0) {
+                    textView5.visibility = View.GONE
 
+                } else
+                    textView5.visibility = View.VISIBLE
             }
             .setNegativeButton("No") { dialog, id ->
                 dialog.cancel()

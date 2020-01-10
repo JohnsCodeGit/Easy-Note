@@ -1,4 +1,4 @@
-package com.whiskey.notes.com.whiskey.notes
+package com.whiskey.notes
 
 
 import android.annotation.SuppressLint
@@ -10,15 +10,14 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.Filter
-import android.widget.Filterable
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.whiskey.notes.R
+import com.whiskey.notes.com.whiskey.notes.NoteModel
+import com.whiskey.notes.com.whiskey.notes.NotesDbHelper
+import com.whiskey.notes.com.whiskey.notes.ViewNoteActivity
 import kotlinx.android.synthetic.main.note_row_item.view.*
 
 
@@ -29,12 +28,12 @@ class FavoriteAdapter(
     var buttonLayout: ConstraintLayout,
 
     var context: Context,
-    var favDBHandler: NotesDbHelper,
 
     var recyclerviewMain: RecyclerView,
 
     var noteList: ArrayList<NoteModel>,
-    var searchItems: ArrayList<NoteModel>
+    var searchItems: ArrayList<NoteModel>,
+    var textView6: TextView
 
 )
     : RecyclerView.Adapter<FavoriteAdapter.NoteViewHolder>(), Filterable {
@@ -347,7 +346,11 @@ class FavoriteAdapter(
                 unSelectAll()
                 deleteAll.isChecked = false
 
+                if (noteList.size != 0) {
+                    textView6.visibility = View.GONE
 
+                } else
+                    textView6.visibility = View.VISIBLE
             }
             .setNegativeButton("No") { dialog, id ->
                 dialog.cancel()
@@ -406,7 +409,11 @@ class FavoriteAdapter(
                 deleteAll.isSelected = false
                 unSelectAll()
                 deleteAll.isChecked = false
+                if (noteList.size != 0) {
+                    textView6.visibility = View.GONE
 
+                } else
+                    textView6.visibility = View.VISIBLE
             }
             .setNegativeButton("No") { dialog, id ->
                 dialog.cancel()
@@ -475,9 +482,9 @@ class FavoriteAdapter(
                 }
                 else{
 
-                    var filterPattern = constraint.toString().toLowerCase().trim()
+                    val filterPattern = constraint.toString().toLowerCase().trim()
                     for(item: NoteModel in noteList){
-                        var noteItem = item.note.replace("\n", " ")
+                        val noteItem = item.note.replace("\n", " ")
                         noteItem.replace("\t", " ")
                         Log.d("noteItemText", noteItem)
 
