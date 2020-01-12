@@ -10,6 +10,14 @@
 
         android:title="Save"/>
     <item
+
+        android:id="@+id/Delete"
+
+
+        android:icon="@drawable/delete_icon_2"
+        android:title="Delete"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/fav"
         android:title="@string/favorite"
         app:showAsAction="always"

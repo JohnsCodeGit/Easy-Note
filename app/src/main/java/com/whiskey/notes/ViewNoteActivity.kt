@@ -41,6 +41,8 @@ class ViewNoteActivity : AppCompatActivity() {
     private lateinit var dateT: String
     private val notedbHandler = NotesDbHelper(this, null)
     lateinit var mAdView: AdView
+    var trashDB: TrashDB = TrashDB(this, null)
+    var deleteList = ArrayList<NoteModel>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -179,8 +181,25 @@ class ViewNoteActivity : AppCompatActivity() {
 
             share(eTitle.text.toString(), eNote.text.toString())
 
-        }
-        else if (id == R.id.fav){
+        } else if (id == R.id.Delete) {
+            val mainIntent = Intent(this, MainActivity::class.java)
+            deleteList = trashDB.getAllNote()
+            val noteModel = NoteModel(
+                noteList[position].note,
+                noteList[position].title,
+                noteList[position].date
+            )
+            deleteList.add(noteModel)
+            trashDB.addNote(
+                noteList[position].note,
+                noteList[position].title,
+                noteList[position].date,
+                deleteList.size
+            )
+            notedbHandler.deleteItem(position + 1)
+            startActivity(mainIntent)
+
+        } else if (id == R.id.fav) {
             bool = !bool
             if(bool) {
                 boolean = 1
@@ -190,8 +209,7 @@ class ViewNoteActivity : AppCompatActivity() {
                     eNote.text.toString(), eTitle.text.toString(),
                     dateText, boolean, position + 1
                 )
-            }
-            else{
+            } else {
                 boolean = 0
                 item.icon = ContextCompat.getDrawable(
                     this,
