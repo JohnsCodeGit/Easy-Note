@@ -1205,6 +1205,7 @@ id actions
 id activity_chooser_view_content
 id adView
 id add
+id addGroup
 id alertTitle
 id all
 id always
@@ -1279,6 +1280,7 @@ id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
 id fabButton
+id fabButtonG
 id fav
 id fill
 id fill_horizontal
@@ -1609,6 +1611,7 @@ string abc_shareactionprovider_share_with_application
 string abc_toolbar_collapse_description
 string action_settings
 string ad_id_banner
+string add_to_group
 string all
 string app_name
 string appbar_scrolling_view_behavior
