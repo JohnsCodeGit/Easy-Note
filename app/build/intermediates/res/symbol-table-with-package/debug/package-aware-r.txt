@@ -1101,6 +1101,7 @@ drawable fav_icon
 drawable fav_icon_1
 drawable fav_icon_empty
 drawable fgroup_icon
+drawable group_shape
 drawable home_icon
 drawable ic_action_name
 drawable ic_launcher_background
@@ -1143,6 +1144,7 @@ id CTRL
 id Delete
 id FUNCTION
 id LConst
+id LConstG
 id LConstR
 id LConstT
 id META
@@ -1287,6 +1289,7 @@ id forever
 id frag_container
 id fragment_container_view_tag
 id fragment_fav
+id fragment_group
 id ghost_view
 id gone
 id group_divider
@@ -1353,6 +1356,7 @@ id rConsts
 id radio
 id radioButton
 id recyclerView_fav
+id recyclerView_group
 id recyclerView_home
 id recyclerView_trash
 id right
@@ -1425,6 +1429,7 @@ id textView4
 id textView5
 id textView6
 id textView7
+id textView8
 id text_input_password_toggle
 id textinput_counter
 id textinput_error
@@ -1535,6 +1540,8 @@ layout edit_note
 layout fragment_fav
 layout fragment_home
 layout fragment_trash
+layout group_item
+layout group_layout
 layout mtrl_layout_snackbar
 layout mtrl_layout_snackbar_include
 layout nav_header
@@ -1629,6 +1636,7 @@ string navigation_drawer_close
 string navigation_drawer_open
 string new_note
 string no_favorites
+string no_groups
 string no_notes
 string no_trash
 string password_toggle_content_description

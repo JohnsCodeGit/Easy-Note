@@ -306,7 +306,7 @@ class FavoriteAdapter(
 
             .setCancelable(false)
             .setPositiveButton("Yes") {
-                    dialog, id-> dialog.dismiss()
+                    dialog, _-> dialog.dismiss()
                 for (i in 0 until checkedItems.size) {
                     if (checkedItems.size == 0) {
                         break
@@ -355,7 +355,7 @@ class FavoriteAdapter(
                 } else
                     textView6.visibility = View.VISIBLE
             }
-            .setNegativeButton("No") { dialog, id ->
+            .setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()
             }
         val alert = dialogBuilder.create()
@@ -371,7 +371,7 @@ class FavoriteAdapter(
 
             .setCancelable(false)
             .setPositiveButton("Yes") {
-                    dialog, id-> dialog.dismiss()
+                    dialog, _-> dialog.dismiss()
                 checkedItems.sort()
                 Log.d("itemDeleted List1", (checkedItems).toString())
 
@@ -418,7 +418,7 @@ class FavoriteAdapter(
                 } else
                     textView6.visibility = View.VISIBLE
             }
-            .setNegativeButton("No") { dialog, id ->
+            .setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()
             }
         val alert = dialogBuilder.create()

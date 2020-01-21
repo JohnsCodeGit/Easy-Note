@@ -297,7 +297,7 @@ class DeleteAdapter(
 
             .setCancelable(false)
             .setPositiveButton("Yes") {
-                    dialog, id-> dialog.dismiss()
+                    dialog, _-> dialog.dismiss()
 
                 searchItems.clear()
                 noteList.clear()
@@ -317,7 +317,7 @@ class DeleteAdapter(
 
 
             }
-            .setNegativeButton("No") { dialog, id ->
+            .setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()
             }
         val alert = dialogBuilder.create()
@@ -333,7 +333,7 @@ class DeleteAdapter(
 
             .setCancelable(false)
             .setPositiveButton("Yes") {
-                    dialog, id-> dialog.dismiss()
+                    dialog, _-> dialog.dismiss()
                 checkedItems.sort()
                 Log.d("itemDeleted List1", (checkedItems).toString())
 
@@ -367,7 +367,7 @@ class DeleteAdapter(
                 deleteAll.isChecked = false
 
             }
-            .setNegativeButton("No") { dialog, id ->
+            .setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()
             }
         val alert = dialogBuilder.create()

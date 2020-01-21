@@ -28,10 +28,10 @@ class NewNoteActivity : AppCompatActivity() {
 
             .setCancelable(false)
             .setPositiveButton("Ok") {
-                    dialog, id -> finish()
+                    _, _ -> finish()
             }
             .setNegativeButton("Cancel") {
-                    dialog, id -> dialog.cancel()
+                    dialog, _ -> dialog.cancel()
             }
         val alert = dialogBuilder.create()
         alert.show()

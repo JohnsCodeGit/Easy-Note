@@ -25,8 +25,10 @@ class MainActivity : AppCompatActivity() {
 
     private var noteList = ArrayList<NoteModel>()
     private var searchItems = ArrayList<NoteModel>()
+    private var groupItems = ArrayList<NoteModel>()
     private lateinit var barLay: ConstraintLayout
     private val notedbHandler = NotesDbHelper(this, null)
+    private val groupsDB = GroupsDB(this, null)
     private lateinit var noteItem: NoteModel
 
     var selectedFragment: Fragment = HomeFragment()
@@ -74,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.nav_groups ->{
 
-                    selectedFragment = HomeFragment()
+                    selectedFragment = FragmentGroups()
                     toolbar.title = "Groups"
                     this.supportFragmentManager.beginTransaction()
                         .replace(R.id.frag_container, selectedFragment, "Groups").commit()
@@ -98,6 +100,7 @@ class MainActivity : AppCompatActivity() {
         val viewpager = ViewPager(this)
         viewpager.offscreenPageLimit = 0
 
+        groupItems = groupsDB.getAllGroups()
         noteList = notedbHandler.getAllNote()
         searchItems = notedbHandler.getAllNote()
 
@@ -166,17 +169,20 @@ class MainActivity : AppCompatActivity() {
         val frag1 = supportFragmentManager.findFragmentByTag("Notes")
         val frag2 = supportFragmentManager.findFragmentByTag("Favorites")
         val frag3 = supportFragmentManager.findFragmentByTag("Trash")
+        val frag4 = supportFragmentManager.findFragmentByTag("Groups")
         Log.d("selectedFrag", frag1.toString())
         val home = HomeFragment()
         val fav = FavoriteFragment()
         val trash = TrashFragment()
+        val group = FragmentGroups()
         if(frag1 != null)
             home.HideDeleteMenu(findViewById(R.id.LConst))
-
         if (frag2 != null)
             fav.HideDeleteMenu(findViewById(R.id.LConstR))
         if (frag3 != null)
             trash.HideDeleteMenu(findViewById(R.id.LConstT))
+        if (frag4 != null)
+            group.HideDeleteMenu(findViewById(R.id.LConstG))
     }
 
 
