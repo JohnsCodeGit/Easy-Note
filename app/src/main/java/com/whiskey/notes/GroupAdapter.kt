@@ -13,32 +13,38 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.note_row_item.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class GroupAdapter(var bDelete: Button,
-                   var deleteAll: CheckBox,
-                   var buttonLayout: ConstraintLayout,
+class GroupAdapter(
+    var bDelete: Button,
+    var deleteAll: CheckBox,
+    var buttonLayout: ConstraintLayout,
 
-                   var context: Context,
+    var context: Context,
 
-                   var recyclerviewMain: RecyclerView,
-                   var noteList: ArrayList<NoteModel>,
-                   var searchItems: ArrayList<NoteModel>,
-                   var textView5: TextView
+    var recyclerviewMain: RecyclerView,
+    var noteList: ArrayList<String>,
+    var searchItems: ArrayList<String>,
+    var textView5: TextView,
+    var fab: FloatingActionButton
 )  : RecyclerView.Adapter<GroupAdapter.GroupViewHolder>(), Filterable {
     private var checkedItems = ArrayList<Int>()
-    var deleteList = ArrayList<NoteModel>()
+    var deleteList = ArrayList<String>()
     private var checkedVisible = false
     private var isAllChecked = false
     private var mCheckItems = SparseBooleanArray()
     var trashDB: TrashDB = TrashDB(this.context, null)
-    val GroupDB = GroupsDB(this.context, null)
-    override fun getItemCount() = searchItems.size
+    private val groupsDB = GroupsDB(this.context, null)
+
+    override fun getItemCount(): Int {
+
+        searchItems = groupsDB.getAllGroups()
+        return searchItems.size
+    }
 
     fun hideItems(){
         checkedVisible = false
@@ -50,6 +56,7 @@ class GroupAdapter(var bDelete: Button,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val customView = layoutInflater.inflate(R.layout.group_item, parent, false)
+        searchItems = groupsDB.getAllGroups()
 
         return GroupViewHolder(customView)
 
@@ -62,9 +69,8 @@ class GroupAdapter(var bDelete: Button,
 
     override fun onBindViewHolder(holder: GroupViewHolder, position: Int) {
 
-        holder.customView.dateText.text  = searchItems[position].date
-        holder.customView.itemTitle.text = searchItems[position].title
-        holder.customView.itemNote.text  = searchItems[position].note
+        searchItems = groupsDB.getAllGroups()
+        holder.customView.itemTitle.text = searchItems[position]
 
 
         //DO NOT TOUCH
@@ -198,14 +204,14 @@ class GroupAdapter(var bDelete: Button,
                     holder.customView.checkBox.visibility = View.VISIBLE
                     //holder.customView.checkBox.isChecked = true
                     bDelete.visibility = View.VISIBLE
-                    holder.customView.button.visibility = View.VISIBLE
+//                    holder.customView.button.visibility = View.VISIBLE
                     deleteAll.visibility = View.VISIBLE
                     buttonLayout.visibility = View.VISIBLE
                 }
                 else if(!checkedVisible) {
                     holder.customView.checkBox.visibility = View.GONE
                     bDelete.visibility = View.GONE
-                    holder.customView.button.visibility = View.GONE
+//                    holder.customView.button.visibility = View.GONE
                     deleteAll.visibility = View.GONE
                     checkedItems.clear()
                     mCheckItems.clear()
@@ -247,15 +253,13 @@ class GroupAdapter(var bDelete: Button,
                 else {
                     val intent = Intent(holder.customView.context, ViewNoteActivity::class.java)
                     holder.customView.checkBox.visibility = View.GONE
-                    holder.customView.button.visibility = View.GONE
+//                    holder.customView.button.visibility = View.GONE
                     bDelete.visibility = View.GONE
                     checkedItems.clear()
                     mCheckItems.clear()
-                    intent.putExtra("title", searchItems[position].title)
-                    intent.putExtra("note", searchItems[position].note)
-                    intent.putExtra("date", searchItems[position].date)
-                    intent.putParcelableArrayListExtra("noteList", noteList)
-                    intent.putParcelableArrayListExtra("searchItems", searchItems)
+                    intent.putExtra("title", searchItems[position])
+
+
 
                     if(noteList == searchItems){
                         intent.putExtra("position", position)
@@ -305,20 +309,20 @@ class GroupAdapter(var bDelete: Button,
                     if(checkedItems.size == 0) {
                         break
                     } else {
-                        deleteList = trashDB.getAllNote()
-                        val noteModel = NoteModel(
-                            noteList[checkedItems[0] - i].note,
-                            noteList[checkedItems[0] - i].title,
-                            noteList[checkedItems[0] - i].date
-                        )
-                        deleteList.add(noteModel)
-                        trashDB.addNote(
-                            noteList[checkedItems[0] - i].note,
-                            noteList[checkedItems[0] - i].title,
-                            noteList[checkedItems[0] - i].date,
-                            deleteList.size
-                        )
-                        GroupDB.deleteItem(checkedItems[0] + 1 - i)
+//                        deleteList = trashDB.getAllNote()
+//                        val noteModel = NoteModel(
+//                            noteList[checkedItems[0] - i].note,
+//                            noteList[checkedItems[0] - i].title,
+//                            noteList[checkedItems[0] - i].date
+//                        )
+//                        deleteList.add(noteModel)
+//                        trashDB.addNote(
+//                            noteList[checkedItems[0] - i].note,
+//                            noteList[checkedItems[0] - i].title,
+//                            noteList[checkedItems[0] - i].date,
+//                            deleteList.size
+//                        )
+                        groupsDB.deleteItem(checkedItems[0] + 1 - i)
                         noteList.removeAt(checkedItems[0] - i)
                         searchItems.removeAt(checkedItems[0] - i)
 
@@ -333,7 +337,7 @@ class GroupAdapter(var bDelete: Button,
 
                 searchItems.clear()
                 noteList.clear()
-                GroupDB.deleteAll()
+                groupsDB.deleteAll()
 
                 checkedVisible = false
                 hideItems()
@@ -377,20 +381,20 @@ class GroupAdapter(var bDelete: Button,
                         break
                     }
                     else{
-                        deleteList = trashDB.getAllNote()
-                        val noteModel = NoteModel(
-                            noteList[checkedItems[0] - i].note,
-                            noteList[checkedItems[0] - i].title,
-                            noteList[checkedItems[0] - i].date
-                        )
-                        deleteList.add(noteModel)
-                        trashDB.addNote(
-                            noteList[checkedItems[0]-i].note,
-                            noteList[checkedItems[0]-i].title,
-                            noteList[checkedItems[0]-i].date,
-                            deleteList.size
-                        )
-                        GroupDB.deleteItem(checkedItems[0]+1-i)
+//                        deleteList = trashDB.getAllNote()
+//                        val noteModel = NoteModel(
+//                            noteList[checkedItems[0] - i].note,
+//                            noteList[checkedItems[0] - i].title,
+//                            noteList[checkedItems[0] - i].date
+//                        )
+//                        deleteList.add(noteModel)
+//                        trashDB.addNote(
+//                            noteList[checkedItems[0]-i].note,
+//                            noteList[checkedItems[0]-i].title,
+//                            noteList[checkedItems[0]-i].date,
+//                            deleteList.size
+//                        )
+                        groupsDB.deleteItem(checkedItems[0] + 1 - i)
                         noteList.removeAt(checkedItems[0]-i)
                         searchItems.removeAt(checkedItems[0]-i)
 
@@ -417,7 +421,7 @@ class GroupAdapter(var bDelete: Button,
                 } else
                     textView5.visibility = View.VISIBLE
             }
-            .setNegativeButton("No") { dialog, id ->
+            .setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()
             }
         val alert = dialogBuilder.create()
@@ -432,7 +436,7 @@ class GroupAdapter(var bDelete: Button,
         init {
             customView.isLongClickable = true
             customView.setOnLongClickListener(this)
-
+            searchItems = groupsDB.getAllGroups()
 
         }
 
@@ -486,16 +490,16 @@ class GroupAdapter(var bDelete: Button,
 
                     val filterPattern =
                         constraint.toString().toLowerCase(Locale.getDefault()).trim()
-                    for(item: NoteModel in noteList){
-                        val noteItem = item.note.replace("\n", " ")
+                    for (item: String in noteList) {
+                        val noteItem = item.replace("\n", " ")
                         noteItem.replace("\t", " ")
                         Log.d("noteItemText", noteItem)
 
-                        if (item.note.toLowerCase(Locale.getDefault()).trim().contains(filterPattern)
-                            || item.title.toLowerCase(Locale.getDefault()).trim().contains(
+                        if (item.toLowerCase(Locale.getDefault()).trim().contains(filterPattern)
+                            || item.toLowerCase(Locale.getDefault()).trim().contains(
                                 filterPattern
                             )
-                            && (item.title.isNotBlank() || item.note.isNotBlank())
+                            && (item.isNotBlank())
                         ) {
                             searchItems.add(item)
 

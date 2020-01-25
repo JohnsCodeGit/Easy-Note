@@ -35,7 +35,8 @@ class NoteAdapter(
     var recyclerviewMain: RecyclerView,
     var noteList: ArrayList<NoteModel>,
     var searchItems: ArrayList<NoteModel>,
-    var textView5: TextView
+    var textView5: TextView,
+    var addToGroup: ImageButton
 
 )
     : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), Filterable {
@@ -175,6 +176,13 @@ class NoteAdapter(
                 deleteAll.isSelected = false
 
                 deleteAll.isChecked = false
+
+            }
+
+            addToGroup.setOnClickListener {
+
+                //TODO: Bring up list of groups to add note to
+                Toast.makeText(this.context, "Added to group", Toast.LENGTH_SHORT).show()
 
             }
 

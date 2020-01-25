@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.ImageButton
 import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
@@ -36,6 +37,7 @@ class HomeFragment : Fragment(){
     private lateinit var checkBox: CheckBox
     private lateinit var constraintLayout: ConstraintLayout
     private lateinit var recyclerView: RecyclerView
+    private lateinit var addToGroup: ImageButton
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,6 +56,7 @@ class HomeFragment : Fragment(){
         checkBox = mView.findViewById(R.id.radioButton)
         fabs = mView.findViewById(R.id.fabButton)
         constraintLayout = mView.findViewById(R.id.constrain)
+        addToGroup = mView.findViewById(R.id.addGroup)
         searchItems.clear()
 
         if(notedbHandler.getNoteSize() != 0.toLong() ) {
@@ -78,10 +81,11 @@ class HomeFragment : Fragment(){
             layoutM.reverseLayout = true
             layoutManager = layoutM
 
-            noteadapter  = NoteAdapter(deleteButton, deleteAll, constraint, fab, this.context,
-                notedbHandler, recyclerView, noteList, searchItems, textView5
+            noteadapter = NoteAdapter(
+                deleteButton, deleteAll, constraint, fab, this.context,
+                notedbHandler, recyclerView, noteList, searchItems, textView5, addToGroup
             )
-            adapter= noteadapter
+            adapter = noteadapter
             addItemDecoration(VerticalSpacing(25))
 
         }

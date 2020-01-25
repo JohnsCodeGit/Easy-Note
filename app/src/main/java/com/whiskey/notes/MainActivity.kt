@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
     private var noteList = ArrayList<NoteModel>()
     private var searchItems = ArrayList<NoteModel>()
-    private var groupItems = ArrayList<NoteModel>()
+    private var groupItems = ArrayList<String>()
     private lateinit var barLay: ConstraintLayout
     private val notedbHandler = NotesDbHelper(this, null)
     private val groupsDB = GroupsDB(this, null)
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.nav_groups ->{
 
-                    selectedFragment = FragmentGroups()
+                    selectedFragment = GroupsFragment()
                     toolbar.title = "Groups"
                     this.supportFragmentManager.beginTransaction()
                         .replace(R.id.frag_container, selectedFragment, "Groups").commit()
@@ -170,11 +170,14 @@ class MainActivity : AppCompatActivity() {
         val frag2 = supportFragmentManager.findFragmentByTag("Favorites")
         val frag3 = supportFragmentManager.findFragmentByTag("Trash")
         val frag4 = supportFragmentManager.findFragmentByTag("Groups")
+
         Log.d("selectedFrag", frag1.toString())
+
         val home = HomeFragment()
         val fav = FavoriteFragment()
         val trash = TrashFragment()
-        val group = FragmentGroups()
+        val group = GroupsFragment()
+
         if(frag1 != null)
             home.HideDeleteMenu(findViewById(R.id.LConst))
         if (frag2 != null)
