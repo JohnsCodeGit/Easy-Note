@@ -2,7 +2,6 @@ package com.whiskey.notes
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
@@ -12,7 +11,6 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.note_row_item.view.*
@@ -251,28 +249,14 @@ class GroupAdapter(
                     }
                 }
                 else {
-                    val intent = Intent(holder.customView.context, ViewNoteActivity::class.java)
+
                     holder.customView.checkBox.visibility = View.GONE
 //                    holder.customView.button.visibility = View.GONE
                     bDelete.visibility = View.GONE
                     checkedItems.clear()
                     mCheckItems.clear()
-                    intent.putExtra("title", searchItems[position])
 
-
-
-                    if(noteList == searchItems){
-                        intent.putExtra("position", position)
-                        Log.d("same", position.toString())
-                    }else {
-                        intent.putExtra("position", noteList.indexOf(searchItems[position]))
-                        Log.d("Not Same", noteList.indexOf(searchItems[position]).toString())
-                    }
-
-
-
-                    ContextCompat.startActivity(holder.customView.context, intent, null)
-
+                    
                 }
             }
         }

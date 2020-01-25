@@ -17,6 +17,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.Nullable
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
@@ -52,14 +53,18 @@ class GroupsFragment : Fragment() {
 
         fab.setOnClickListener {
 
-            val builder = AlertDialog.Builder(this.context, R.style.MyDialogTheme)
-            builder.setTitle("New Group: ")
+            val builder = AlertDialog.Builder(this.context)
+            builder.setMessage("")
 
-            val input = EditText(this.context)
-            input.setPadding(60, 40, 60, 0)
+            val input = AppCompatEditText(this.context)
+            input.setPadding(60, 0, 60, 0)
             input.inputType = InputType.TYPE_CLASS_TEXT
             input.setHintTextColor(Color.LTGRAY)
             input.setTextColor(Color.BLACK)
+//            input.setBackgroundColor(Color.BLACK)
+//            input.setTextColor(Color.WHITE)
+//            val colorStateList = ColorStateList.valueOf(Color.BLACK)
+//            ViewCompat.setBackgroundTintList(input, colorStateList)
             input.hasFocus()
             //showKeyboard(mView.findViewById<ConstraintLayout>(R.id.constrainG).context)
             input.hint = "Enter a group name..."
