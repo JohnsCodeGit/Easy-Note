@@ -180,9 +180,12 @@ class NoteAdapter(
             }
 
             addToGroup.setOnClickListener {
+                val groupDb = GroupsDB(this.context, null)
+                val groupListArray: ArrayList<String> = groupDb.getAllGroups()
+                val intent = Intent(holder.customView.context, GroupList::class.java)
+                intent.putStringArrayListExtra("groupList", groupListArray)
 
-                //TODO: Bring up list of groups to add note to
-                Toast.makeText(this.context, "Added to group", Toast.LENGTH_SHORT).show()
+                startActivity(this.context, intent, null)
 
             }
 
@@ -437,7 +440,7 @@ class NoteAdapter(
                 } else
                     textView5.visibility = View.VISIBLE
             }
-            .setNegativeButton("No") { dialog, id ->
+            .setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()
             }
         val alert = dialogBuilder.create()

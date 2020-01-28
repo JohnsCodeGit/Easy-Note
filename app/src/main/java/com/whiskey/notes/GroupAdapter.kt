@@ -21,7 +21,6 @@ class GroupAdapter(
     var bDelete: Button,
     var deleteAll: CheckBox,
     var buttonLayout: ConstraintLayout,
-
     var context: Context,
 
     var recyclerviewMain: RecyclerView,
@@ -256,7 +255,7 @@ class GroupAdapter(
                     checkedItems.clear()
                     mCheckItems.clear()
 
-                    
+
                 }
             }
         }

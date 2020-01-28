@@ -18,7 +18,10 @@ class GroupsDB(context: Context?,
                         + " ("
                         + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                         + COLUMN_INDEX + " INT, "
-                        + COLUMN_NAME + " TEXT"
+                        + COLUMN_NAME + " TEXT, "
+                        + COLUMN_NOTE + " TEXT, "
+                        + COLUMN_TITLE + " TEXT, "
+                        + COLUMN_DATE + " TEXT "
                         + ")"
                 )
         db.execSQL(CREATE_PRODUCTS_TABLE)
@@ -58,6 +61,27 @@ class GroupsDB(context: Context?,
         cursor.close()
         return notes
     }
+
+    //    fun getAllGroupItems(position: Int): ArrayList<NoteModel> {
+//        val notes = ArrayList<NoteModel>()
+//
+//        val cursor = this.readableDatabase.rawQuery(SELECT_NOTE, null)
+//        if (cursor.moveToFirst()) {
+//            while (!cursor.isAfterLast) {
+//                if (cursor.getString(cursor.getColumnIndex(COLUMN_NAME)) != null) {
+//                    val note: String = cursor.getString(cursor.getColumnIndex(COLUMN_NAME))
+//                    val title: String = cursor.getString(cursor.getColumnIndex(COLUMN_NAME))
+//                    val date: String = cursor.getString(cursor.getColumnIndex(COLUMN_NAME))
+//                    val noteModel = NoteModel(note, title, date)
+//                    notes.add(noteModel)
+//
+//                }
+//                cursor.moveToNext()
+//            }
+//        }
+//        cursor.close()
+//        return notes
+//    }
     fun deleteAll(){
         val db = this.writableDatabase
         db.execSQL("delete from $TABLE_NAME")
@@ -66,9 +90,13 @@ class GroupsDB(context: Context?,
     fun updateGroup(noteItem: NoteModel, position: Int) {
         val newValues = ContentValues()
         val note = noteItem.note
+        val title = noteItem.title
+        val date = noteItem.date
 
 
-        newValues.put(COLUMN_NAME, note)
+        newValues.put(COLUMN_NOTE, note)
+        newValues.put(COLUMN_TITLE, title)
+        newValues.put(COLUMN_DATE, date)
 
         val db = this.writableDatabase
         db.update(TABLE_NAME, newValues, "$COLUMN_INDEX=$position", null)
@@ -96,10 +124,13 @@ class GroupsDB(context: Context?,
     }
     companion object {
         private const val DATABASE_VERSION = 1
-        private const val DATABASE_NAME = "GroupDatabase2.db"
+        private const val DATABASE_NAME = "GroupDatabase3.db"
         const val TABLE_NAME = "GroupsTable"
         const val COLUMN_ID = "_id"
-        const val COLUMN_NAME = "noteCol"
+        const val COLUMN_NAME = "nameCol"
+        const val COLUMN_NOTE = "noteCol"
+        const val COLUMN_TITLE = "titleCol"
+        const val COLUMN_DATE = "dateCol"
         const val SELECT_NOTE = "SELECT * FROM $TABLE_NAME"
         const val COLUMN_INDEX = "item"
 
