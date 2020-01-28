@@ -1101,6 +1101,7 @@ drawable fav_icon
 drawable fav_icon_1
 drawable fav_icon_empty
 drawable fgroup_icon
+drawable group_list_shape
 drawable group_shape
 drawable home_icon
 drawable ic_action_name
@@ -1295,6 +1296,7 @@ id fragment_fav
 id fragment_group
 id ghost_view
 id gone
+id groupListRecyclerView
 id group_divider
 id groups
 id home
@@ -1545,6 +1547,8 @@ layout fragment_home
 layout fragment_trash
 layout group_item
 layout group_layout
+layout group_list_item
+layout group_list_layout
 layout mtrl_layout_snackbar
 layout mtrl_layout_snackbar_include
 layout nav_header

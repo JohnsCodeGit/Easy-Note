@@ -87,13 +87,13 @@ class GroupsDB(context: Context?,
         db.execSQL("delete from $TABLE_NAME")
     }
 
-    fun updateGroup(noteItem: NoteModel, position: Int) {
+    fun updateGroup(name: String, noteItem: NoteModel, position: Int) {
         val newValues = ContentValues()
         val note = noteItem.note
         val title = noteItem.title
         val date = noteItem.date
 
-
+        newValues.put(COLUMN_NAME, name)
         newValues.put(COLUMN_NOTE, note)
         newValues.put(COLUMN_TITLE, title)
         newValues.put(COLUMN_DATE, date)

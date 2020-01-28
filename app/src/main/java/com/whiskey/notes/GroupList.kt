@@ -4,9 +4,11 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class GroupList : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
@@ -21,6 +23,8 @@ class GroupList : AppCompatActivity() {
         setSupportActionBar(toolbar)
         toolbar.setTitleTextColor(Color.WHITE)
         toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.dark))
+//        toolbar.title = "Add to group: "
+        supportActionBar?.title = "Add to group: "
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         groupList = groupDB.getAllGroups()
@@ -33,11 +37,16 @@ class GroupList : AppCompatActivity() {
             layoutManager = layoutM
 
             noteadapter = GroupListAdapter(
-                groupList
+                groupList, this.context
             )
             adapter = noteadapter
-            addItemDecoration(VerticalSpacing(25))
-
+//            addItemDecoration(VerticalSpacing(25))
+            recyclerView.addItemDecoration(
+                DividerItemDecoration(
+                    this.context,
+                    LinearLayoutManager.VERTICAL
+                )
+            )
         }
     }
 

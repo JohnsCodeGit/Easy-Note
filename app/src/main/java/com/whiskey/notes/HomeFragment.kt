@@ -49,8 +49,6 @@ class HomeFragment : Fragment(){
             startActivity(intent)
         }
 
-
-
         mView = view
         deleteButton = mView.findViewById(R.id.btnDelete)
         checkBox = mView.findViewById(R.id.radioButton)
