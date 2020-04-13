@@ -11,11 +11,11 @@ import kotlinx.android.synthetic.main.note_row_item.view.*
 
 class GroupListAdapter(
     var groupList: ArrayList<String>,
-    var context: Context
+    var context: Context,
+    var noteItem: NoteModel?
 ) :
     RecyclerView.Adapter<GroupListAdapter.GroupViewHolder>() {
     private val groupsDB = GroupsDB(context, null)
-    private lateinit var noteItem: NoteModel
     override fun getItemCount() = groupList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
@@ -37,8 +37,9 @@ class GroupListAdapter(
 
         holder.customView.setOnClickListener {
 
-            //TODO: Supply adapter with list of notes to add to group
-            groupsDB.updateGroup(groupList[position], noteItem, position + 1)
+            //TODO: Assign multiple noteItems to a single group item.
+            //TODO: Currently only holds most recently added noteItem
+            groupsDB.updateGroup(groupList[position], noteItem!!, position + 1)
 
             val intent = Intent(holder.customView.context, MainActivity::class.java)
             startActivity(holder.customView.context, intent, null)

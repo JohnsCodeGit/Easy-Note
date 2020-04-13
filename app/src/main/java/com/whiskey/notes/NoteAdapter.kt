@@ -184,7 +184,14 @@ class NoteAdapter(
                 val groupListArray: ArrayList<String> = groupDb.getAllGroups()
                 val intent = Intent(holder.customView.context, GroupList::class.java)
                 intent.putStringArrayListExtra("groupList", groupListArray)
-
+                intent.putExtra(
+                    "noteItem",
+                    NoteModel(
+                        searchItems[position].note,
+                        searchItems[position].title,
+                        searchItems[position].date
+                    )
+                )
                 startActivity(this.context, intent, null)
 
             }

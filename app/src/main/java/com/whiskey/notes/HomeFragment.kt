@@ -94,7 +94,7 @@ class HomeFragment : Fragment(){
         super.onDetach()
     }
     @SuppressLint("RestrictedApi")
-    fun HideDeleteMenu(view: View){
+    fun hideMenuItems(view: View) {
 
 
             deleteButton = view.findViewById(R.id.btnDelete)

@@ -29,7 +29,8 @@ class GroupList : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         groupList = groupDB.getAllGroups()
         recyclerView = findViewById(R.id.groupListRecyclerView)
-
+        val groupList = intent.getStringArrayListExtra("groupList")
+        val noteItem = intent.getParcelableExtra<NoteModel>("noteItem")
         recyclerView.apply {
             setBackgroundColor(Color.TRANSPARENT)
             layoutM.stackFromEnd = true
@@ -37,7 +38,7 @@ class GroupList : AppCompatActivity() {
             layoutManager = layoutM
 
             noteadapter = GroupListAdapter(
-                groupList, this.context
+                groupList, this.context, noteItem
             )
             adapter = noteadapter
 //            addItemDecoration(VerticalSpacing(25))

@@ -2,6 +2,7 @@ package com.whiskey.notes
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
@@ -248,7 +249,10 @@ class GroupAdapter(
                     }
                 }
                 else {
-
+                    //TODO: Launch new activity to view note items
+                    val intent = Intent(holder.customView.context, GroupItems::class.java)
+                    intent.putExtra("title", holder.customView.itemTitle.toString())
+                    
                     holder.customView.checkBox.visibility = View.GONE
 //                    holder.customView.button.visibility = View.GONE
                     bDelete.visibility = View.GONE

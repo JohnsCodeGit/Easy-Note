@@ -179,7 +179,7 @@ class MainActivity : AppCompatActivity() {
         val group = GroupsFragment()
 
         if(frag1 != null)
-            home.HideDeleteMenu(findViewById(R.id.LConst))
+            home.hideMenuItems(findViewById(R.id.LConst))
         if (frag2 != null)
             fav.HideDeleteMenu(findViewById(R.id.LConstR))
         if (frag3 != null)
