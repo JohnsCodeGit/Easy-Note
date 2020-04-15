@@ -22,9 +22,10 @@ class GroupItems : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.group_item_layout)
+        setSupportActionBar(toolbarItems)
         val groupPosition = intent.getIntExtra("groupPos", -1)
         groups = groupsDB.getAllGroups()
-        toolbar.title = groups[groupPosition]
+        toolbarItems.title = groups[groupPosition]
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
@@ -55,7 +56,7 @@ class GroupItems : AppCompatActivity() {
     override fun onBackPressed() {
 
         val mainIntent = Intent(this, MainActivity::class.java)
-
+        intent.putExtra("fragment", "Groups")
         startActivity(mainIntent)
     }
 

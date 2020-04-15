@@ -24,7 +24,7 @@ class GroupList : AppCompatActivity() {
         toolbarGLIST.setTitleTextColor(Color.WHITE)
         toolbarGLIST.setBackgroundColor(ContextCompat.getColor(this, R.color.dark))
 //        toolbar.title = "Add to group: "
-        supportActionBar?.title = "Add to group: "
+        supportActionBar?.title = "Add to Group:"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         groupList = groupDB.getAllGroups()

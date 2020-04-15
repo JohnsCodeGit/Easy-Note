@@ -42,12 +42,19 @@ class MainActivity : AppCompatActivity() {
         toolbar.setBackgroundColor(ContextCompat.getColor(this, color.dark))
 //        window.statusBarColor = Color.parseColor("#13151a")
 
+        val frag = intent.getStringExtra("fragment")
+
         barLay = findViewById(R.id.const_layout)
         val navView: BottomNavigationView = findViewById(R.id.bot_view)
-        if(savedInstanceState == null){
+        if (savedInstanceState == null && frag.isNullOrBlank()) {
+            selectedFragment = HomeFragment()
             this.supportFragmentManager.beginTransaction()
                 .replace(R.id.frag_container, selectedFragment, "Notes").commit()
 
+        } else {
+            selectedFragment = supportFragmentManager.findFragmentByTag(frag)!!
+            this.supportFragmentManager.beginTransaction()
+                .replace(R.id.frag_container, selectedFragment, "Notes").commit()
         }
         navView.setOnNavigationItemSelectedListener{
             for (i in 0 until supportFragmentManager.backStackEntryCount){
@@ -178,7 +185,7 @@ class MainActivity : AppCompatActivity() {
         val trash = TrashFragment()
         val group = GroupsFragment()
 
-        if(frag1 != null)
+        if (frag1 != null)
             home.hideMenuItems(findViewById(R.id.LConst))
         if (frag2 != null)
             fav.HideDeleteMenu(findViewById(R.id.LConstR))
