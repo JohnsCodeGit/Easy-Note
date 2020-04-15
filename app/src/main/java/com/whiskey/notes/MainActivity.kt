@@ -185,7 +185,7 @@ class MainActivity : AppCompatActivity() {
         if (frag3 != null)
             trash.HideDeleteMenu(findViewById(R.id.LConstT))
         if (frag4 != null)
-            group.HideDeleteMenu(findViewById(R.id.LConstG))
+            group.hideDeleteMenu(findViewById(R.id.LConstG))
     }
 
 

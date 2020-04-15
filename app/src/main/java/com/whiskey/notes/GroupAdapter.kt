@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.note_row_item.view.*
@@ -249,16 +250,17 @@ class GroupAdapter(
                     }
                 }
                 else {
-                    //TODO: Launch new activity to view note items
+
                     val intent = Intent(holder.customView.context, GroupItems::class.java)
-                    intent.putExtra("title", holder.customView.itemTitle.toString())
-                    
+                    intent.putExtra("groupPos", position)
+
                     holder.customView.checkBox.visibility = View.GONE
-//                    holder.customView.button.visibility = View.GONE
+                    //holder.customView.button.visibility = View.GONE
                     bDelete.visibility = View.GONE
                     checkedItems.clear()
                     mCheckItems.clear()
 
+                    startActivity(holder.customView.context, intent, null)
 
                 }
             }
@@ -368,19 +370,7 @@ class GroupAdapter(
                         break
                     }
                     else{
-//                        deleteList = trashDB.getAllNote()
-//                        val noteModel = NoteModel(
-//                            noteList[checkedItems[0] - i].note,
-//                            noteList[checkedItems[0] - i].title,
-//                            noteList[checkedItems[0] - i].date
-//                        )
-//                        deleteList.add(noteModel)
-//                        trashDB.addNote(
-//                            noteList[checkedItems[0]-i].note,
-//                            noteList[checkedItems[0]-i].title,
-//                            noteList[checkedItems[0]-i].date,
-//                            deleteList.size
-//                        )
+
                         groupsDB.deleteItem(checkedItems[0] + 1 - i)
                         noteList.removeAt(checkedItems[0]-i)
                         searchItems.removeAt(checkedItems[0]-i)

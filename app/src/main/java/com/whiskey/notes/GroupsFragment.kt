@@ -152,8 +152,7 @@ class GroupsFragment : Fragment() {
     }
 
     @SuppressLint("RestrictedApi")
-    fun HideDeleteMenu(view: View) {
-
+    fun hideDeleteMenu(view: View) {
 
         deleteButton = view.findViewById(R.id.btnDelete)
         checkBox = view.findViewById(R.id.radioButton)

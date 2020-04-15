@@ -18,10 +18,7 @@ class GroupsDB(context: Context?,
                         + " ("
                         + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                         + COLUMN_INDEX + " INT, "
-                        + COLUMN_NAME + " TEXT, "
-                        + COLUMN_NOTE + " TEXT, "
-                        + COLUMN_TITLE + " TEXT, "
-                        + COLUMN_DATE + " TEXT "
+                        + COLUMN_NAME + " TEXT "
                         + ")"
                 )
         db.execSQL(CREATE_PRODUCTS_TABLE)
@@ -87,16 +84,9 @@ class GroupsDB(context: Context?,
         db.execSQL("delete from $TABLE_NAME")
     }
 
-    fun updateGroup(name: String, noteItem: NoteModel, position: Int) {
+    fun updateGroup(name: String, position: Int) {
         val newValues = ContentValues()
-        val note = noteItem.note
-        val title = noteItem.title
-        val date = noteItem.date
-
         newValues.put(COLUMN_NAME, name)
-        newValues.put(COLUMN_NOTE, note)
-        newValues.put(COLUMN_TITLE, title)
-        newValues.put(COLUMN_DATE, date)
 
         val db = this.writableDatabase
         db.update(TABLE_NAME, newValues, "$COLUMN_INDEX=$position", null)
@@ -123,8 +113,8 @@ class GroupsDB(context: Context?,
         return DatabaseUtils.queryNumEntries(db, TABLE_NAME)
     }
     companion object {
-        private const val DATABASE_VERSION = 1
-        private const val DATABASE_NAME = "GroupDatabase3.db"
+        private const val DATABASE_VERSION = 3
+        private const val DATABASE_NAME = "GroupDatabase4.db"
         const val TABLE_NAME = "GroupsTable"
         const val COLUMN_ID = "_id"
         const val COLUMN_NAME = "nameCol"

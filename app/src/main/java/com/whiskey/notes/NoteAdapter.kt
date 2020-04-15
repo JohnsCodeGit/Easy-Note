@@ -41,6 +41,7 @@ class NoteAdapter(
 )
     : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), Filterable {
     private var checkedItems = ArrayList<Int>()
+    private var checkedGroupItems = ArrayList<Int>()
     var deleteList = ArrayList<NoteModel>()
     private var checkedVisible = false
     private var isAllChecked = false
@@ -192,6 +193,10 @@ class NoteAdapter(
                         searchItems[position].date
                     )
                 )
+                Log.d("noteDBpos1", checkedItems.toString())
+                checkedGroupItems = checkedItems
+                intent.putIntegerArrayListExtra("itemPositionList", checkedGroupItems)
+
                 startActivity(this.context, intent, null)
 
             }

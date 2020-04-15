@@ -2,6 +2,7 @@ package com.whiskey.notes
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +13,14 @@ import kotlinx.android.synthetic.main.note_row_item.view.*
 class GroupListAdapter(
     var groupList: ArrayList<String>,
     var context: Context,
-    var noteItem: NoteModel?
+    var noteItem: NoteModel?,
+    var itemPosition: Int,
+    var checkedGroupItems: ArrayList<Int>?
 ) :
     RecyclerView.Adapter<GroupListAdapter.GroupViewHolder>() {
     private val groupsDB = GroupsDB(context, null)
+    private val notesDB = NotesDbHelper(context, null)
+    private val notes = notesDB.getAllNote()
     override fun getItemCount() = groupList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
@@ -37,10 +42,11 @@ class GroupListAdapter(
 
         holder.customView.setOnClickListener {
 
-            //TODO: Assign multiple noteItems to a single group item.
-            //TODO: Currently only holds most recently added noteItem
-            groupsDB.updateGroup(groupList[position], noteItem!!, position + 1)
+            for (i in 0 until (checkedGroupItems?.size ?: 0)) {
+                notesDB.updateGroup(groupList[position], checkedGroupItems!![i] + 1)
 
+            }
+            Log.d("noteDBpos", (itemPosition).toString())
             val intent = Intent(holder.customView.context, MainActivity::class.java)
             startActivity(holder.customView.context, intent, null)
         }

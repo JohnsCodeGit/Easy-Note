@@ -3,7 +3,6 @@ package com.whiskey.notes
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
@@ -13,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.note_row_item.view.*
 import java.util.*
@@ -309,29 +307,29 @@ class TrashAdapter(
                         }
                     }
                 } else {
-                    val intent = Intent(holder.customView.context, ViewNoteActivity::class.java)
-                    holder.customView.checkBox.visibility = View.GONE
-                    holder.customView.button.visibility = View.GONE
-                    bDelete.visibility = View.GONE
-                    checkedItems.clear()
-                    mCheckItems.clear()
-                    intent.putExtra("title", searchItems[position].title)
-                    intent.putExtra("note", searchItems[position].note)
-                    intent.putExtra("date", searchItems[position].date)
-                    intent.putParcelableArrayListExtra("noteList", noteList)
-                    intent.putParcelableArrayListExtra("searchItems", searchItems)
-
-                    if (noteList == searchItems) {
-                        intent.putExtra("position", -2)
-                        Log.d("same", position.toString())
-                    } else {
-                        intent.putExtra("position", -2)
-                        Log.d("Not Same", noteList.indexOf(searchItems[position]).toString())
-                    }
-
-
-
-                    startActivity(holder.customView.context, intent, null)
+//                    val intent = Intent(holder.customView.context, ViewNoteActivity::class.java)
+//                    holder.customView.checkBox.visibility = View.GONE
+//                    holder.customView.button.visibility = View.GONE
+//                    bDelete.visibility = View.GONE
+//                    checkedItems.clear()
+//                    mCheckItems.clear()
+//                    intent.putExtra("title", searchItems[position].title)
+//                    intent.putExtra("note", searchItems[position].note)
+//                    intent.putExtra("date", searchItems[position].date)
+//                    intent.putParcelableArrayListExtra("noteList", noteList)
+//                    intent.putParcelableArrayListExtra("searchItems", searchItems)
+//
+//                    if (noteList == searchItems) {
+//                        intent.putExtra("position", -2)
+//                        Log.d("same", position.toString())
+//                    } else {
+//                        intent.putExtra("position", -2)
+//                        Log.d("Not Same", noteList.indexOf(searchItems[position]).toString())
+//                    }
+//
+//
+//
+//                    startActivity(holder.customView.context, intent, null)
 
                 }
             }
