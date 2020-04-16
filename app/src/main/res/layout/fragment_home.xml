@@ -121,7 +121,7 @@
                     app:layout_constraintStart_toEndOf="@+id/radioButton"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.65999997"
-                    app:srcCompat="@android:drawable/ic_menu_add" />
+                    app:srcCompat="@drawable/add_to_group_iconh" />
 
                 <FrameLayout
                     android:id="@+id/frag_container"

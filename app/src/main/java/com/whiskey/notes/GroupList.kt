@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.group_list_layout.*
 
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class GroupList : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private val layoutM = LinearLayoutManager(this)

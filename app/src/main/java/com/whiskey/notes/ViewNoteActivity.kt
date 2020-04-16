@@ -222,6 +222,15 @@ class ViewNoteActivity : AppCompatActivity() {
             }
             Log.d("boolean", boolean.toString())
 
+        } else if (id == R.id.addToGroup) {
+            val intent = Intent(this.applicationContext, GroupList::class.java)
+            save()
+            intent.putExtra("itemPositionList", position)
+            var groupList = ArrayList<String>()
+            val groupDB = GroupsDB(this, null)
+            groupList = groupDB.getAllGroups()
+            intent.putStringArrayListExtra("groupList", groupList)
+            startActivity(intent)
         }
 
         return super.onOptionsItemSelected(item)

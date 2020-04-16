@@ -15,7 +15,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.group_item.view.*
 import kotlinx.android.synthetic.main.note_row_item.view.*
+import kotlinx.android.synthetic.main.note_row_item.view.itemTitle
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -28,7 +30,7 @@ class GroupAdapter(
     var recyclerviewMain: RecyclerView,
     var noteList: ArrayList<String>,
     var searchItems: ArrayList<String>,
-    var textView5: TextView,
+    private var textView5: TextView,
     var fab: FloatingActionButton
 )  : RecyclerView.Adapter<GroupAdapter.GroupViewHolder>(), Filterable {
     private var checkedItems = ArrayList<Int>()
@@ -62,7 +64,7 @@ class GroupAdapter(
     }
 
     override fun onViewRecycled(holder: GroupViewHolder) {
-        holder.customView.checkBox.setOnCheckedChangeListener(null)
+        holder.customView.checkBoxItem.setOnCheckedChangeListener(null)
 
     }
 
@@ -76,7 +78,7 @@ class GroupAdapter(
         if(searchItems.size == checkedItems.size){
 
 
-            holder.customView.checkBox.isChecked = isAllChecked
+            holder.customView.checkBoxItem.isChecked = isAllChecked
 
             mCheckItems.clear()
 
@@ -108,8 +110,7 @@ class GroupAdapter(
                     Log.d("itemAddedAll", checkedItems.size.toString() +", "+ searchItems.size.toString())
                     SelectAll()
 
-                }
-                else if(!isChecked && searchItems.size == checkedItems.size && !holder.customView.checkBox.isSelected){
+                } else if (!isChecked && searchItems.size == checkedItems.size && !holder.customView.checkBoxItem.isSelected) {
                     Log.d("itemsCleared", checkedItems.size.toString())
 
                     unSelectAll()
@@ -122,7 +123,7 @@ class GroupAdapter(
 
             // Add checked check boxes to array to delete checked items
             // and save checked states while scrolling
-            holder.customView.checkBox.setOnCheckedChangeListener { _, isChecked ->
+            holder.customView.checkBoxItem.setOnCheckedChangeListener { _, isChecked ->
 
                 Log.d("itemChecked", isChecked.toString())
                 Log.d("itemNotesSize", searchItems.size.toString())
@@ -168,7 +169,7 @@ class GroupAdapter(
             }
 
 
-            holder.customView.checkBox.setOnClickListener {
+            holder.customView.checkBoxItem.setOnClickListener {
                 deleteAll.isSelected = false
 
                 deleteAll.isChecked = false
@@ -193,22 +194,22 @@ class GroupAdapter(
 
             }
             if (checkedItems.contains(0) && noteList.size == 1) {
-                holder.customView.checkBox.isChecked = true
+                holder.customView.checkBoxItem.isChecked = true
                 Log.d("forceCheck", true.toString())
             }
 
             fun Hide(){
                 if(checkedVisible) {
 
-                    holder.customView.checkBox.visibility = View.VISIBLE
-                    //holder.customView.checkBox.isChecked = true
+                    holder.customView.checkBoxItem.visibility = View.VISIBLE
+                    //holder.customView.checkBoxItem.isChecked = true
                     bDelete.visibility = View.VISIBLE
 //                    holder.customView.button.visibility = View.VISIBLE
                     deleteAll.visibility = View.VISIBLE
                     buttonLayout.visibility = View.VISIBLE
                 }
                 else if(!checkedVisible) {
-                    holder.customView.checkBox.visibility = View.GONE
+                    holder.customView.checkBoxItem.visibility = View.GONE
                     bDelete.visibility = View.GONE
 //                    holder.customView.button.visibility = View.GONE
                     deleteAll.visibility = View.GONE
@@ -230,8 +231,9 @@ class GroupAdapter(
             holder.customView.setOnClickListener {
 
                 if (checkedVisible){
-                    holder.customView.checkBox.isChecked = !holder.customView.checkBox.isChecked
-                    if(!checkedItems.contains(position) && holder.customView.checkBox.isChecked){
+                    holder.customView.checkBoxItem.isChecked =
+                        !holder.customView.checkBoxItem.isChecked
+                    if (!checkedItems.contains(position) && holder.customView.checkBoxItem.isChecked) {
 
                         checkedItems.add(position)
                         mCheckItems.put(position, true)
@@ -239,8 +241,7 @@ class GroupAdapter(
                             mCheckItems[position].toString()
                                     + ", "
                                     + position.toString())
-                    }
-                    else if(!holder.customView.checkBox.isChecked){
+                    } else if (!holder.customView.checkBoxItem.isChecked) {
                         if(position < checkedItems.size) {
                             mCheckItems.put(position, false)
                             deleteAll.isChecked = false
@@ -254,7 +255,7 @@ class GroupAdapter(
                     val intent = Intent(holder.customView.context, GroupItems::class.java)
                     intent.putExtra("groupPos", position)
 
-                    holder.customView.checkBox.visibility = View.GONE
+                    holder.customView.checkBoxItem.visibility = View.GONE
                     //holder.customView.button.visibility = View.GONE
                     bDelete.visibility = View.GONE
                     checkedItems.clear()
@@ -408,7 +409,7 @@ class GroupAdapter(
 
     inner class GroupViewHolder(val customView: View) : RecyclerView.ViewHolder(customView),
         View.OnLongClickListener {
-        private var checkbox = customView.checkBox
+        private var checkbox = customView.checkBoxItem
 
         init {
             customView.isLongClickable = true
@@ -418,7 +419,7 @@ class GroupAdapter(
         }
 
         fun bind(position: Int) { // use the sparse boolean array to check
-            customView.checkBox.isChecked = mCheckItems.get(position, false)
+            checkbox.isChecked = mCheckItems.get(position, false)
         }
 
         @SuppressLint("ClickableViewAccessibility")

@@ -14,8 +14,8 @@ class GroupListAdapter(
     var groupList: ArrayList<String>,
     var context: Context,
     var noteItem: NoteModel?,
-    var itemPosition: Int,
-    var checkedGroupItems: ArrayList<Int>?
+    private var itemPosition: Int,
+    private var checkedGroupItems: ArrayList<Int>?
 ) :
     RecyclerView.Adapter<GroupListAdapter.GroupViewHolder>() {
     private val groupsDB = GroupsDB(context, null)
@@ -41,10 +41,12 @@ class GroupListAdapter(
         holder.customView.itemTitle.text = groupList[position]
 
         holder.customView.setOnClickListener {
-
-            for (i in 0 until (checkedGroupItems?.size ?: 0)) {
-                notesDB.updateGroup(groupList[position], checkedGroupItems!![i] + 1)
-
+            if (checkedGroupItems?.size ?: 0 != 0) {
+                for (i in 0 until (checkedGroupItems?.size ?: 0)) {
+                    notesDB.updateGroup(groupList[position], checkedGroupItems!![i] + 1)
+                }
+            } else {
+                notesDB.updateGroup(groupList[position], itemPosition + 1)
             }
             Log.d("noteDBpos", (itemPosition).toString())
             val intent = Intent(holder.customView.context, MainActivity::class.java)

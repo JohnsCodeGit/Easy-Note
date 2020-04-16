@@ -29,5 +29,6 @@
     <string name="ad_id_banner">ca-app-pub-1441038997276804/4820456308</string>
     <string name="no_groups">No Groups</string>
     <string name="add_to_group">Add to group</string>
+    <string name="empty_group">Empty Group</string>
 
 </resources>
