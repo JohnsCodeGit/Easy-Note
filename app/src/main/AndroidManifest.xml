@@ -46,7 +46,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".GroupList"
+            android:name=".AddToGroup"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize">
             <meta-data
@@ -54,7 +54,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".GroupItems"
+            android:name=".GroupItemsList"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize">
             <meta-data

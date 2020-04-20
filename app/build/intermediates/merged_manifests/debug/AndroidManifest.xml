@@ -60,7 +60,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name="com.whiskey.notes.GroupList"
+            android:name="com.whiskey.notes.AddToGroup"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" >
             <meta-data
@@ -68,7 +68,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name="com.whiskey.notes.GroupItems"
+            android:name="com.whiskey.notes.GroupItemsList"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" >
             <meta-data

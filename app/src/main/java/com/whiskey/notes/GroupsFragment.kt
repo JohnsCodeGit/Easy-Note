@@ -30,7 +30,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 class GroupsFragment : Fragment() {
     private var noteList = ArrayList<String>()
     private var searchItems = ArrayList<String>()
-    private lateinit var noteadapter: GroupAdapter
+    private lateinit var noteadapter: GroupsAdapter
     private var groupsDB = GroupsDB(null, null)
     private lateinit var searchView: SearchView
     private val layoutM = LinearLayoutManager(activity)
@@ -113,7 +113,7 @@ class GroupsFragment : Fragment() {
             layoutM.reverseLayout = true
             layoutManager = layoutM
             checkBox = activity?.findViewById(R.id.radioButton)!!
-            noteadapter = GroupAdapter(
+            noteadapter = GroupsAdapter(
                 deleteButton, checkBox, constraintLayout, this.context,
                 recyclerView, noteList, searchItems, textView, fab
             )
@@ -159,7 +159,7 @@ class GroupsFragment : Fragment() {
         constraintLayout = view.findViewById(R.id.constrainG)
         recyclerView = view.findViewById(R.id.recyclerView_group)
 
-        noteadapter = recyclerView.adapter as GroupAdapter
+        noteadapter = recyclerView.adapter as GroupsAdapter
 
         deleteButton.visibility = View.GONE
         deleteButton.isVisible = false

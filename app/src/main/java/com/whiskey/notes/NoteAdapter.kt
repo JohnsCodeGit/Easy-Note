@@ -183,7 +183,7 @@ class NoteAdapter(
             addToGroup.setOnClickListener {
                 val groupDb = GroupsDB(this.context, null)
                 val groupListArray: ArrayList<String> = groupDb.getAllGroups()
-                val intent = Intent(holder.customView.context, GroupList::class.java)
+                val intent = Intent(holder.customView.context, AddToGroup::class.java)
                 intent.putStringArrayListExtra("groupList", groupListArray)
                 intent.putExtra(
                     "noteItem",

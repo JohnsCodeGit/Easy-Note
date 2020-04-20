@@ -32,6 +32,8 @@ class ViewNoteActivity : AppCompatActivity() {
     private val formatter = SimpleDateFormat("MM/dd/yyyy, hh:mm aaa")
     private val dateText = formatter.format(date).toString()
     private var noteList = ArrayList<NoteModel>()
+    private var groupList = ArrayList<String>()
+
     lateinit var note: String
     lateinit var title: String
     var boolean: Int = 0
@@ -223,10 +225,9 @@ class ViewNoteActivity : AppCompatActivity() {
             Log.d("boolean", boolean.toString())
 
         } else if (id == R.id.addToGroup) {
-            val intent = Intent(this.applicationContext, GroupList::class.java)
+            val intent = Intent(this.applicationContext, AddToGroup::class.java)
             save()
             intent.putExtra("itemPositionList", position)
-            var groupList = ArrayList<String>()
             val groupDB = GroupsDB(this, null)
             groupList = groupDB.getAllGroups()
             intent.putStringArrayListExtra("groupList", groupList)

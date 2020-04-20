@@ -7,15 +7,29 @@
     android:background="@color/Background"
     android:orientation="vertical">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarItems"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/dark"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        android:visibility="visible"
+        app:elevation="4dp"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:titleTextColor="@android:color/white"
+        tools:visibility="visible" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/LConstGItems"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/Background"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/textView10"
@@ -36,11 +50,13 @@
             android:background="@color/dark"
 
             android:theme="@style/AppTheme.AppBarOverlay"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintVertical_bias="0.0"
+            tools:visibility="visible">
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -115,17 +131,5 @@
         </androidx.recyclerview.widget.RecyclerView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbarItems"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/dark"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark"
-        android:visibility="visible"
-        app:elevation="4dp"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:titleTextColor="@android:color/white"
-        tools:visibility="visible" />
 
 </LinearLayout>
