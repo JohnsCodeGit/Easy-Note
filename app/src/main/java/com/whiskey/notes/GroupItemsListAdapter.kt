@@ -22,7 +22,8 @@ class GroupItemsListAdapter(
     private val deleteAll: CheckBox,
     private val constraintLayout: ConstraintLayout,
     private val btnDelete: Button,
-    private val textView10: TextView
+    private val textView10: TextView,
+    private val groupTitle: String
 ) :
     RecyclerView.Adapter<GroupItemsListAdapter.CustomViewHolder>() {
 
@@ -333,11 +334,15 @@ class GroupItemsListAdapter(
                         notes.removeAt(checkedItems[0] - i)
                         notesDB.updateGroup(
                             "9MM(@{M_|^9rcR)K3[3-j.Qm",
-                            checkedItems[0] - i + 1
+                            checkedItems[0] + 1
+                        )
+                        Log.d("groupItemsList", notesDB.getGroup(groupTitle).toString())
+                        Log.d(
+                            "itemDeletedList",
+                            (checkedItems).toString() + (checkedItems[0] + 1).toString()
                         )
 
                         checkedItems.removeAt(0)
-                        Log.d("itemDeleted List", (checkedItems).toString())
                     }
 
                 }

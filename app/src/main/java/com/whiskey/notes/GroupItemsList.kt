@@ -55,7 +55,7 @@ class GroupItemsList : AppCompatActivity() {
         recyclerView.apply {
             noteAdapter = GroupItemsListAdapter(
                 notes, notesDB, recyclerView,
-                checkBox, constraintLayout, deleteAll, textView
+                checkBox, constraintLayout, deleteAll, textView, groups[groupPosition]
             )
             setBackgroundColor(Color.TRANSPARENT)
             layoutM.stackFromEnd = true
