@@ -9,18 +9,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.group_item.view.*
 
 class GroupItemsListAdapter(
-    private val notes: List<NoteModel>,
+    private val notes: ArrayList<NoteModel>,
     private val notesDB: NotesDbHelper,
     private val recyclerView: RecyclerView,
     private val deleteAll: CheckBox,
     private val constraintLayout: ConstraintLayout,
-    private val btnDelete: Button
+    private val btnDelete: Button,
+    private val textView10: TextView
 ) :
     RecyclerView.Adapter<GroupItemsListAdapter.CustomViewHolder>() {
 
@@ -255,14 +257,11 @@ class GroupItemsListAdapter(
     private fun clearAllItems() {
         checkedItems.clear()
         mCheckItems.clear()
-
     }
 
     private fun selectAll() {
         isAllChecked = true
         notifyDataSetChanged()
-
-
     }
 
     private fun unSelectAll() {
@@ -284,36 +283,18 @@ class GroupItemsListAdapter(
                     if (checkedItems.isEmpty()) {
                         break
                     } else {
-//                        deleteList = trashDB.getAllNote()
-//                        val noteModel = NoteModel(
-//                            noteList[checkedItems[0] - i].note,
-//                            noteList[checkedItems[0] - i].title,
-//                            noteList[checkedItems[0] - i].date
-//                        )
-//                        deleteList.add(noteModel)
-//                        trashDB.addNote(
-//                            noteList[checkedItems[0] - i].note,
-//                            noteList[checkedItems[0] - i].title,
-//                            noteList[checkedItems[0] - i].date,
-//                            deleteList.size
-//                        )
-                        //groupsDB.deleteItem(checkedItems[0] + 1 - i)
-                        //notes.removeAt(checkedItems[0] - i)
-                        //notes.removeAt(checkedItems[0] - i)
+                        notes.removeAt(checkedItems[0] - i)
+                        notesDB.updateGroup(
+                            "9MM(@{M_|^9rcR)K3[3-j.Qm",
+                            checkedItems[0] - i + 1
+                        )
 
-//                        notifyItemRemoved(checkedItems[0]-i)
+                        notifyItemRemoved(checkedItems[0] - i)
                         checkedItems.removeAt(0)
                         Log.d("itemDeleted List", (checkedItems).toString())
-
-
                     }
-
                 }
-
-                //notes.clear()
-                //notes.clear()
-                //groupsDB.deleteAll()
-
+                notes.clear()
                 checkedVisible = false
                 hideItems()
                 clearAllItems()
@@ -324,12 +305,6 @@ class GroupItemsListAdapter(
                 deleteAll.isSelected = false
                 unSelectAll()
                 deleteAll.isChecked = false
-//                if (noteList.isNotEmpty()) {
-//                    textView5.visibility = View.GONE
-//
-//                } else
-//                    textView5.visibility = View.VISIBLE
-
             }
             .setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()
@@ -355,16 +330,14 @@ class GroupItemsListAdapter(
                     if (checkedItems.isEmpty()) {
                         break
                     } else {
+                        notes.removeAt(checkedItems[0] - i)
+                        notesDB.updateGroup(
+                            "9MM(@{M_|^9rcR)K3[3-j.Qm",
+                            checkedItems[0] - i + 1
+                        )
 
-                        //groupsDB.deleteItem(checkedItems[0] + 1 - i)
-                        //notes.removeAt(checkedItems[0]-i)
-                        //notes.removeAt(checkedItems[0]-i)
-
-//                        notifyItemRemoved(checkedItems[0]-i)
                         checkedItems.removeAt(0)
                         Log.d("itemDeleted List", (checkedItems).toString())
-
-
                     }
 
                 }
@@ -377,11 +350,7 @@ class GroupItemsListAdapter(
                 deleteAll.isSelected = false
                 unSelectAll()
                 deleteAll.isChecked = false
-//                if (noteList.isNotEmpty()) {
-//                    textView5.visibility = View.GONE
-//
-//                } else
-                //.visibility = View.VISIBLE
+
             }
             .setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()

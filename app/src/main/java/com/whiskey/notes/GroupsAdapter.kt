@@ -396,11 +396,6 @@ class GroupsAdapter(
                 deleteAll.isSelected = false
                 unSelectAll()
                 deleteAll.isChecked = false
-                if (noteList.isNotEmpty()) {
-                    textView5.visibility = View.GONE
-
-                } else
-                    textView5.visibility = View.VISIBLE
             }
             .setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -45,11 +46,16 @@ class GroupItemsList : AppCompatActivity() {
         checkBox = findViewById(R.id.chkDeleteAll)
         constraintLayout = findViewById(R.id.constrainGLIST)
         recyclerView = findViewById(R.id.groupItemsRecyclerView)
+        val textView = findViewById<TextView>(R.id.textView10)
+        if (notes.isEmpty())
+            textView.visibility = View.VISIBLE
+        else
+            textView.visibility = View.GONE
         constraintLayout.visibility = View.VISIBLE
         recyclerView.apply {
             noteAdapter = GroupItemsListAdapter(
                 notes, notesDB, recyclerView,
-                checkBox, constraintLayout, deleteAll
+                checkBox, constraintLayout, deleteAll, textView
             )
             setBackgroundColor(Color.TRANSPARENT)
             layoutM.stackFromEnd = true

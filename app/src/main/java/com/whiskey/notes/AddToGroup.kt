@@ -2,13 +2,11 @@ package com.whiskey.notes
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.group_item_layout.*
 import kotlinx.android.synthetic.main.group_list_layout.*
 
 
@@ -42,10 +40,7 @@ class AddToGroup : AppCompatActivity() {
         val itemPosition = intent.getIntExtra("itemPositionList", -1)
         val checkedGroupItems = intent.getIntegerArrayListExtra("itemPositionList")
 
-        if (groupList.isEmpty())
-            textView10.visibility = View.VISIBLE
-        else
-            textView10.visibility = View.GONE
+
 
         recyclerView.apply {
             setBackgroundColor(Color.TRANSPARENT)

@@ -42,20 +42,21 @@ class MainActivity : AppCompatActivity() {
         toolbar.setBackgroundColor(ContextCompat.getColor(this, color.dark))
 //        window.statusBarColor = Color.parseColor("#13151a")
 
-        val frag = intent.getStringExtra("fragment")
+        val frag = HomeFragment()
 
         barLay = findViewById(R.id.const_layout)
         val navView: BottomNavigationView = findViewById(R.id.bot_view)
-        if (savedInstanceState == null && frag.isNullOrBlank()) {
+        if (savedInstanceState == null) {
             selectedFragment = HomeFragment()
             this.supportFragmentManager.beginTransaction()
                 .replace(R.id.frag_container, selectedFragment, "Notes").commit()
 
-        } else {
-            selectedFragment = supportFragmentManager.findFragmentByTag(frag)!!
-            this.supportFragmentManager.beginTransaction()
-                .replace(R.id.frag_container, selectedFragment, "Notes").commit()
         }
+//        else {
+//            selectedFragment = supportFragmentManager.findFragmentByTag(frag)!!
+//            this.supportFragmentManager.beginTransaction()
+//                .replace(R.id.frag_container, selectedFragment, "Notes").commit()
+//        }
         navView.setOnNavigationItemSelectedListener{
             for (i in 0 until supportFragmentManager.backStackEntryCount){
                 this.supportFragmentManager.popBackStack()

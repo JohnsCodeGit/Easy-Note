@@ -11,13 +11,14 @@
         android:title="Add"
         app:showAsAction="always" />
     <item
-
-        android:id="@+id/save"
-
-
+        android:id="@+id/fav"
+        android:icon="@drawable/fav_icon_empty"
         app:showAsAction="always"
+        android:title="@string/favorite"
 
-        android:title="Save"/>
+
+        />
+
     <item
 
         android:id="@+id/Delete"
@@ -27,15 +28,6 @@
         android:title="Delete"
         app:showAsAction="always" />
     <item
-        android:id="@+id/fav"
-        android:title="@string/favorite"
-        app:showAsAction="always"
-        android:icon="@drawable/fav_icon_empty"
-
-
-        />
-
-    <item
         android:id="@+id/share"
         android:title="@string/share"
         app:showAsAction="always"
@@ -43,6 +35,14 @@
 
 
         />
+    <item
+
+        android:id="@+id/save"
+
+
+        android:title="Save"
+
+        app:showAsAction="always" />
 
 
 </menu>

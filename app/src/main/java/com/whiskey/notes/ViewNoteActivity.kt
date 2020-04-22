@@ -36,15 +36,15 @@ class ViewNoteActivity : AppCompatActivity() {
 
     lateinit var note: String
     lateinit var title: String
-    var boolean: Int = 0
-    var bool: Boolean = false
-    var position: Int = 0
-    var menuVisible = false
+    private var boolean: Int = 0
+    private var bool: Boolean = false
+    private var position: Int = 0
+    private var menuVisible = false
     private lateinit var dateT: String
     private val notedbHandler = NotesDbHelper(this, null)
-    lateinit var mAdView: AdView
-    var trashDB: TrashDB = TrashDB(this, null)
-    var deleteList = ArrayList<NoteModel>()
+    private lateinit var mAdView: AdView
+    private var trashDB: TrashDB = TrashDB(this, null)
+    private var deleteList = ArrayList<NoteModel>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
