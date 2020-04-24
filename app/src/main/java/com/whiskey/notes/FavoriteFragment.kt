@@ -7,7 +7,6 @@ import android.content.Context.SEARCH_SERVICE
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.CheckBox
@@ -56,9 +55,9 @@ class FavoriteFragment : Fragment() {
             textView.visibility = View.GONE
         else {
             textView.visibility = View.VISIBLE
-            Log.d("visibility", true.toString())
+
         }
-        Log.d("favList", noteList.toString())
+
 
         val deleteAll = activity?.findViewById<CheckBox>(R.id.radioButton)!!
         val constraint = activity?.findViewById<ConstraintLayout>(R.id.constrain)!!
@@ -104,7 +103,7 @@ class FavoriteFragment : Fragment() {
         checkBox.isChecked = false
         checkBox.isSelected = false
         noteadapter.hideItems()
-        Log.d("visible?", checkBox.isVisible.toString())
+
 
     }
 

@@ -7,7 +7,6 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.text.InputType
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -101,9 +100,9 @@ class GroupsFragment : Fragment() {
             textView.visibility = View.GONE
         else {
             textView.visibility = View.VISIBLE
-            Log.d("visibility", true.toString())
+
         }
-        Log.d("favList", noteList.toString())
+
 
         recyclerView = view.findViewById(R.id.recyclerView_group)
 
@@ -171,7 +170,7 @@ class GroupsFragment : Fragment() {
         checkBox.isChecked = false
         checkBox.isSelected = false
         noteadapter.hideItems()
-        Log.d("visible?", checkBox.isVisible.toString())
+
 
     }
 

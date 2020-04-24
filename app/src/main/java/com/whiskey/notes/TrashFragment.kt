@@ -6,7 +6,6 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.CheckBox
@@ -59,7 +58,7 @@ class TrashFragment : Fragment() {
         } else
             textView.visibility = View.VISIBLE
 
-        Log.d("favList", noteList.toString())
+
 
         recyclerView = view.findViewById(R.id.recyclerView_trash)
 
@@ -103,7 +102,7 @@ class TrashFragment : Fragment() {
         checkBox.isChecked = false
         checkBox.isSelected = false
         noteadapter.hideItems()
-        Log.d("visible?", checkBox.isVisible.toString())
+
 
     }
 

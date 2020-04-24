@@ -2,7 +2,6 @@ package com.whiskey.notes
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,7 @@ class AddToGroupAdapter(
     var context: Context,
     var noteItem: NoteModel?,
     private var itemPosition: Int,
-    private var checkedGroupItems: ArrayList<Int>?
+    private var checkedGroupItems: ArrayList<Int>
 ) :
     RecyclerView.Adapter<AddToGroupAdapter.GroupViewHolder>() {
     private val groupsDB = GroupsDB(context, null)
@@ -41,14 +40,14 @@ class AddToGroupAdapter(
         holder.customView.itemTitle.text = groupList[position]
 
         holder.customView.setOnClickListener {
-            if (checkedGroupItems?.size ?: 0 != 0) {
-                for (i in 0 until (checkedGroupItems?.size ?: 0)) {
-                    notesDB.updateGroup(groupList[position], checkedGroupItems!![i] + 1)
+            if (checkedGroupItems.size != 0) {
+                for (i in 0 until checkedGroupItems.size) {
+                    notesDB.updateGroup(groupList[position], checkedGroupItems[i] + 1)
                 }
             } else {
                 notesDB.updateGroup(groupList[position], itemPosition + 1)
             }
-            Log.d("noteDBpos", (itemPosition).toString())
+
             val intent = Intent(holder.customView.context, MainActivity::class.java)
             startActivity(holder.customView.context, intent, null)
         }

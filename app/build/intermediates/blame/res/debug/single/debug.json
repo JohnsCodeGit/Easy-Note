@@ -24,6 +24,10 @@
         "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\drawable-xxxhdpi\\save_icon.png"
     },
     {
+        "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\layout_group_item_note.xml.flat",
+        "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\layout\\group_item_note.xml"
+    },
+    {
         "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_fav.xml.flat",
         "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\layout\\fragment_fav.xml"
     },

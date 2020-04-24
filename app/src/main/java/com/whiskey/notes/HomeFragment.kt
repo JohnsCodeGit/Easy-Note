@@ -8,7 +8,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.CheckBox
@@ -117,7 +116,7 @@ class HomeFragment : Fragment(){
             fabs.visibility = View.VISIBLE
             fabs.isVisible = true
             noteadapter.hideItems()
-        Log.d("visible?", checkBox.isVisible.toString())
+
 
     }
 

@@ -34,12 +34,13 @@ class GroupsAdapter(
     var fab: FloatingActionButton
 ) : RecyclerView.Adapter<GroupsAdapter.GroupViewHolder>(), Filterable {
     private var checkedItems = ArrayList<Int>()
-    var deleteList = ArrayList<String>()
     private var checkedVisible = false
     private var isAllChecked = false
     private var mCheckItems = SparseBooleanArray()
-    var trashDB: TrashDB = TrashDB(this.context, null)
     private val groupsDB = GroupsDB(this.context, null)
+    private val notesDB = NotesDbHelper(this.context, null)
+    private val notes = notesDB.getAllNote()
+    private lateinit var groupName: String
 
     override fun getItemCount(): Int {
 
@@ -72,7 +73,7 @@ class GroupsAdapter(
 
         searchItems = groupsDB.getAllGroups()
         holder.customView.itemTitle.text = searchItems[position]
-
+        groupName = searchItems[position]
 
         //DO NOT TOUCH
         if(searchItems.size == checkedItems.size){
@@ -86,7 +87,7 @@ class GroupsAdapter(
         else {
             holder.bind(position)
         }
-        Log.d("Bound", mCheckItems[position].toString())
+
 
         if (searchItems.isNotEmpty()) {
 
@@ -101,22 +102,20 @@ class GroupsAdapter(
                         else {
                             checkedItems.add(i)
                             mCheckItems.put(i, true)
-                            Log.d("itemAdded",
-                                mCheckItems[i].toString()
-                                        + ", "
-                                        + position.toString())
+
+
                         }
                     }
-                    Log.d("itemAddedAll", checkedItems.size.toString() +", "+ searchItems.size.toString())
+
                     selectAll()
 
                 } else if (!isChecked && searchItems.size == checkedItems.size && !holder.customView.checkBoxItem.isSelected) {
-                    Log.d("itemsCleared", checkedItems.size.toString())
+
 
                     unSelectAll()
                     checkedItems.clear()
                     mCheckItems.clear()
-                    Log.d("itemsCleared", checkedItems.size.toString())
+
                 }
 
             }
@@ -124,9 +123,6 @@ class GroupsAdapter(
             // Add checked check boxes to array to delete checked items
             // and save checked states while scrolling
             holder.customView.checkBoxItem.setOnCheckedChangeListener { _, isChecked ->
-
-                Log.d("itemChecked", isChecked.toString())
-                Log.d("itemNotesSize", searchItems.size.toString())
 
 
                 if (isChecked) {
@@ -136,10 +132,7 @@ class GroupsAdapter(
 
                         checkedItems.add(position)
                         mCheckItems.put(position, true)
-                        Log.d("itemAdded",
-                            mCheckItems[position].toString()
-                                    + ", "
-                                    + position.toString())
+
 
                     }
                 }
@@ -154,17 +147,16 @@ class GroupsAdapter(
                     holder.customView.checkBox.isChecked = false
                     mCheckItems.put(position, false)
                     checkedItems.remove(position)
-                    Log.d("itemRemoved", checkedItems.size.toString())
+
                 }
                 else if(!isChecked && !deleteAll.isChecked){
 
                     mCheckItems.put(position, false)
                     checkedItems.remove(position)
-                    Log.d("itemRemoved", checkedItems.size.toString())
+
 
                 }
-                Log.d("itemsChecked", mCheckItems[position].toString())
-                Log.d("itemDeleteCheckState", deleteAll.isChecked.toString())
+
 
             }
 
@@ -195,7 +187,7 @@ class GroupsAdapter(
             }
             if (checkedItems.contains(0) && noteList.size == 1) {
                 holder.customView.checkBoxItem.isChecked = true
-                Log.d("forceCheck", true.toString())
+
             }
 
             fun hideOrShow() {
@@ -226,7 +218,7 @@ class GroupsAdapter(
             //Show or hide check boxes
             hideOrShow()
 
-            Log.d("checkedVisible", checkedVisible.toString())
+
 
 
             holder.customView.setOnClickListener {
@@ -238,16 +230,12 @@ class GroupsAdapter(
 
                         checkedItems.add(position)
                         mCheckItems.put(position, true)
-                        Log.d("itemAdded",
-                            mCheckItems[position].toString()
-                                    + ", "
-                                    + position.toString())
                     } else if (!holder.customView.checkBoxItem.isChecked) {
                         if(position < checkedItems.size) {
                             mCheckItems.put(position, false)
                             deleteAll.isChecked = false
                             checkedItems.removeAt(position)
-                            Log.d("itemRemoved", position.toString())
+
                         }
                     }
                 }
@@ -302,28 +290,15 @@ class GroupsAdapter(
                     if (checkedItems.isEmpty()) {
                         break
                     } else {
-//                        deleteList = trashDB.getAllNote()
-//                        val noteModel = NoteModel(
-//                            noteList[checkedItems[0] - i].note,
-//                            noteList[checkedItems[0] - i].title,
-//                            noteList[checkedItems[0] - i].date
-//                        )
-//                        deleteList.add(noteModel)
-//                        trashDB.addNote(
-//                            noteList[checkedItems[0] - i].note,
-//                            noteList[checkedItems[0] - i].title,
-//                            noteList[checkedItems[0] - i].date,
-//                            deleteList.size
-//                        )
+                        val groupPosition = notesDB.getGroupPositions(groupName)
+
+                        for (j in groupPosition.indices)
+                            notesDB.updateGroup("", groupPosition[i])
+
                         groupsDB.deleteItem(checkedItems[0] + 1 - i)
                         noteList.removeAt(checkedItems[0] - i)
                         searchItems.removeAt(checkedItems[0] - i)
-
-//                        notifyItemRemoved(checkedItems[0]-i)
                         checkedItems.removeAt(0)
-                        Log.d("itemDeleted List", (checkedItems).toString())
-
-
                     }
 
                 }
@@ -367,23 +342,22 @@ class GroupsAdapter(
             .setPositiveButton("Yes") {
                     dialog, _-> dialog.dismiss()
                 checkedItems.sort()
-                Log.d("itemDeleted List1", (checkedItems).toString())
 
-                for (i in 0 until checkedItems.size){
+
+                for (i in checkedItems.indices) {
                     if (checkedItems.isEmpty()) {
                         break
                     }
                     else{
+                        val groupPositions = notesDB.getGroupPositions(groupName)
+                        Log.d("groupSize", groupPositions.toString())
+                        for (j in groupPositions.indices)
+                            notesDB.updateGroup("", groupPositions[i])
 
                         groupsDB.deleteItem(checkedItems[0] + 1 - i)
                         noteList.removeAt(checkedItems[0]-i)
                         searchItems.removeAt(checkedItems[0]-i)
-
-//                        notifyItemRemoved(checkedItems[0]-i)
                         checkedItems.removeAt(0)
-                        Log.d("itemDeleted List", (checkedItems).toString())
-
-
                     }
 
                 }
@@ -438,18 +412,6 @@ class GroupsAdapter(
             }
             return true
         }
-
-//        override fun onClick(v: View?) {
-//            //Changed the state of check box visibility
-//
-//            if(checkedVisible){
-//                checkedVisible = false
-//                notifyDataSetChanged()
-//            }
-//
-//        }
-
-
     }
 
     override fun getFilter(): Filter {
@@ -469,7 +431,7 @@ class GroupsAdapter(
                     for (item: String in noteList) {
                         val noteItem = item.replace("\n", " ")
                         noteItem.replace("\t", " ")
-                        Log.d("noteItemText", noteItem)
+
 
                         if (item.toLowerCase(Locale.getDefault()).trim().contains(filterPattern)
                             || item.toLowerCase(Locale.getDefault()).trim().contains(
@@ -479,7 +441,7 @@ class GroupsAdapter(
                         ) {
                             searchItems.add(item)
 
-                            Log.d("addedSearch", searchItems.toString())
+
                         }
                     }
 

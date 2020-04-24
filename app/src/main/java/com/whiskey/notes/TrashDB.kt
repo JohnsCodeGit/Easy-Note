@@ -5,7 +5,6 @@ import android.content.Context
 import android.database.DatabaseUtils
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 
 class TrashDB(context: Context?,
               factory: SQLiteDatabase.CursorFactory?) :
@@ -50,7 +49,7 @@ SQLiteOpenHelper(context, DATABASE_NAME,
                     val note: String = cursor.getString(cursor.getColumnIndex(COLUMN_NAME))
                     val title: String = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE))
                     val date: String = cursor.getString(cursor.getColumnIndex(COLUMN_DATE))
-                    val noteItem = NoteModel(note, title, date)
+                    val noteItem = NoteModel(note, title, date, "")
 
                     notes.add(noteItem)
 
@@ -86,7 +85,7 @@ SQLiteOpenHelper(context, DATABASE_NAME,
 
         )
         db.close()
-        Log.d("itemDeletedDataBase", item.toString())
+
     }
     fun getNoteSize(): Long{
         val db = this.readableDatabase

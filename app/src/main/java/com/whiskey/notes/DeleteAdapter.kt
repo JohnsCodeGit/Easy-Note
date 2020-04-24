@@ -4,7 +4,6 @@ package com.whiskey.notes
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -83,7 +82,7 @@ class DeleteAdapter(
         else {
             holder.bind(position)
         }
-        Log.d("Bound", mCheckItems[position].toString())
+
 
         if (searchItems.size != 0) {
 
@@ -98,23 +97,19 @@ class DeleteAdapter(
                         else {
                             checkedItems.add(i)
                             mCheckItems.put(i, true)
-                            Log.d("itemAdded",
-                                mCheckItems[i].toString()
-                                        + ", "
-                                        + position.toString())
                         }
                     }
-                    Log.d("itemAddedAll", checkedItems.size.toString() +", "+ searchItems.size.toString())
+
                     SelectAll()
 
                 }
                 else if(!isChecked && searchItems.size == checkedItems.size && !holder.customView.checkBox.isSelected){
-                    Log.d("itemsCleared", checkedItems.size.toString())
+
 
                     unSelectAll()
                     checkedItems.clear()
                     mCheckItems.clear()
-                    Log.d("itemsCleared", checkedItems.size.toString())
+
                 }
 
             }
@@ -122,19 +117,12 @@ class DeleteAdapter(
             // Add checked check boxes to array to delete checked items
             holder.customView.checkBox.setOnCheckedChangeListener { _, isChecked ->
 
-                Log.d("itemChecked", isChecked.toString())
-                Log.d("itemNotesSize", searchItems.size.toString())
-
 
                 if (isChecked) {
                     if(checkedItems.contains(position)){}
                     else {
                         checkedItems.add(position)
                         mCheckItems.put(position, true)
-                        Log.d("itemAdded",
-                            mCheckItems[position].toString()
-                                    + ", "
-                                    + position.toString())
                     }
                 }
                 else if(!isChecked && deleteAll.isChecked){
@@ -148,17 +136,16 @@ class DeleteAdapter(
                     holder.customView.checkBox.isChecked = false
                     mCheckItems.put(position, false)
                     checkedItems.remove(position)
-                    Log.d("itemRemoved", checkedItems.size.toString())
+
                 }
                 else if(!isChecked && !deleteAll.isChecked){
 
                     mCheckItems.put(position, false)
                     checkedItems.remove(position)
-                    Log.d("itemRemoved", checkedItems.size.toString())
+
 
                 }
-                Log.d("itemsChecked", mCheckItems[position].toString())
-                Log.d("itemDeleteCheckState", deleteAll.isChecked.toString())
+
 
             }
 
@@ -222,10 +209,6 @@ class DeleteAdapter(
 
                             checkedItems.add(position)
                             mCheckItems.put(position, true)
-                            Log.d("itemAdded",
-                                mCheckItems[position].toString()
-                                        + ", "
-                                        + position.toString())
                         }
                         !holder.customView.checkBox.isChecked -> {
                             when {
@@ -233,7 +216,7 @@ class DeleteAdapter(
                                     mCheckItems.put(position, false)
                                     deleteAll.isChecked = false
                                     checkedItems.removeAt(position)
-                                    Log.d("itemRemoved", position.toString())
+
                                 }
                                 else->{}
                             }
@@ -256,10 +239,10 @@ class DeleteAdapter(
 
                     if(noteList == searchItems){
                         intent.putExtra("position", position)
-                        Log.d("same", position.toString())
+
                     }else {
                         intent.putExtra("position", noteList.indexOf(searchItems[position]))
-                        Log.d("Not Same", noteList.indexOf(searchItems[position]).toString())
+
                     }
 
 
@@ -335,7 +318,7 @@ class DeleteAdapter(
             .setPositiveButton("Yes") {
                     dialog, _-> dialog.dismiss()
                 checkedItems.sort()
-                Log.d("itemDeleted List1", (checkedItems).toString())
+
 
                 for (i in 0 until checkedItems.size){
                     if(checkedItems.size == 0) {
@@ -347,10 +330,9 @@ class DeleteAdapter(
                         noteList.removeAt(checkedItems[0]-i)
                         searchItems.removeAt(checkedItems[0]-i)
 
-                        Log.d("itemDeleted3", checkedItems[0].toString())
+
 //                        notifyItemRemoved(checkedItems[0]-i)
                         checkedItems.removeAt(0)
-                        Log.d("itemDeleted List", (checkedItems).toString())
 
 
                     }
@@ -438,7 +420,7 @@ class DeleteAdapter(
                     for(item: NoteModel in noteList){
                         val noteItem = item.note.replace("\n", " ")
                         noteItem.replace("\t", " ")
-                        Log.d("noteItemText", noteItem)
+
 
                         if (item.note.toLowerCase(Locale.getDefault()).trim().contains(filterPattern)
                             || item.title.toLowerCase(Locale.getDefault()).trim().contains(
@@ -447,7 +429,7 @@ class DeleteAdapter(
                             && noteItem.isNotBlank()){
                             searchItems.add(item)
 
-                            Log.d("addedSearch", searchItems.toString())
+
                         }
                     }
 

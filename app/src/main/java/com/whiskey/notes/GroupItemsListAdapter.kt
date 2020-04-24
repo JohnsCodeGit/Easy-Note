@@ -9,11 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.group_item.view.*
+import kotlinx.android.synthetic.main.group_item.view.checkBoxItem
+import kotlinx.android.synthetic.main.group_item.view.dateText
+import kotlinx.android.synthetic.main.group_item.view.itemTitle
+import kotlinx.android.synthetic.main.group_item_note.view.*
 
 class GroupItemsListAdapter(
     private val notes: ArrayList<NoteModel>,
@@ -22,25 +24,26 @@ class GroupItemsListAdapter(
     private val deleteAll: CheckBox,
     private val constraintLayout: ConstraintLayout,
     private val btnDelete: Button,
-    private val textView10: TextView,
     private val groupTitle: String
+
 ) :
     RecyclerView.Adapter<GroupItemsListAdapter.CustomViewHolder>() {
 
     private var checkedItems = ArrayList<Int>()
     var noteDB = notesDB
+    private val noteList = noteDB.getAllNote()
     private var checkedVisible = false
     private var isAllChecked = false
     private var mCheckItems = SparseBooleanArray()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val rowView =
-            LayoutInflater.from(parent.context).inflate(R.layout.group_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.group_item_note, parent, false)
         return CustomViewHolder(rowView)
     }
 
     override fun getItemCount(): Int {
-        Log.d("notesSIZE", notes.count().toString())
+
         return notes.count()
     }
 
@@ -58,6 +61,9 @@ class GroupItemsListAdapter(
     }
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         val item = notes[position]
+        holder.rowView.itemTitle.text = item.title
+        holder.rowView.itemNote2.text = item.note
+        holder.rowView.dateText.text = item.date
         if (notes.size == checkedItems.size) {
 
 
@@ -68,97 +74,67 @@ class GroupItemsListAdapter(
         } else {
             holder.bind(position)
         }
-        if (notes.isNotEmpty()) {
+        if (checkedItems.contains(0) && notes.size == 1) {
+            holder.rowView.checkBoxItem.isChecked = true
+
+        }
+        if (notes.size != 0) {
 
             //Delete all items
             deleteAll.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     checkedItems.clear()
-
-                    for (i in notes.indices) {
+                    for (i in 0 until notes.size) {
 
                         if (checkedItems.contains(i))
                         else {
                             checkedItems.add(i)
                             mCheckItems.put(i, true)
-                            Log.d(
-                                "itemAdded",
-                                mCheckItems[i].toString()
-                                        + ", "
-                                        + position.toString()
-                            )
                         }
                     }
-                    Log.d(
-                        "itemAddedAll",
-                        checkedItems.size.toString() + ", " + notes.size.toString()
-                    )
                     selectAll()
-
-                } else if (!isChecked && notes.size == checkedItems.size && !holder.rowView.checkBoxItem.isSelected) {
-                    Log.d("itemsCleared", checkedItems.size.toString())
-
+                } else if (!isChecked && notes.size == checkedItems.size &&
+                    !holder.rowView.checkBoxItem.isSelected
+                ) {
                     unSelectAll()
                     checkedItems.clear()
                     mCheckItems.clear()
-                    Log.d("itemsCleared", checkedItems.size.toString())
                 }
 
             }
         }
-        if (notes.isNotEmpty()) {
 
-            //Delete all items
-            deleteAll.setOnCheckedChangeListener { _, isChecked ->
+        // Add checked check boxes to array to delete checked items
+        // and save checked states while scrolling
+        holder.rowView.checkBoxItem.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
-                    checkedItems.clear()
-
-                    for (i in notes.indices) {
-
-                        if (checkedItems.contains(i))
-                        else {
-                            checkedItems.add(i)
-                            mCheckItems.put(i, true)
-                            Log.d(
-                                "itemAdded",
-                                mCheckItems[i].toString()
-                                        + ", "
-                                        + position.toString()
-                            )
-                        }
+                    if (checkedItems.contains(position)) {
+                    } else {
+                        checkedItems.add(position)
+                        mCheckItems.put(position, true)
                     }
-                    Log.d(
-                        "itemAddedAll",
-                        checkedItems.size.toString() + ", " + notes.size.toString()
-                    )
-                    selectAll()
-
-                } else if (!isChecked && notes.size == checkedItems.size && !holder.rowView.checkBoxItem.isSelected) {
-                    Log.d("itemsCleared", checkedItems.size.toString())
-
-                    unSelectAll()
+                } else if (!isChecked && deleteAll.isChecked) {
                     checkedItems.clear()
                     mCheckItems.clear()
-                    Log.d("itemsCleared", checkedItems.size.toString())
-                }
+                    for (i in 0 until notes.size) {
 
+                        checkedItems.add(i)
+                        mCheckItems.put(i, true)
+                    }
+                    holder.rowView.checkBoxItem.isChecked = false
+                    mCheckItems.put(position, false)
+                    checkedItems.remove(position)
+
+                } else if (!isChecked && !deleteAll.isChecked) {
+
+                    mCheckItems.put(position, false)
+                    checkedItems.remove(position)
+                }
             }
-        }
+
         btnDelete.setOnClickListener {
-
-            if (deleteAll.isChecked) {
-
-                deleteAll(holder.rowView, deleteAll, btnDelete)
-                notifyDataSetChanged()
-
-            } else {
-
                 deleteItems(holder.rowView, deleteAll, btnDelete)
                 notifyDataSetChanged()
-
-            }
-
-
         }
         fun hideOrShow() {
             if (checkedVisible) {
@@ -166,13 +142,13 @@ class GroupItemsListAdapter(
                 holder.rowView.checkBoxItem.visibility = View.VISIBLE
                 //holder.customView.checkBoxItem.isChecked = true
                 btnDelete.visibility = View.VISIBLE
-//                    holder.customView.button.visibility = View.VISIBLE
+                holder.rowView.button2.visibility = View.VISIBLE
                 deleteAll.visibility = View.VISIBLE
                 constraintLayout.visibility = View.VISIBLE
             } else if (!checkedVisible) {
                 holder.rowView.checkBoxItem.visibility = View.GONE
                 btnDelete.visibility = View.GONE
-//                    holder.customView.button.visibility = View.GONE
+                holder.rowView.button2.visibility = View.GONE
                 deleteAll.visibility = View.GONE
                 checkedItems.clear()
                 mCheckItems.clear()
@@ -181,10 +157,6 @@ class GroupItemsListAdapter(
         }
         holder.rowView.checkBoxItem.setOnCheckedChangeListener { _, isChecked ->
 
-            Log.d("itemChecked", isChecked.toString())
-            Log.d("itemNotesSize", notes.size.toString())
-
-
             if (isChecked) {
 
                 if (checkedItems.contains(position)) {
@@ -192,12 +164,7 @@ class GroupItemsListAdapter(
 
                     checkedItems.add(position)
                     mCheckItems.put(position, true)
-                    Log.d(
-                        "itemAdded",
-                        mCheckItems[position].toString()
-                                + ", "
-                                + position.toString()
-                    )
+
 
                 }
             } else if (!isChecked && deleteAll.isChecked) {
@@ -211,23 +178,18 @@ class GroupItemsListAdapter(
                 holder.rowView.checkBoxItem.isChecked = false
                 mCheckItems.put(position, false)
                 checkedItems.remove(position)
-                Log.d("itemRemoved", checkedItems.size.toString())
             } else if (!isChecked && !deleteAll.isChecked) {
 
                 mCheckItems.put(position, false)
                 checkedItems.remove(position)
-                Log.d("itemRemoved", checkedItems.size.toString())
 
             }
-            Log.d("itemsChecked", mCheckItems[position].toString())
-            Log.d("itemDeleteCheckState", deleteAll.isChecked.toString())
-
         }
         if (notes.isEmpty()) {
             checkedVisible = false
         }
         hideOrShow()
-        holder.rowView.itemTitle.text = item.title
+
         holder.rowView.setOnClickListener {
 
             if (checkedVisible) {
@@ -236,18 +198,13 @@ class GroupItemsListAdapter(
 
                     checkedItems.add(position)
                     mCheckItems.put(position, true)
-                    Log.d(
-                        "itemAdded",
-                        mCheckItems[position].toString()
-                                + ", "
-                                + position.toString()
-                    )
+
                 } else if (!holder.rowView.checkBoxItem.isChecked) {
                     if (position < checkedItems.size) {
                         mCheckItems.put(position, false)
                         deleteAll.isChecked = false
                         checkedItems.removeAt(position)
-                        Log.d("itemRemoved", position.toString())
+
                     }
                 }
             }
@@ -270,54 +227,13 @@ class GroupItemsListAdapter(
         notifyDataSetChanged()
     }
 
-    private fun deleteAll(view: View, delete: CheckBox, btn: Button) {
-        val dialogBuilder =
-            AlertDialog.Builder(view.context, R.style.MyDialogTheme)
-
-        // set message of alert dialog
-        dialogBuilder.setMessage("Do you want to delete all notes?")
-
-            .setCancelable(false)
-            .setPositiveButton("Yes") { dialog, _ ->
-                dialog.dismiss()
-                for (i in 0 until checkedItems.size) {
-                    if (checkedItems.isEmpty()) {
-                        break
-                    } else {
-                        notes.removeAt(checkedItems[0] - i)
-                        notesDB.updateGroup(
-                            "9MM(@{M_|^9rcR)K3[3-j.Qm",
-                            checkedItems[0] - i + 1
-                        )
-
-                        notifyItemRemoved(checkedItems[0] - i)
-                        checkedItems.removeAt(0)
-                        Log.d("itemDeleted List", (checkedItems).toString())
-                    }
-                }
-                notes.clear()
-                checkedVisible = false
-                hideItems()
-                clearAllItems()
-
-                delete.visibility = View.GONE
-                btn.visibility = View.GONE
-                constraintLayout.visibility = View.GONE
-                deleteAll.isSelected = false
-                unSelectAll()
-                deleteAll.isChecked = false
-            }
-            .setNegativeButton("No") { dialog, _ ->
-                dialog.cancel()
-            }
-        val alert = dialogBuilder.create()
-        alert.show()
-    }
-
     private fun deleteItems(view: View, delete: CheckBox, btn: Button) {
         val dialogBuilder =
             AlertDialog.Builder(view.context, R.style.MyDialogTheme)
+        Log.d("deletePOS", checkedItems.toString())
 
+        val allNotes = notesDB.getGroup(groupTitle)
+        Log.d("deletePOS", allNotes.toString())
         // set message of alert dialog
         dialogBuilder.setMessage("Do you want to delete the selected notes?")
 
@@ -325,23 +241,18 @@ class GroupItemsListAdapter(
             .setPositiveButton("Yes") { dialog, _ ->
                 dialog.dismiss()
                 checkedItems.sort()
-                Log.d("itemDeleted List1", (checkedItems).toString())
+
 
                 for (i in 0 until checkedItems.size) {
                     if (checkedItems.isEmpty()) {
                         break
                     } else {
-                        notes.removeAt(checkedItems[0] - i)
                         notesDB.updateGroup(
-                            "9MM(@{M_|^9rcR)K3[3-j.Qm",
-                            checkedItems[0] + 1
-                        )
-                        Log.d("groupItemsList", notesDB.getGroup(groupTitle).toString())
-                        Log.d(
-                            "itemDeletedList",
-                            (checkedItems).toString() + (checkedItems[0] + 1).toString()
+                            "",
+                            noteList.indexOf(notes[checkedItems[0] - i]) + 1
                         )
 
+                        notes.removeAt(checkedItems[0] - i)
                         checkedItems.removeAt(0)
                     }
 

@@ -46,6 +46,7 @@ class GroupItemsList : AppCompatActivity() {
         checkBox = findViewById(R.id.chkDeleteAll)
         constraintLayout = findViewById(R.id.constrainGLIST)
         recyclerView = findViewById(R.id.groupItemsRecyclerView)
+
         val textView = findViewById<TextView>(R.id.textView10)
         if (notes.isEmpty())
             textView.visibility = View.VISIBLE
@@ -55,7 +56,8 @@ class GroupItemsList : AppCompatActivity() {
         recyclerView.apply {
             noteAdapter = GroupItemsListAdapter(
                 notes, notesDB, recyclerView,
-                checkBox, constraintLayout, deleteAll, textView, groups[groupPosition]
+                checkBox, constraintLayout, deleteAll,
+                groups[groupPosition]
             )
             setBackgroundColor(Color.TRANSPARENT)
             layoutM.stackFromEnd = true
@@ -70,10 +72,6 @@ class GroupItemsList : AppCompatActivity() {
                 )
             )
         }
-    }
-
-    fun hideAppBar(view: View) {
-        constraintLayout.visibility = View.GONE
     }
 
     override fun onBackPressed() {

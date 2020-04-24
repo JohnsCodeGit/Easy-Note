@@ -1,4 +1,7 @@
-@file:Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+@file:Suppress(
+    "RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS",
+    "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS"
+)
 
 package com.whiskey.notes
 
@@ -7,7 +10,6 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.Rect
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -115,20 +117,21 @@ class MainActivity : AppCompatActivity() {
         var noteText = intent.getStringExtra("note")
         var titleText = intent.getStringExtra("title")
         var dateText = intent.getStringExtra("date")
+        var group = intent.getStringExtra("group")
         val bool = intent.getIntExtra("bool", 0)
 
         if(((noteText != null && noteText.isNotBlank()) ||
                     (titleText != null)) && dateText != null) {
-            Log.d("NOTETEXT", noteText.toString())
+
             noteText = noteText.toString()
             titleText = titleText.toString()
             dateText = dateText.toString()
 
-            noteItem = NoteModel(noteText.toString(), titleText.toString(), dateText)
+            noteItem = NoteModel(noteText, titleText, dateText, group)
 
             val position: Int = intent.getIntExtra("position", -1)
 
-            Log.d("notePosition", position.toString())
+
             if(position == -1 && (noteText.isNotEmpty() || titleText.isNotEmpty())) {
 
                 noteList.add(noteItem)
@@ -136,7 +139,6 @@ class MainActivity : AppCompatActivity() {
 
                 notedbHandler.addNote(noteText, titleText.toString(), dateText, 0, noteList.size)
 //                favDbHandler.addNote(noteText, titleText.toString(), dateText, noteList.size)
-                Log.d("itemAddedNoteItem", noteItem.toString())
 
 
             } else if (position == -2 && (noteText.isNotEmpty() || titleText.isNotEmpty())) {
@@ -145,14 +147,23 @@ class MainActivity : AppCompatActivity() {
 
                 searchItems.removeAt(position)
                 noteList.removeAt(position)
+//                val groupName = notedbHandler.getGroupName(position + 1)
                 notedbHandler.deleteItem(position+1)
 
                 noteList.add(noteItem)
                 searchItems.add(noteItem)
 
-                notedbHandler.addNote(noteItem.note, noteItem.title, noteItem.date, bool, noteList.size)
+                notedbHandler.addNote(
+                    noteItem.note,
+                    noteItem.title,
+                    noteItem.date,
+                    bool,
+                    noteItem.group,
+                    noteList.size
+                )
 
-                Log.d("positionItem1", position.toString())
+//                notedbHandler.updateGroup(groupName, position + 1)
+
             }
 
 
@@ -179,7 +190,6 @@ class MainActivity : AppCompatActivity() {
         val frag3 = supportFragmentManager.findFragmentByTag("Trash")
         val frag4 = supportFragmentManager.findFragmentByTag("Groups")
 
-        Log.d("selectedFrag", frag1.toString())
 
         val home = HomeFragment()
         val fav = FavoriteFragment()

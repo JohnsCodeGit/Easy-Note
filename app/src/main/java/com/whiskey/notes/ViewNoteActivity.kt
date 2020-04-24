@@ -9,7 +9,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -20,7 +19,6 @@ import androidx.core.content.ContextCompat
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
-
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.view_note.*
 import java.util.*
@@ -40,8 +38,10 @@ class ViewNoteActivity : AppCompatActivity() {
     private var bool: Boolean = false
     private var position: Int = 0
     private var menuVisible = false
+    private lateinit var groupName: String
     private lateinit var dateT: String
     private val notedbHandler = NotesDbHelper(this, null)
+    private val groupsDB = GroupsDB(this, null)
     private lateinit var mAdView: AdView
     private var trashDB: TrashDB = TrashDB(this, null)
     private var deleteList = ArrayList<NoteModel>()
@@ -59,14 +59,17 @@ class ViewNoteActivity : AppCompatActivity() {
 
 
         eDate.text = ("Modified: $dateText").toString()
-        Log.d("bool", (notedbHandler.getFav(position)).toString())
+
 
         note = intent.getStringExtra("note")
         title = intent.getStringExtra("title")
         position = intent.getIntExtra("position", -1)
         noteList = intent.getParcelableArrayListExtra("noteList")
         dateT = intent.getStringExtra("date")
-        Log.d("positionItem", position.toString())
+
+        groupName = intent.getStringExtra("group")
+
+
         eTitle.hint = "Note Title"
         eTitle.setHintTextColor(Color.DKGRAY)
         toolbar.inflateMenu(R.menu.menu)
@@ -189,7 +192,8 @@ class ViewNoteActivity : AppCompatActivity() {
             val noteModel = NoteModel(
                 noteList[position].note,
                 noteList[position].title,
-                noteList[position].date
+                noteList[position].date,
+                noteList[position].group
             )
             deleteList.add(noteModel)
             trashDB.addNote(
@@ -209,7 +213,7 @@ class ViewNoteActivity : AppCompatActivity() {
 
                 notedbHandler.updateNote(
                     eNote.text.toString(), eTitle.text.toString(),
-                    dateText, boolean, position + 1
+                    dateText, boolean, groupName, position + 1
                 )
             } else {
                 boolean = 0
@@ -219,10 +223,10 @@ class ViewNoteActivity : AppCompatActivity() {
                 )
                 notedbHandler.updateNote(
                     eNote.text.toString(), eTitle.text.toString(),
-                    dateText, boolean, position + 1
+                    dateText, boolean, groupName, position + 1
                 )
             }
-            Log.d("boolean", boolean.toString())
+
 
         } else if (id == R.id.addToGroup) {
             val intent = Intent(this.applicationContext, AddToGroup::class.java)
@@ -264,7 +268,7 @@ class ViewNoteActivity : AppCompatActivity() {
                     R.drawable.fav_icon_1
                 )
                 bool = true
-                Log.d("boolVal", notedbHandler.getFav(position+1).toString())
+
             }
 
         return true
@@ -281,7 +285,9 @@ class ViewNoteActivity : AppCompatActivity() {
             mainIntent.putExtra("title", title)
             mainIntent.putExtra("bool", boolean)
             mainIntent.putExtra("date", dateText)
+            mainIntent.putExtra("group", groupName)
             mainIntent.putExtra("position", position)
+
 
             startActivity(mainIntent)
         }
@@ -293,7 +299,8 @@ class ViewNoteActivity : AppCompatActivity() {
         date = Calendar.getInstance().time
 
         notedbHandler.updateNote(eNote.text.toString(), eTitle.text.toString(),
-            dateText, boolean, position + 1
+            dateText, boolean, groupName, position + 1
         )
+//        notedbHandler.updateGroup(groupName, position + 1)
     }
 }

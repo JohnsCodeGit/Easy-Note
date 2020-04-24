@@ -85,7 +85,7 @@ class NewNoteActivity : AppCompatActivity() {
             val date = Calendar.getInstance().time
             val formatter = SimpleDateFormat("MM/dd/yyyy, hh:mm aaa")
             val dateText = formatter.format(date).toString()
-
+            intent.putExtra("group", "")
             intent.putExtra("date", dateText)
             startActivity(intent)
             return true

@@ -6,7 +6,6 @@ import android.database.Cursor
 import android.database.DatabaseUtils
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 
 
 class NotesDbHelper(
@@ -40,7 +39,21 @@ class NotesDbHelper(
         values.put(COLUMN_TITLE, title)
         values.put(COLUMN_DATE, date)
         values.put(COLUMN_FAV, fav)
-        values.put(COLUMN_GROUP, "9MM(@{M_|^9rcR)K3[3-j.Qm")
+        values.put(COLUMN_GROUP, "")
+
+        val db = this.writableDatabase
+        values.put(COLUMN_INDEX, index)
+        db.insert(TABLE_NAME, null, values)
+        db.close()
+    }
+
+    fun addNote(note: String, title: String, date: String, fav: Int, group: String, index: Int) {
+        val values = ContentValues()
+        values.put(COLUMN_NAME, note)
+        values.put(COLUMN_TITLE, title)
+        values.put(COLUMN_DATE, date)
+        values.put(COLUMN_FAV, fav)
+        values.put(COLUMN_GROUP, group)
 
         val db = this.writableDatabase
         values.put(COLUMN_INDEX, index)
@@ -57,7 +70,9 @@ class NotesDbHelper(
                     val note: String = cursor.getString(cursor.getColumnIndex(COLUMN_NAME))
                     val title: String = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE))
                     val date: String = cursor.getString(cursor.getColumnIndex(COLUMN_DATE))
-                    val noteItem = NoteModel(note, title, date)
+                    val group: String = cursor.getString(cursor.getColumnIndex(COLUMN_GROUP))
+
+                    val noteItem = NoteModel(note, title, date, group)
 
                     notes.add(noteItem)
 
@@ -72,7 +87,15 @@ class NotesDbHelper(
         val db = this.writableDatabase
         db.execSQL("delete from $TABLE_NAME")
     }
-    fun updateNote(note: String, title: String, date: String, fav: Int, position: Int){
+
+    fun updateNote(
+        note: String,
+        title: String,
+        date: String,
+        fav: Int,
+        group: String,
+        position: Int
+    ) {
         val newValues = ContentValues()
         newValues.put(COLUMN_NAME, note)
         newValues.put(COLUMN_TITLE, title)
@@ -88,11 +111,13 @@ class NotesDbHelper(
         val note = noteItem.note
         val title = noteItem.title
         val date = noteItem.date
+        val group = noteItem.group
 
         newValues.put(COLUMN_NAME, note)
         newValues.put(COLUMN_TITLE, title)
         newValues.put(COLUMN_DATE, date)
         newValues.put(COLUMN_FAV, fav)
+        newValues.put(COLUMN_GROUP, group)
         val db = this.writableDatabase
         db.update(TABLE_NAME, newValues, "$COLUMN_INDEX=$position", null)
         db.close()
@@ -116,7 +141,7 @@ class NotesDbHelper(
 
         )
         db.close()
-        Log.d("itemDeletedDataBase", item.toString())
+
     }
     fun getFav(position: Int): Int{
         val db = this.writableDatabase
@@ -129,7 +154,7 @@ class NotesDbHelper(
 
         c.close()
         db.close()
-        Log.d("boolDB", bool.toString())
+
         return bool
 
 
@@ -137,7 +162,7 @@ class NotesDbHelper(
 
     fun getGroup(groupName: String): ArrayList<NoteModel> {
         val db = this.writableDatabase
-        val group = ArrayList<NoteModel>()
+        val groupItems = ArrayList<NoteModel>()
         val cursor: Cursor =
             db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COLUMN_GROUP like '%$groupName%'", null)
 
@@ -147,10 +172,74 @@ class NotesDbHelper(
                     val note: String = cursor.getString(cursor.getColumnIndex(COLUMN_NAME))
                     val title: String = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE))
                     val date: String = cursor.getString(cursor.getColumnIndex(COLUMN_DATE))
-                    val noteItem = NoteModel(note, title, date)
+                    val group: String = cursor.getString(cursor.getColumnIndex(COLUMN_GROUP))
+                    val noteItem = NoteModel(note, title, date, group)
 
-                    group.add(noteItem)
+                    groupItems.add(noteItem)
 
+                }
+                cursor.moveToNext()
+            }
+        }
+        cursor.close()
+        return groupItems
+    }
+
+    fun getGroupPositions(groupName: String): ArrayList<Int> {
+        val db = this.writableDatabase
+        val group = ArrayList<Int>()
+        val cursor: Cursor =
+            db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COLUMN_GROUP like '%$groupName%'", null)
+
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast) {
+                if (cursor.getString(cursor.getColumnIndex(COLUMN_NAME)) != null) {
+
+                    val position: Int = cursor.getColumnIndex(COLUMN_GROUP)
+
+                    group.add(position)
+
+                }
+                cursor.moveToNext()
+            }
+        }
+        cursor.close()
+        return group
+    }
+//    fun getGroup(groupName: Int): ArrayList<NoteModel> {
+//        val db = this.writableDatabase
+//        val group = ArrayList<NoteModel>()
+//        val cursor: Cursor =
+//            db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COLUMN_INDEX == $groupName", null)
+//
+//        if (cursor.moveToFirst()) {
+//            while (!cursor.isAfterLast) {
+//                if (cursor.getString(cursor.getColumnIndex(COLUMN_NAME)) != null) {
+//                    val note: String = cursor.getString(cursor.getColumnIndex(COLUMN_NAME))
+//                    val title: String = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE))
+//                    val date: String = cursor.getString(cursor.getColumnIndex(COLUMN_DATE))
+//                    val noteItem = NoteModel(note, title, date)
+//
+//                    group.add(noteItem)
+//
+//                }
+//                cursor.moveToNext()
+//            }
+//        }
+//        cursor.close()
+//        return group
+//    }
+
+    fun getGroupName(groupName: Int): String {
+        val db = this.writableDatabase
+        lateinit var group: String
+        val cursor: Cursor =
+            db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COLUMN_INDEX == $groupName", null)
+
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast) {
+                if (cursor.getString(cursor.getColumnIndex(COLUMN_NAME)) != null) {
+                    group = cursor.getString(cursor.getColumnIndex(COLUMN_GROUP))
                 }
                 cursor.moveToNext()
             }
@@ -170,7 +259,8 @@ class NotesDbHelper(
                     val note: String = cursor.getString(cursor.getColumnIndex(COLUMN_NAME))
                     val title: String = cursor.getString(cursor.getColumnIndex(COLUMN_TITLE))
                     val date: String = cursor.getString(cursor.getColumnIndex(COLUMN_DATE))
-                    val noteItem = NoteModel(note, title, date)
+                    val group: String = cursor.getString(cursor.getColumnIndex(COLUMN_GROUP))
+                    val noteItem = NoteModel(note, title, date, group)
 
                     favs.add(noteItem)
 

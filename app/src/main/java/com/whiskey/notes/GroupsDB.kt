@@ -5,7 +5,6 @@ import android.content.Context
 import android.database.DatabaseUtils
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
 
 class GroupsDB(context: Context?,
                factory: SQLiteDatabase.CursorFactory?) :
@@ -103,7 +102,7 @@ class GroupsDB(context: Context?,
 
         )
         db.close()
-        Log.d("itemDeletedDataBase", item.toString())
+
     }
 
 
