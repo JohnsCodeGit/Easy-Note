@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     private var searchItems = ArrayList<NoteModel>()
     private var groupItems = ArrayList<String>()
     private lateinit var barLay: ConstraintLayout
-    private val notedbHandler = NotesDbHelper(this, null)
+    private val notedbHandler = NotesDB(this, null)
     private val groupsDB = GroupsDB(this, null)
     private lateinit var noteItem: NoteModel
 
@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         toolbar.setBackgroundColor(ContextCompat.getColor(this, color.dark))
 //        window.statusBarColor = Color.parseColor("#13151a")
 
-        val frag = HomeFragment()
+        //val frag = HomeFragment()
 
         barLay = findViewById(R.id.const_layout)
         val navView: BottomNavigationView = findViewById(R.id.bot_view)
@@ -117,7 +117,7 @@ class MainActivity : AppCompatActivity() {
         var noteText = intent.getStringExtra("note")
         var titleText = intent.getStringExtra("title")
         var dateText = intent.getStringExtra("date")
-        var group = intent.getStringExtra("group")
+        val group = intent.getStringExtra("group")
         val bool = intent.getIntExtra("bool", 0)
 
         if(((noteText != null && noteText.isNotBlank()) ||

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -19,12 +20,13 @@ import kotlinx.android.synthetic.main.group_item_note.view.*
 
 class GroupItemsListAdapter(
     private val notes: ArrayList<NoteModel>,
-    private val notesDB: NotesDbHelper,
+    private val notesDB: NotesDB,
     private val recyclerView: RecyclerView,
     private val deleteAll: CheckBox,
     private val constraintLayout: ConstraintLayout,
     private val btnDelete: Button,
-    private val groupTitle: String
+    private val groupTitle: String,
+    private val textView: TextView
 
 ) :
     RecyclerView.Adapter<GroupItemsListAdapter.CustomViewHolder>() {
@@ -266,7 +268,11 @@ class GroupItemsListAdapter(
                 deleteAll.isSelected = false
                 unSelectAll()
                 deleteAll.isChecked = false
+                if (notes.isNotEmpty()) {
+                    textView.visibility = View.GONE
 
+                } else
+                    textView.visibility = View.VISIBLE
             }
             .setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()

@@ -19,7 +19,7 @@ class GroupItemsList : AppCompatActivity() {
     var notes = ArrayList<NoteModel>()
     var notesAll = ArrayList<NoteModel>()
     private var groups = ArrayList<String>()
-    private val notesDB = NotesDbHelper(this, null)
+    private val notesDB = NotesDB(this, null)
     private val groupsDB = GroupsDB(this, null)
     private val layoutM = LinearLayoutManager(this)
     private lateinit var checkBox: CheckBox
@@ -35,9 +35,9 @@ class GroupItemsList : AppCompatActivity() {
         val groupPosition = intent.getIntExtra("groupPos", -1)
         groups = groupsDB.getAllGroups()
 
-        toolbarItems.title = groups[groupPosition]
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.title = groups[groupPosition]
 
         if (groupsDB.getGroupSize() != 0.toLong())
             notes = notesDB.getGroup(groups[groupPosition])
@@ -48,16 +48,18 @@ class GroupItemsList : AppCompatActivity() {
         recyclerView = findViewById(R.id.groupItemsRecyclerView)
 
         val textView = findViewById<TextView>(R.id.textView10)
-        if (notes.isEmpty())
-            textView.visibility = View.VISIBLE
-        else
+
+        if (notes.isNotEmpty()) {
             textView.visibility = View.GONE
+        } else
+            textView.visibility = View.VISIBLE
+
         constraintLayout.visibility = View.VISIBLE
         recyclerView.apply {
             noteAdapter = GroupItemsListAdapter(
                 notes, notesDB, recyclerView,
                 checkBox, constraintLayout, deleteAll,
-                groups[groupPosition]
+                groups[groupPosition], textView
             )
             setBackgroundColor(Color.TRANSPARENT)
             layoutM.stackFromEnd = true

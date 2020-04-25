@@ -29,7 +29,7 @@ class DeleteAdapter(
     var buttonLayout: ConstraintLayout,
 
     var context: Context,
-    var notedbHandler: NotesDbHelper,
+    var notedbHandler: NotesDB,
 
     var recyclerviewMain: RecyclerView,
 

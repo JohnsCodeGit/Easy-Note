@@ -96,12 +96,11 @@ class GroupsFragment : Fragment() {
 
         }
 
-        if (noteList.size != 0)
+        if (noteList.isNotEmpty()) {
             textView.visibility = View.GONE
-        else {
-            textView.visibility = View.VISIBLE
 
-        }
+        } else
+            textView.visibility = View.VISIBLE
 
 
         recyclerView = view.findViewById(R.id.recyclerView_group)
@@ -162,13 +161,16 @@ class GroupsFragment : Fragment() {
 
         deleteButton.visibility = View.GONE
         deleteButton.isVisible = false
+
         checkBox.visibility = View.GONE
         checkBox.isVisible = false
 
         constraintLayout.visibility = View.GONE
         constraintLayout.isVisible = false
+
         checkBox.isChecked = false
         checkBox.isSelected = false
+
         noteadapter.hideItems()
 
 

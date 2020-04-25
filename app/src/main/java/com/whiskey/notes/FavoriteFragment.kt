@@ -25,7 +25,7 @@ class FavoriteFragment : Fragment() {
     private var noteList = ArrayList<NoteModel>()
     private var searchItems = ArrayList<NoteModel>()
     private lateinit  var noteadapter: FavoriteAdapter
-    private var notedbHandler = NotesDbHelper(null, null)
+    private var notedbHandler = NotesDB(null, null)
     private lateinit var searchView: SearchView
     private val layoutM = LinearLayoutManager(activity)
     private lateinit var deleteButton: Button
@@ -108,7 +108,7 @@ class FavoriteFragment : Fragment() {
     }
 
     override fun onAttach(context: Context) {
-        notedbHandler = NotesDbHelper(activity,null)
+        notedbHandler = NotesDB(activity, null)
         super.onAttach(context)
     }
 

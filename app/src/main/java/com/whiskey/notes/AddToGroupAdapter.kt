@@ -12,13 +12,12 @@ import kotlinx.android.synthetic.main.note_row_item.view.*
 class AddToGroupAdapter(
     var groupList: ArrayList<String>,
     var context: Context,
-    var noteItem: NoteModel?,
     private var itemPosition: Int,
     private var checkedGroupItems: ArrayList<Int>
 ) :
     RecyclerView.Adapter<AddToGroupAdapter.GroupViewHolder>() {
     private val groupsDB = GroupsDB(context, null)
-    private val notesDB = NotesDbHelper(context, null)
+    private val notesDB = NotesDB(context, null)
     private val notes = notesDB.getAllNote()
     override fun getItemCount() = groupList.size
 

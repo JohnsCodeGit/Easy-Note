@@ -3,7 +3,6 @@ package com.whiskey.notes
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -38,7 +37,7 @@ class GroupsAdapter(
     private var isAllChecked = false
     private var mCheckItems = SparseBooleanArray()
     private val groupsDB = GroupsDB(this.context, null)
-    private val notesDB = NotesDbHelper(this.context, null)
+    private val notesDB = NotesDB(this.context, null)
     private val notes = notesDB.getAllNote()
     private lateinit var groupName: String
 
@@ -286,14 +285,14 @@ class GroupsAdapter(
             .setCancelable(false)
             .setPositiveButton("Yes") {
                     dialog, _-> dialog.dismiss()
-                for (i in 0 until checkedItems.size) {
+                for (i in checkedItems.indices) {
                     if (checkedItems.isEmpty()) {
                         break
                     } else {
-                        val groupPosition = notesDB.getGroupPositions(groupName)
-
-                        for (j in groupPosition.indices)
-                            notesDB.updateGroup("", groupPosition[i])
+//                        val groupPosition = notesDB.getGroupPositions(groupName)
+//
+//                        for (j in groupPosition.indices)
+//                            notesDB.updateGroup("", groupPosition[i])
 
                         groupsDB.deleteItem(checkedItems[0] + 1 - i)
                         noteList.removeAt(checkedItems[0] - i)
@@ -319,10 +318,8 @@ class GroupsAdapter(
                 deleteAll.isChecked = false
                 if (noteList.isNotEmpty()) {
                     textView5.visibility = View.GONE
-
                 } else
                     textView5.visibility = View.VISIBLE
-
             }
             .setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()
@@ -349,10 +346,10 @@ class GroupsAdapter(
                         break
                     }
                     else{
-                        val groupPositions = notesDB.getGroupPositions(groupName)
-                        Log.d("groupSize", groupPositions.toString())
-                        for (j in groupPositions.indices)
-                            notesDB.updateGroup("", groupPositions[i])
+//                        val groupPositions = notesDB.getGroupPositions(groupName)
+//                        Log.d("groupSize", groupPositions.toString())
+//                        for (j in groupPositions.indices)
+//                            notesDB.updateGroup("", groupPositions[i])
 
                         groupsDB.deleteItem(checkedItems[0] + 1 - i)
                         noteList.removeAt(checkedItems[0]-i)
@@ -370,6 +367,11 @@ class GroupsAdapter(
                 deleteAll.isSelected = false
                 unSelectAll()
                 deleteAll.isChecked = false
+                if (noteList.isNotEmpty()) {
+                    textView5.visibility = View.GONE
+
+                } else
+                    textView5.visibility = View.VISIBLE
             }
             .setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()

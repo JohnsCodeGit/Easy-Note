@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 
 
-class NotesDbHelper(
+class NotesDB(
     context: Context?,
     factory: SQLiteDatabase.CursorFactory?) :
     SQLiteOpenHelper(context, DATABASE_NAME,
@@ -101,6 +101,7 @@ class NotesDbHelper(
         newValues.put(COLUMN_TITLE, title)
         newValues.put(COLUMN_DATE, date)
         newValues.put(COLUMN_FAV, fav)
+        newValues.put(COLUMN_GROUP, group)
         val db = this.writableDatabase
         db.update(TABLE_NAME, newValues, "$COLUMN_INDEX=$position", null)
         db.close()

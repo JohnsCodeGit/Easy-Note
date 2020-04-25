@@ -40,7 +40,7 @@ class ViewNoteActivity : AppCompatActivity() {
     private var menuVisible = false
     private lateinit var groupName: String
     private lateinit var dateT: String
-    private val notedbHandler = NotesDbHelper(this, null)
+    private val notedbHandler = NotesDB(this, null)
     private val groupsDB = GroupsDB(this, null)
     private lateinit var mAdView: AdView
     private var trashDB: TrashDB = TrashDB(this, null)
@@ -229,12 +229,20 @@ class ViewNoteActivity : AppCompatActivity() {
 
 
         } else if (id == R.id.addToGroup) {
-            val intent = Intent(this.applicationContext, AddToGroup::class.java)
+
             save()
-            intent.putExtra("itemPositionList", position)
+
             val groupDB = GroupsDB(this, null)
             groupList = groupDB.getAllGroups()
+
+            val checkedGroupItems = ArrayList<Int>()
+            checkedGroupItems.add(position)
+
+            val intent = Intent(this.applicationContext, AddToGroup::class.java)
+            intent.putExtra("itemPosition", position)
+            intent.putIntegerArrayListExtra("itemPositionList", checkedGroupItems)
             intent.putStringArrayListExtra("groupList", groupList)
+
             startActivity(intent)
         }
 

@@ -28,10 +28,8 @@ class NoteAdapter(
     private var deleteAll: CheckBox,
     private var buttonLayout: ConstraintLayout,
     private var fab: FloatingActionButton,
-
     private var context: Context,
-    private var notedbHandler: NotesDbHelper,
-
+    private var noteDB: NotesDB,
     private var recyclerviewMain: RecyclerView,
     private var noteList: ArrayList<NoteModel>,
     private var searchItems: ArrayList<NoteModel>,
@@ -41,7 +39,6 @@ class NoteAdapter(
 )
     : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), Filterable {
     private var checkedItems = ArrayList<Int>()
-    private var checkedGroupItems = ArrayList<Int>()
     private var deleteList = ArrayList<NoteModel>()
     private var checkedVisible = false
     private var isAllChecked = false
@@ -76,12 +73,11 @@ class NoteAdapter(
         holder.customView.dateText.text  = searchItems[position].date
         holder.customView.itemTitle.text = searchItems[position].title
         holder.customView.itemNote.text  = searchItems[position].note
-        groupName = searchItems[position].group
 
+        groupName = searchItems[position].group
 
         //DO NOT TOUCH
         if(searchItems.size == checkedItems.size){
-
 
             holder.customView.checkBox.isChecked = isAllChecked
 
@@ -99,9 +95,10 @@ class NoteAdapter(
             deleteAll.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     checkedItems.clear()
-                    for (i in 0 until noteList.size) {
+                    for (i in noteList.indices) {
 
-                        if (checkedItems.contains(i))
+                        if (checkedItems.contains(i)) {
+                        }
                         else {
                             checkedItems.add(i)
                             mCheckItems.put(i, true)
@@ -128,11 +125,12 @@ class NoteAdapter(
                 } else if (!isChecked && deleteAll.isChecked) {
                     checkedItems.clear()
                     mCheckItems.clear()
-                    for (i in 0 until searchItems.size) {
 
+                    for (i in searchItems.indices) {
                         checkedItems.add(i)
                         mCheckItems.put(i, true)
                     }
+
                     holder.customView.checkBox.isChecked = false
                     mCheckItems.put(position, false)
                     checkedItems.remove(position)
@@ -154,19 +152,7 @@ class NoteAdapter(
                 val groupListArray: ArrayList<String> = groupDb.getAllGroups()
                 val intent = Intent(holder.customView.context, AddToGroup::class.java)
                 intent.putStringArrayListExtra("groupList", groupListArray)
-                intent.putExtra(
-                    "noteItem",
-                    NoteModel(
-                        searchItems[position].note,
-                        searchItems[position].title,
-                        searchItems[position].date,
-                        searchItems[position].group
-
-                    )
-                )
-
-                checkedGroupItems = checkedItems
-                intent.putIntegerArrayListExtra("itemPositionList", checkedGroupItems)
+                intent.putIntegerArrayListExtra("itemPositionList", checkedItems)
 
                 startActivity(this.context, intent, null)
 
@@ -193,7 +179,6 @@ class NoteAdapter(
                 if(checkedVisible) {
 
                     holder.customView.checkBox.visibility = View.VISIBLE
-                    //holder.customView.checkBox.isChecked = true
                     bDelete.visibility = View.VISIBLE
                     holder.customView.button.visibility = View.VISIBLE
                     deleteAll.visibility = View.VISIBLE
@@ -212,7 +197,7 @@ class NoteAdapter(
 
             }
 
-            if(noteList.size == 0){
+            if (noteList.isEmpty()) {
                 checkedVisible = false
             }
 
@@ -224,11 +209,8 @@ class NoteAdapter(
                 if (checkedVisible){
                     holder.customView.checkBox.isChecked = !holder.customView.checkBox.isChecked
                     if(!checkedItems.contains(position) && holder.customView.checkBox.isChecked){
-
                         checkedItems.add(position)
                         mCheckItems.put(position, true)
-
-
                     }
                     else if(!holder.customView.checkBox.isChecked){
                         if(position < checkedItems.size) {
@@ -274,20 +256,18 @@ class NoteAdapter(
     private fun clearAllItems() {
         checkedItems.clear()
         mCheckItems.clear()
-
     }
 
     private fun selectAll() {
         isAllChecked = true
         notifyDataSetChanged()
-
-
     }
 
     private fun unSelectAll() {
         isAllChecked = false
         notifyDataSetChanged()
     }
+
     private fun deleteAll(view:View, delete: CheckBox, btn: Button){
         val dialogBuilder =
             AlertDialog.Builder(view.context, R.style.MyDialogTheme)
@@ -298,8 +278,8 @@ class NoteAdapter(
             .setCancelable(false)
             .setPositiveButton("Yes") {
                     dialog, _-> dialog.dismiss()
-                for (i in 0 until checkedItems.size) {
-                    if(checkedItems.size == 0) {
+                for (i in checkedItems.indices) {
+                    if (checkedItems.isEmpty()) {
                         break
                     } else {
                         deleteList = trashDB.getAllNote()
@@ -316,7 +296,7 @@ class NoteAdapter(
                             noteList[checkedItems[0] - i].date,
                             deleteList.size
                         )
-                        notedbHandler.deleteItem(checkedItems[0] + 1 - i)
+                        noteDB.deleteItem(checkedItems[0] + 1 - i)
                         noteList.removeAt(checkedItems[0] - i)
                         searchItems.removeAt(checkedItems[0] - i)
                         checkedItems.removeAt(0)
@@ -326,7 +306,7 @@ class NoteAdapter(
 
                 searchItems.clear()
                 noteList.clear()
-                notedbHandler.deleteAll()
+                noteDB.deleteAll()
 
                 checkedVisible = false
                 hideItems()
@@ -339,7 +319,7 @@ class NoteAdapter(
                 deleteAll.isSelected = false
                 unSelectAll()
                 deleteAll.isChecked = false
-                if (noteList.size != 0) {
+                if (noteList.isNotEmpty()) {
                     textView5.visibility = View.GONE
 
                 } else
@@ -366,8 +346,8 @@ class NoteAdapter(
                 checkedItems.sort()
 
 
-                for (i in 0 until checkedItems.size){
-                    if(checkedItems.size == 0) {
+                for (i in checkedItems.indices) {
+                    if (checkedItems.isEmpty()) {
                         break
                     }
                     else{
@@ -385,7 +365,7 @@ class NoteAdapter(
                             noteList[checkedItems[0]-i].date,
                             deleteList.size
                         )
-                        notedbHandler.deleteItem(checkedItems[0]+1-i)
+                        noteDB.deleteItem(checkedItems[0] + 1 - i)
                         noteList.removeAt(checkedItems[0]-i)
                         searchItems.removeAt(checkedItems[0]-i)
                         checkedItems.removeAt(0)
@@ -438,7 +418,7 @@ class NoteAdapter(
             notifyDataSetChanged()
             Log.d(
                 "groupPosition",
-                notedbHandler.getGroupPositions(groupName).toString() + adapterPosition.toString()
+                noteDB.getGroupPositions(groupName).toString() + adapterPosition.toString()
             )
             checkbox.isChecked = true
             recyclerviewMain.isLayoutFrozen = true

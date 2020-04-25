@@ -28,19 +28,18 @@ class AddToGroup : AppCompatActivity() {
 
         toolbarGLIST.setTitleTextColor(Color.WHITE)
         toolbarGLIST.setBackgroundColor(ContextCompat.getColor(this, R.color.dark))
-//        toolbar.title = "Add to group: "
+
         supportActionBar?.title = "Add to Group:"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+
         groupList = groupDB.getAllGroups()
+
         recyclerView = findViewById(R.id.groupListRecyclerView)
 
-        val groupList = intent.getStringArrayListExtra("groupList")
-        val noteItem = intent.getParcelableExtra<NoteModel>("noteItem")
-        val itemPosition = intent.getIntExtra("itemPositionList", -1)
-        val checkedGroupItems = intent.getIntegerArrayListExtra("itemPositionList")
-
-
+        val groupList: ArrayList<String> = intent.getStringArrayListExtra("groupList")
+        val itemPosition: Int = intent.getIntExtra("itemPosition", -1)
+        val checkedGroupItems: ArrayList<Int> = intent.getIntegerArrayListExtra("itemPositionList")
 
         recyclerView.apply {
             setBackgroundColor(Color.TRANSPARENT)
@@ -49,7 +48,7 @@ class AddToGroup : AppCompatActivity() {
             layoutManager = layoutM
 
             noteAdapter = AddToGroupAdapter(
-                groupList, this.context, noteItem, itemPosition, checkedGroupItems
+                groupList, this.context, itemPosition, checkedGroupItems
             )
             adapter = noteAdapter
 //            addItemDecoration(VerticalSpacing(25))

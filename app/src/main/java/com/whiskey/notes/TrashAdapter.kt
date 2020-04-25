@@ -40,7 +40,7 @@ class TrashAdapter(
     private var checkedVisible = false
     private var isAllChecked = false
     private var mCheckItems = SparseBooleanArray()
-    private val noteDB = NotesDbHelper(this.context, null)
+    private val noteDB = NotesDB(this.context, null)
     private lateinit var title: String
     private lateinit var note: String
     private lateinit var date: String
