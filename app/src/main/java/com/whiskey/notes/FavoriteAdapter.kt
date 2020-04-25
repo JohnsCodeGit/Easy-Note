@@ -109,7 +109,7 @@ class FavoriteAdapter(
                         }
                     }
 
-                    SelectAll()
+                    selectAll()
 
                 }
                 else if(!isChecked && searchItems.size == checkedItems.size && !holder.customView.checkBox.isSelected){
@@ -237,48 +237,48 @@ class FavoriteAdapter(
                 }
                 else {
                     val intent = Intent(holder.customView.context, ViewNoteActivity::class.java)
+
                     holder.customView.checkBox.visibility = View.GONE
                     holder.customView.button.visibility = View.GONE
                     bDelete.visibility = View.GONE
+
                     checkedItems.clear()
                     mCheckItems.clear()
+
                     intent.putExtra("title", searchItems[position].title)
                     intent.putExtra("note", searchItems[position].note)
                     intent.putExtra("date", searchItems[position].date)
+                    intent.putExtra("group", searchItems[position].group)
                     intent.putParcelableArrayListExtra("noteList", noteList)
                     intent.putParcelableArrayListExtra("searchItems", searchItems)
 
                     if(noteList == searchItems){
                         intent.putExtra("position", notes.indexOf(noteList[position]))
-
                     }else {
                         intent.putExtra("position", notes.indexOf(searchItems[position]))
-
                     }
-
-
-
                     startActivity(holder.customView.context, intent, null)
-
                 }
             }
         }
 
 
     }
-    fun clearAllItems(){
+
+    private fun clearAllItems() {
         checkedItems.clear()
         mCheckItems.clear()
 
     }
 
-    fun SelectAll(){
+    private fun selectAll() {
         isAllChecked = true
         notifyDataSetChanged()
 
 
     }
-    fun unSelectAll(){
+
+    private fun unSelectAll() {
         isAllChecked = false
         notifyDataSetChanged()
     }

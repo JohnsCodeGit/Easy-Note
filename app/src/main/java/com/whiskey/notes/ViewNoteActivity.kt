@@ -51,7 +51,7 @@ class ViewNoteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.view_note)
 
-
+        //Show Ad
         MobileAds.initialize(this)
         mAdView = findViewById(R.id.adView)
         val adRequest = AdRequest.Builder().build()

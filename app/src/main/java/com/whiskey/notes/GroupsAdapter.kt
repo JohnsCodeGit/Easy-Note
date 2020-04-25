@@ -109,20 +109,15 @@ class GroupsAdapter(
                     selectAll()
 
                 } else if (!isChecked && searchItems.size == checkedItems.size && !holder.customView.checkBoxItem.isSelected) {
-
-
                     unSelectAll()
                     checkedItems.clear()
                     mCheckItems.clear()
-
                 }
-
             }
 
             // Add checked check boxes to array to delete checked items
             // and save checked states while scrolling
             holder.customView.checkBoxItem.setOnCheckedChangeListener { _, isChecked ->
-
 
                 if (isChecked) {
 
@@ -146,19 +141,12 @@ class GroupsAdapter(
                     holder.customView.checkBox.isChecked = false
                     mCheckItems.put(position, false)
                     checkedItems.remove(position)
-
                 }
                 else if(!isChecked && !deleteAll.isChecked){
-
                     mCheckItems.put(position, false)
                     checkedItems.remove(position)
-
-
                 }
-
-
             }
-
 
             holder.customView.checkBoxItem.setOnClickListener {
                 deleteAll.isSelected = false
@@ -176,14 +164,11 @@ class GroupsAdapter(
                     notifyDataSetChanged()
 
                 }else {
-
                     deleteItems(holder.customView, deleteAll, bDelete)
                     notifyDataSetChanged()
-
                 }
-
-
             }
+
             if (checkedItems.contains(0) && noteList.size == 1) {
                 holder.customView.checkBoxItem.isChecked = true
 
@@ -216,9 +201,6 @@ class GroupsAdapter(
 
             //Show or hide check boxes
             hideOrShow()
-
-
-
 
             holder.customView.setOnClickListener {
 

@@ -190,6 +190,7 @@ class GroupItemsListAdapter(
         if (notes.isEmpty()) {
             checkedVisible = false
         }
+
         hideOrShow()
 
         holder.rowView.setOnClickListener {
@@ -209,6 +210,8 @@ class GroupItemsListAdapter(
 
                     }
                 }
+            } else {
+                //TODO: Open Note in ViewNoteActivity
             }
         }
 

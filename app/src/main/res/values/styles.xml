@@ -48,5 +48,11 @@
         <item name="android:textColorSecondary">@android:color/white</item>
     </style>
 
+    <style name="AlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:background">#00000000</item>
+        <item name="android:windowBackground">@drawable/group_dialog_shape</item>
+
+    </style>
 
 </resources>

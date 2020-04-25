@@ -364,6 +364,10 @@
         "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\layout\\fragment_home.xml"
     },
     {
+        "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\drawable_group_dialog_shape.xml.flat",
+        "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\drawable\\group_dialog_shape.xml"
+    },
+    {
         "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi_fav_icon.png.flat",
         "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\drawable-xxxhdpi\\fav_icon.png"
     },

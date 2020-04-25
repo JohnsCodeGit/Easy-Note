@@ -52,14 +52,16 @@ class GroupsFragment : Fragment() {
 
         fab.setOnClickListener {
 
-            val builder = AlertDialog.Builder(this.context)
-            builder.setMessage("")
+            val alertDialog = AlertDialog.Builder(this.context, R.style.AlertDialogStyle)
+
+            alertDialog.setMessage("")
+            alertDialog.setTitle("New Group")
 
             val input = AppCompatEditText(this.context)
-            input.setPadding(60, 0, 60, 0)
+            input.setPadding(30, -30, 30, 30)
             input.inputType = InputType.TYPE_CLASS_TEXT
-            input.setHintTextColor(Color.LTGRAY)
-            input.setTextColor(Color.BLACK)
+            input.setHintTextColor(Color.parseColor("#4b4b4b"))
+//            input.setTextColor(Color.WHITE)
 //            input.setBackgroundColor(Color.BLACK)
 //            input.setTextColor(Color.WHITE)
 //            val colorStateList = ColorStateList.valueOf(Color.BLACK)
@@ -68,7 +70,7 @@ class GroupsFragment : Fragment() {
             //showKeyboard(mView.findViewById<ConstraintLayout>(R.id.constrainG).context)
             input.hint = "Enter a group name..."
 
-            builder.setView(input)
+            alertDialog.setView(input)
 
                 .setCancelable(true)
                 .setPositiveButton("Add") { dialog, _ ->
@@ -82,7 +84,7 @@ class GroupsFragment : Fragment() {
                     input.clearFocus()
                     hideSoftKeyboard(this.activity!!)
                 }
-            val alert = builder.create()
+            val alert = alertDialog.create()
             alert.show()
 
 

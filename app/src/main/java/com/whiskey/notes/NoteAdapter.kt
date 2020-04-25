@@ -223,29 +223,27 @@ class NoteAdapter(
                 }
                 else {
                     val intent = Intent(holder.customView.context, ViewNoteActivity::class.java)
+
                     holder.customView.checkBox.visibility = View.GONE
                     holder.customView.button.visibility = View.GONE
                     bDelete.visibility = View.GONE
+
                     checkedItems.clear()
                     mCheckItems.clear()
+
                     intent.putExtra("title", searchItems[position].title)
                     intent.putExtra("note", searchItems[position].note)
                     intent.putExtra("date", searchItems[position].date)
                     intent.putExtra("group", searchItems[position].group)
-
                     intent.putParcelableArrayListExtra("noteList", noteList)
                     intent.putParcelableArrayListExtra("searchItems", searchItems)
 
                     if(noteList == searchItems){
                         intent.putExtra("position", position)
-
                     }else {
                         intent.putExtra("position", noteList.indexOf(searchItems[position]))
-
                     }
-
                     startActivity(holder.customView.context, intent, null)
-
                 }
             }
         }
