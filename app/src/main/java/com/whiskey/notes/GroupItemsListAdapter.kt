@@ -1,22 +1,24 @@
 package com.whiskey.notes
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.util.Log
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.group_item.view.checkBoxItem
 import kotlinx.android.synthetic.main.group_item.view.dateText
 import kotlinx.android.synthetic.main.group_item.view.itemTitle
 import kotlinx.android.synthetic.main.group_item_note.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class GroupItemsListAdapter(
     private val notes: ArrayList<NoteModel>,
@@ -26,28 +28,28 @@ class GroupItemsListAdapter(
     private val constraintLayout: ConstraintLayout,
     private val btnDelete: Button,
     private val groupTitle: String,
-    private val textView: TextView
+    private val textView: TextView,
+    private var searchItems: ArrayList<NoteModel>
 
 ) :
-    RecyclerView.Adapter<GroupItemsListAdapter.CustomViewHolder>() {
+    RecyclerView.Adapter<GroupItemsListAdapter.CustomViewHolder>(), Filterable {
 
     private var checkedItems = ArrayList<Int>()
-    var noteDB = notesDB
+    private var noteDB = notesDB
     private val noteList = noteDB.getAllNote()
     private var checkedVisible = false
     private var isAllChecked = false
     private var mCheckItems = SparseBooleanArray()
 
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
         val rowView =
             LayoutInflater.from(parent.context).inflate(R.layout.group_item_note, parent, false)
+
         return CustomViewHolder(rowView)
     }
 
-    override fun getItemCount(): Int {
-
-        return notes.count()
-    }
+    override fun getItemCount() = searchItems.size
 
     fun hideItems() {
         checkedVisible = false
@@ -62,11 +64,11 @@ class GroupItemsListAdapter(
 
     }
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        val item = notes[position]
+        val item = searchItems[position]
         holder.rowView.itemTitle.text = item.title
         holder.rowView.itemNote2.text = item.note
         holder.rowView.dateText.text = item.date
-        if (notes.size == checkedItems.size) {
+        if (searchItems.size == checkedItems.size) {
 
 
             holder.rowView.checkBoxItem.isChecked = isAllChecked
@@ -76,17 +78,17 @@ class GroupItemsListAdapter(
         } else {
             holder.bind(position)
         }
-        if (checkedItems.contains(0) && notes.size == 1) {
+        if (checkedItems.contains(0) && searchItems.size == 1) {
             holder.rowView.checkBoxItem.isChecked = true
 
         }
-        if (notes.size != 0) {
+        if (searchItems.size != 0) {
 
             //Delete all items
             deleteAll.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     checkedItems.clear()
-                    for (i in 0 until notes.size) {
+                    for (i in 0 until searchItems.size) {
 
                         if (checkedItems.contains(i))
                         else {
@@ -95,7 +97,7 @@ class GroupItemsListAdapter(
                         }
                     }
                     selectAll()
-                } else if (!isChecked && notes.size == checkedItems.size &&
+                } else if (!isChecked && searchItems.size == checkedItems.size &&
                     !holder.rowView.checkBoxItem.isSelected
                 ) {
                     unSelectAll()
@@ -118,7 +120,7 @@ class GroupItemsListAdapter(
                 } else if (!isChecked && deleteAll.isChecked) {
                     checkedItems.clear()
                     mCheckItems.clear()
-                    for (i in 0 until notes.size) {
+                    for (i in searchItems.indices) {
 
                         checkedItems.add(i)
                         mCheckItems.put(i, true)
@@ -172,7 +174,7 @@ class GroupItemsListAdapter(
             } else if (!isChecked && deleteAll.isChecked) {
                 checkedItems.clear()
                 mCheckItems.clear()
-                for (i in notes.indices) {
+                for (i in searchItems.indices) {
 
                     checkedItems.add(i)
                     mCheckItems.put(i, true)
@@ -187,7 +189,7 @@ class GroupItemsListAdapter(
 
             }
         }
-        if (notes.isEmpty()) {
+        if (searchItems.isEmpty()) {
             checkedVisible = false
         }
 
@@ -211,7 +213,28 @@ class GroupItemsListAdapter(
                     }
                 }
             } else {
-                //TODO: Open Note in ViewNoteActivity
+                val intent = Intent(holder.rowView.context, ViewNoteActivity::class.java)
+
+                holder.rowView.checkBoxItem.visibility = View.GONE
+                holder.rowView.button2.visibility = View.GONE
+                btnDelete.visibility = View.GONE
+
+                checkedItems.clear()
+                mCheckItems.clear()
+
+                intent.putExtra("title", searchItems[position].title)
+                intent.putExtra("note", searchItems[position].note)
+                intent.putExtra("date", searchItems[position].date)
+                intent.putExtra("group", searchItems[position].group)
+                intent.putParcelableArrayListExtra("noteList", noteList)
+                intent.putParcelableArrayListExtra("searchItems", searchItems)
+
+                if (noteList == searchItems) {
+                    intent.putExtra("position", position)
+                } else {
+                    intent.putExtra("position", noteList.indexOf(searchItems[position]))
+                }
+                startActivity(holder.rowView.context, intent, null)
             }
         }
 
@@ -254,10 +277,10 @@ class GroupItemsListAdapter(
                     } else {
                         notesDB.updateGroup(
                             "",
-                            noteList.indexOf(notes[checkedItems[0] - i]) + 1
+                            noteList.indexOf(searchItems[checkedItems[0] - i]) + 1
                         )
 
-                        notes.removeAt(checkedItems[0] - i)
+                        searchItems.removeAt(checkedItems[0] - i)
                         checkedItems.removeAt(0)
                     }
 
@@ -271,7 +294,7 @@ class GroupItemsListAdapter(
                 deleteAll.isSelected = false
                 unSelectAll()
                 deleteAll.isChecked = false
-                if (notes.isNotEmpty()) {
+                if (searchItems.isNotEmpty()) {
                     textView.visibility = View.GONE
 
                 } else
@@ -318,6 +341,54 @@ class GroupItemsListAdapter(
                 false
             }
             return true
+        }
+    }
+
+    override fun getFilter(): Filter {
+        searchItems.clear()
+        return object : Filter() {
+
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+
+                if (constraint == null || constraint.isEmpty()) {
+
+                    searchItems.addAll(noteList)
+                } else {
+
+                    val filterPattern =
+                        constraint.toString().toLowerCase(Locale.getDefault()).trim()
+                    for (item: NoteModel in noteList) {
+                        val noteItem = item.note.replace("\n", " ")
+                        noteItem.replace("\t", " ")
+
+
+                        if (item.note.toLowerCase(Locale.getDefault()).trim()
+                                .contains(filterPattern)
+                            || item.title.toLowerCase(Locale.getDefault()).trim().contains(
+                                filterPattern
+                            )
+                            && (item.title.isNotBlank() || item.note.isNotBlank())
+                        ) {
+                            searchItems.add(item)
+
+
+                        }
+                    }
+
+
+                }
+                val filterResult = FilterResults()
+                filterResult.values = (searchItems)
+
+                return filterResult
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+
+
+                notifyDataSetChanged()
+            }
+
         }
     }
 }

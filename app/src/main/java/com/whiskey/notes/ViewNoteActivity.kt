@@ -40,7 +40,7 @@ class ViewNoteActivity : AppCompatActivity() {
     private var menuVisible = false
     private lateinit var groupName: String
     private lateinit var dateT: String
-    private val notedbHandler = NotesDB(this, null)
+    private val noteDB = NotesDB(this, null)
     private val groupsDB = GroupsDB(this, null)
     private lateinit var mAdView: AdView
     private var trashDB: TrashDB = TrashDB(this, null)
@@ -57,36 +57,31 @@ class ViewNoteActivity : AppCompatActivity() {
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
 
-
         eDate.text = ("Modified: $dateText").toString()
-
 
         note = intent.getStringExtra("note")
         title = intent.getStringExtra("title")
         position = intent.getIntExtra("position", -1)
         noteList = intent.getParcelableArrayListExtra("noteList")
         dateT = intent.getStringExtra("date")
-
         groupName = intent.getStringExtra("group")
-
 
         eTitle.hint = "Note Title"
         eTitle.setHintTextColor(Color.DKGRAY)
-        toolbar.inflateMenu(R.menu.menu)
+        eNote.hint = "Notes"
 
-            eNote.hint = "Notes"
-//        window.statusBarColor = Color.parseColor("#13151a")
-
-        toolbar.setTitleTextColor(Color.WHITE)
-        boolean = notedbHandler.getFav(position+1)
         setSupportActionBar(toolbar)
         toolbar.inflateMenu(R.menu.menu)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+        toolbar.setTitleTextColor(Color.WHITE)
+        boolean = noteDB.getFav(position + 1)
+
         eNote.clearFocus()
         eTitle.clearFocus()
         eTitle.setText(title)
         eNote.setText(note)
+
         rConst.setOnClickListener {
             eNote.hasFocus()
             eNote.isSelected = true
@@ -117,11 +112,11 @@ class ViewNoteActivity : AppCompatActivity() {
             }
         }
 
-        bullet.setOnCheckedChangeListener { _, isChecked ->
-
-            if(isChecked){
-                val lines: Array<String> = note.split("\n").toTypedArray()
-                for (i in lines.indices){
+//        bullet.setOnCheckedChangeListener { _, isChecked ->
+//
+//            if(isChecked){
+//                val lines: Array<String> = note.split("\n").toTypedArray()
+//                for (i in lines.indices){
 //                    if(i == 0) {
 //                        eNote.lines[i];
 //                    } else if (TextUtils.isEmpty(lines[i].trim()) {
@@ -129,12 +124,12 @@ class ViewNoteActivity : AppCompatActivity() {
 //                        } else {
 //                        pad.append("\n" + "\u2022" + "  " + lines[i]);
 //                    }
-                }
-
-            }
-
-
-        }
+//                }
+//
+//            }
+//
+//
+//        }
 
 
     }
@@ -202,7 +197,7 @@ class ViewNoteActivity : AppCompatActivity() {
                 noteList[position].date,
                 deleteList.size
             )
-            notedbHandler.deleteItem(position + 1)
+            noteDB.deleteItem(position + 1)
             startActivity(mainIntent)
 
         } else if (id == R.id.fav) {
@@ -211,7 +206,7 @@ class ViewNoteActivity : AppCompatActivity() {
                 boolean = 1
                 item.icon = ContextCompat.getDrawable(this, R.drawable.fav_icon_1)
 
-                notedbHandler.updateNote(
+                noteDB.updateNote(
                     eNote.text.toString(), eTitle.text.toString(),
                     dateText, boolean, groupName, position + 1
                 )
@@ -221,7 +216,7 @@ class ViewNoteActivity : AppCompatActivity() {
                     this,
                     R.drawable.fav_icon_empty
                 )
-                notedbHandler.updateNote(
+                noteDB.updateNote(
                     eNote.text.toString(), eTitle.text.toString(),
                     dateText, boolean, groupName, position + 1
                 )
@@ -270,7 +265,7 @@ class ViewNoteActivity : AppCompatActivity() {
         menuItem?.isVisible = menuVisible
 
 
-            if (notedbHandler.getFav(position+1) == 1) {
+        if (noteDB.getFav(position + 1) == 1) {
                 favItem!!.icon = ContextCompat.getDrawable(
                     this,
                     R.drawable.fav_icon_1
@@ -306,7 +301,8 @@ class ViewNoteActivity : AppCompatActivity() {
 
         date = Calendar.getInstance().time
 
-        notedbHandler.updateNote(eNote.text.toString(), eTitle.text.toString(),
+        noteDB.updateNote(
+            eNote.text.toString(), eTitle.text.toString(),
             dateText, boolean, groupName, position + 1
         )
 //        notedbHandler.updateGroup(groupName, position + 1)
