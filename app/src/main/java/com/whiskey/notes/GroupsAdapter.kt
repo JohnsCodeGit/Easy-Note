@@ -286,7 +286,6 @@ class GroupsAdapter(
                 searchItems.clear()
                 noteList.clear()
                 groupsDB.deleteAll()
-
                 checkedVisible = false
                 hideItems()
                 clearAllItems()
@@ -295,6 +294,8 @@ class GroupsAdapter(
                 btn.visibility = View.GONE
                 buttonLayout.visibility = View.GONE
                 deleteAll.isSelected = false
+                fab.isVisible = true
+
                 unSelectAll()
                 deleteAll.isChecked = false
                 if (noteList.isNotEmpty()) {
@@ -346,6 +347,8 @@ class GroupsAdapter(
                 btn.visibility = View.GONE
                 buttonLayout.visibility = View.GONE
                 deleteAll.isSelected = false
+                fab.isVisible = true
+
                 unSelectAll()
                 deleteAll.isChecked = false
                 if (noteList.isNotEmpty()) {
