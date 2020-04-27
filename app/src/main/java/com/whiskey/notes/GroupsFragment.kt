@@ -3,19 +3,20 @@ package com.whiskey.notes
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.app.SearchManager
 import android.content.Context
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.text.InputType
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.Nullable
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -25,6 +26,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class GroupsFragment : Fragment() {
     private var noteList = ArrayList<String>()
@@ -49,7 +51,16 @@ class GroupsFragment : Fragment() {
         fab = mView.findViewById(R.id.fabButtonG)
         val textView = mView.findViewById<TextView>(R.id.textView8)
         searchItems.clear()
+        if (groupsDB.getGroupSize() != 0.toLong()) {
 
+            noteList = groupsDB.getAllGroups()
+
+            searchItems = groupsDB.getAllGroups()
+
+            textView.visibility = View.GONE
+
+        } else
+            textView.visibility = View.VISIBLE
         fab.setOnClickListener {
 
             val alertDialog = AlertDialog.Builder(this.context, R.style.AlertDialogStyle)
@@ -87,23 +98,8 @@ class GroupsFragment : Fragment() {
             val alert = alertDialog.create()
             alert.show()
 
-
+            noteadapter.notifyDataSetChanged()
         }
-
-        if (groupsDB.getGroupSize() != 0.toLong()) {
-
-            noteList = groupsDB.getAllGroups()
-
-            searchItems = groupsDB.getAllGroups()
-
-        }
-
-        if (noteList.isNotEmpty()) {
-            textView.visibility = View.GONE
-
-        } else
-            textView.visibility = View.VISIBLE
-
 
         recyclerView = view.findViewById(R.id.recyclerView_group)
 
@@ -127,7 +123,7 @@ class GroupsFragment : Fragment() {
         noteList.add(input.text.toString())
         searchItems.add(input.text.toString())
         groupsDB.addGroup(input.text.toString(), noteList.size)
-        noteadapter.notifyDataSetChanged()
+        noteadapter.notifyItemChanged(noteList.size - 1)
 
     }
     override fun onAttach(context: Context) {
@@ -141,13 +137,6 @@ class GroupsFragment : Fragment() {
         inputMethodManager.hideSoftInputFromWindow(
             activity.currentFocus?.windowToken,
             0
-        )
-    }
-
-    private fun showKeyboard(context: Context) {
-        (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).toggleSoftInput(
-            InputMethodManager.SHOW_FORCED,
-            InputMethodManager.HIDE_IMPLICIT_ONLY
         )
     }
 
@@ -178,6 +167,46 @@ class GroupsFragment : Fragment() {
 
     }
 
+    @SuppressLint("RestrictedApi")
+    override fun onCreateOptionsMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        val searchItem = menu.findItem(R.id.search)
+        val manager = activity!!.getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        searchView = searchItem.actionView as SearchView
+        searchView.queryHint = "Search in Groups..."
+        searchView.setSearchableInfo(manager.getSearchableInfo(activity!!.componentName))
+        searchView.isIconified = true
+        searchView.setOnCloseListener {
+            searchItems.clear()
+            searchItems = groupsDB.getAllGroups()
+            fabButton.visibility = View.VISIBLE
+
+            true
+        }
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(query: String?): Boolean {
+
+                return false
+
+            }
+
+            @RequiresApi(Build.VERSION_CODES.N)
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val text: String = newText.toString().trim()
+
+                noteadapter.filter.filter(text)
+
+
+
+                return true
+            }
+
+        })
+
+        super.onCreateOptionsMenu(menu, menuInflater)
+    }
     @SuppressLint("RestrictedApi")
     @Nullable
     override fun onCreateView(

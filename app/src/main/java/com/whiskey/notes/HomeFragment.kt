@@ -116,8 +116,6 @@ class HomeFragment : Fragment(){
             fabs.visibility = View.VISIBLE
             fabs.isVisible = true
             noteadapter.hideItems()
-
-
     }
 
     override fun onAttach(context: Context) {

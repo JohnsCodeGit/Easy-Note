@@ -12,6 +12,7 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.group_item.view.*
@@ -30,7 +31,7 @@ class GroupsAdapter(
     var noteList: ArrayList<String>,
     var searchItems: ArrayList<String>,
     private var textView5: TextView,
-    var fab: FloatingActionButton
+    private var fab: FloatingActionButton
 ) : RecyclerView.Adapter<GroupsAdapter.GroupViewHolder>(), Filterable {
     private var checkedItems = ArrayList<Int>()
     private var checkedVisible = false
@@ -41,11 +42,7 @@ class GroupsAdapter(
     private val notes = notesDB.getAllNote()
     private lateinit var groupName: String
 
-    override fun getItemCount(): Int {
-
-        searchItems = groupsDB.getAllGroups()
-        return searchItems.size
-    }
+    override fun getItemCount() = searchItems.size
 
     fun hideItems(){
         checkedVisible = false
@@ -57,7 +54,7 @@ class GroupsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val customView = layoutInflater.inflate(R.layout.group_item, parent, false)
-        searchItems = groupsDB.getAllGroups()
+        //searchItems = groupsDB.getAllGroups()
 
         return GroupViewHolder(customView)
 
@@ -70,18 +67,13 @@ class GroupsAdapter(
 
     override fun onBindViewHolder(holder: GroupViewHolder, position: Int) {
 
-        searchItems = groupsDB.getAllGroups()
         holder.customView.itemTitle.text = searchItems[position]
         groupName = searchItems[position]
 
         //DO NOT TOUCH
         if(searchItems.size == checkedItems.size){
-
-
             holder.customView.checkBoxItem.isChecked = isAllChecked
-
             mCheckItems.clear()
-
         }
         else {
             holder.bind(position)
@@ -183,6 +175,7 @@ class GroupsAdapter(
 //                    holder.customView.button.visibility = View.VISIBLE
                     deleteAll.visibility = View.VISIBLE
                     buttonLayout.visibility = View.VISIBLE
+                    fab.isVisible = false
                 }
                 else if(!checkedVisible) {
                     holder.customView.checkBoxItem.visibility = View.GONE
@@ -191,6 +184,8 @@ class GroupsAdapter(
                     deleteAll.visibility = View.GONE
                     checkedItems.clear()
                     mCheckItems.clear()
+                    fab.isVisible = true
+
                 }
 
             }
@@ -223,14 +218,18 @@ class GroupsAdapter(
                 else {
 
                     val intent = Intent(holder.customView.context, GroupItemsList::class.java)
-                    intent.putExtra("groupPos", position)
 
                     holder.customView.checkBoxItem.visibility = View.GONE
                     //holder.customView.button.visibility = View.GONE
                     bDelete.visibility = View.GONE
                     checkedItems.clear()
                     mCheckItems.clear()
+                    if (noteList == searchItems) {
+                        intent.putExtra("groupPos", position)
 
+                    } else {
+                        intent.putExtra("groupPos", noteList.indexOf(searchItems[position]))
+                    }
                     startActivity(holder.customView.context, intent, null)
 
                 }
@@ -370,8 +369,6 @@ class GroupsAdapter(
         init {
             customView.isLongClickable = true
             customView.setOnLongClickListener(this)
-            searchItems = groupsDB.getAllGroups()
-
         }
 
         fun bind(position: Int) { // use the sparse boolean array to check
@@ -424,7 +421,6 @@ class GroupsAdapter(
                             && (item.isNotBlank())
                         ) {
                             searchItems.add(item)
-
 
                         }
                     }
