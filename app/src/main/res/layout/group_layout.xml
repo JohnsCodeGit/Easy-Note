@@ -131,6 +131,7 @@
             android:background="@android:color/transparent"
             android:clipToPadding="false"
             android:paddingLeft="8dp"
+            android:paddingTop="8dp"
             android:paddingRight="3dp"
             android:scrollbarSize="6dp"
             android:scrollbarStyle="outsideInset"
