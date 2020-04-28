@@ -170,7 +170,7 @@ class NoteAdapter(
                 }
 
             }
-            if (checkedItems.contains(0) && noteList.size == 1) {
+            if (checkedItems.contains(0) && searchItems.size == 1) {
                 holder.customView.checkBox.isChecked = true
 
             }
@@ -283,20 +283,20 @@ class NoteAdapter(
                     } else {
                         deleteList = trashDB.getAllNote()
                         val noteModel = NoteModel(
-                            noteList[checkedItems[0] - i].note,
-                            noteList[checkedItems[0] - i].title,
-                            noteList[checkedItems[0] - i].date,
-                            noteList[checkedItems[0] - i].group
+                            searchItems[checkedItems[0] - i].note,
+                            searchItems[checkedItems[0] - i].title,
+                            searchItems[checkedItems[0] - i].date,
+                            searchItems[checkedItems[0] - i].group
                         )
                         deleteList.add(noteModel)
                         trashDB.addNote(
-                            noteList[checkedItems[0] - i].note,
-                            noteList[checkedItems[0] - i].title,
-                            noteList[checkedItems[0] - i].date,
+                            searchItems[checkedItems[0] - i].note,
+                            searchItems[checkedItems[0] - i].title,
+                            searchItems[checkedItems[0] - i].date,
                             deleteList.size
                         )
-                        noteDB.deleteItem(checkedItems[0] + 1 - i)
-                        noteList.removeAt(checkedItems[0] - i)
+                        noteDB.deleteItem(noteList.indexOf(searchItems[checkedItems[0] - i]) + 1)
+                        noteList.removeAt(noteList.indexOf(searchItems[checkedItems[0] - i]))
                         searchItems.removeAt(checkedItems[0] - i)
                         checkedItems.removeAt(0)
                     }
@@ -352,20 +352,20 @@ class NoteAdapter(
                     else{
                         deleteList = trashDB.getAllNote()
                         val noteModel = NoteModel(
-                            noteList[checkedItems[0] - i].note,
-                            noteList[checkedItems[0] - i].title,
-                            noteList[checkedItems[0] - i].date,
-                            noteList[checkedItems[0] - i].group
+                            searchItems[checkedItems[0] - i].note,
+                            searchItems[checkedItems[0] - i].title,
+                            searchItems[checkedItems[0] - i].date,
+                            searchItems[checkedItems[0] - i].group
                         )
                         deleteList.add(noteModel)
                         trashDB.addNote(
-                            noteList[checkedItems[0]-i].note,
-                            noteList[checkedItems[0]-i].title,
-                            noteList[checkedItems[0]-i].date,
+                            searchItems[checkedItems[0] - i].note,
+                            searchItems[checkedItems[0] - i].title,
+                            searchItems[checkedItems[0] - i].date,
                             deleteList.size
                         )
-                        noteDB.deleteItem(checkedItems[0] + 1 - i)
-                        noteList.removeAt(checkedItems[0]-i)
+                        noteDB.deleteItem(noteList.indexOf(searchItems[checkedItems[0] - i]) + 1)
+                        noteList.removeAt(noteList.indexOf(searchItems[checkedItems[0] - i]))
                         searchItems.removeAt(checkedItems[0]-i)
                         checkedItems.removeAt(0)
                     }

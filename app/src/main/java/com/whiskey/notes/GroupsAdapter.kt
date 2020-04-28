@@ -161,7 +161,7 @@ class GroupsAdapter(
                 }
             }
 
-            if (checkedItems.contains(0) && noteList.size == 1) {
+            if (checkedItems.contains(0) && searchItems.size == 1) {
                 holder.customView.checkBoxItem.isChecked = true
 
             }
@@ -276,7 +276,7 @@ class GroupsAdapter(
 //                            notesDB.updateGroup("", groupPosition[i])
 
                         groupsDB.deleteItem(checkedItems[0] + 1 - i)
-                        noteList.removeAt(checkedItems[0] - i)
+                        noteList.removeAt(noteList.indexOf(searchItems[checkedItems[0] - i]))
                         searchItems.removeAt(checkedItems[0] - i)
                         checkedItems.removeAt(0)
                     }
@@ -334,7 +334,7 @@ class GroupsAdapter(
 //                            notesDB.updateGroup("", groupPositions[i])
 
                         groupsDB.deleteItem(checkedItems[0] + 1 - i)
-                        noteList.removeAt(checkedItems[0]-i)
+                        noteList.removeAt(noteList.indexOf(searchItems[checkedItems[0] - i]))
                         searchItems.removeAt(checkedItems[0]-i)
                         checkedItems.removeAt(0)
                     }
