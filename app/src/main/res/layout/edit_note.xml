@@ -15,7 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/Background"
+            android:background="@color/Background_DARK"
             android:visibility="visible"
             app:popupTheme="@style/AppTheme.PopupOverlay"
             app:theme="@style/ToolbarColoredBackArrow"
@@ -27,7 +27,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/Background"
+        android:background="@color/Background_DARK"
         android:orientation="vertical"
         tools:context=".NewNoteActivity">
 

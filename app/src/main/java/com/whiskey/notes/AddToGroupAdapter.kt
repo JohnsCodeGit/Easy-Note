@@ -39,7 +39,7 @@ class AddToGroupAdapter(
         holder.customView.itemTitle.text = groupList[position]
 
         holder.customView.setOnClickListener {
-            if (checkedGroupItems.size != 0) {
+            if (!checkedGroupItems.isNullOrEmpty()) {
                 for (i in 0 until checkedGroupItems.size) {
                     notesDB.updateGroup(groupList[position], checkedGroupItems[i] + 1)
                 }

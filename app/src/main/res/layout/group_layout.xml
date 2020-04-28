@@ -6,11 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/LConstG"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/Background"
+        android:background="@android:color/transparent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,9 +23,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:backgroundTint="@color/colorAccent"
+            android:tint="@color/Background_Light"
             android:visibility="visible"
-            app:backgroundTint="@color/colorAccent"
+            app:backgroundTint="@color/colorPrimaryDark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.954"
@@ -50,7 +51,7 @@
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/dark"
+            android:background="@color/colorPrimary"
 
             android:theme="@style/AppTheme.AppBarOverlay"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -117,7 +118,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -128,15 +129,18 @@
             android:layout_height="0dp"
             android:layout_marginTop="1dp"
             android:background="@android:color/transparent"
-            android:paddingLeft="3dp"
+            android:clipToPadding="false"
+            android:paddingLeft="8dp"
             android:paddingRight="3dp"
             android:scrollbarSize="6dp"
             android:scrollbarStyle="outsideInset"
             android:scrollbars="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            app:layout_constraintVertical_bias="0.0">
 
         </androidx.recyclerview.widget.RecyclerView>
 

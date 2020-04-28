@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/const_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark"
-    android:id="@+id/const_layout"
+    android:background="@color/Background_Light"
     android:fitsSystemWindows="true"
     tools:context=".MainActivity">
 
@@ -15,7 +15,8 @@
 
         android:layout_height="50dp"
         android:layout_gravity="bottom"
-        android:background="@color/dark"
+        android:background="@color/Background_Light"
+        android:elevation="500dp"
         android:visibility="visible"
         app:itemIconTint="@color/bottom_nav_color"
         app:itemTextColor="@color/bottom_nav_color"
@@ -43,7 +44,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/dark"
+            android:background="@color/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
             android:visibility="visible"
             app:elevation="4dp"

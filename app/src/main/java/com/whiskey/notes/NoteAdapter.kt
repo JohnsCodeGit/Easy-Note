@@ -89,7 +89,7 @@ class NoteAdapter(
         }
 
 
-        if (searchItems.size != 0) {
+        if (!searchItems.isNullOrEmpty()) {
 
             //Delete all items
             deleteAll.setOnCheckedChangeListener { _, isChecked ->
@@ -235,6 +235,7 @@ class NoteAdapter(
                     intent.putExtra("note", searchItems[position].note)
                     intent.putExtra("date", searchItems[position].date)
                     intent.putExtra("group", searchItems[position].group)
+                    intent.putExtra("frag", "Notes")
                     intent.putParcelableArrayListExtra("noteList", noteList)
                     intent.putParcelableArrayListExtra("searchItems", searchItems)
 
@@ -380,7 +381,7 @@ class NoteAdapter(
                 deleteAll.isSelected = false
                 unSelectAll()
                 deleteAll.isChecked = false
-                if (noteList.size != 0) {
+                if (!noteList.isNullOrEmpty()) {
                     textView5.visibility = View.GONE
 
                 } else

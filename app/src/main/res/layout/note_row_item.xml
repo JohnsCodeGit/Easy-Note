@@ -5,7 +5,11 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="130dp"
-    android:background="@drawable/list_shape">
+    android:background="@drawable/list_shape"
+    android:clipToPadding="false"
+    android:elevation="10dp"
+    android:outlineProvider="bounds">
+
 
     <TextView
         android:id="@+id/itemTitle"
@@ -14,10 +18,11 @@
         android:layout_marginStart="24dp"
         android:background="@android:color/transparent"
         android:gravity="top|start"
+
         android:maxEms="1"
         android:maxLines="1"
         android:paddingTop="5dp"
-        android:textColor="@android:color/black"
+        android:textColor="@color/colorAccent"
         android:textCursorDrawable="@color/colorPrimary"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -26,7 +31,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/checkBox"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.100000024" />
+        app:layout_constraintVertical_bias="0.100000024"
+        tools:ignore="PrivateResource" />
 
     <TextView
         android:id="@+id/itemNote"
@@ -38,12 +44,12 @@
         android:maxEms="3"
         android:maxLines="3"
         android:minLines="3"
-        android:textColor="@android:color/black"
+        android:textColor="@color/recyclerViewItemText"
         android:textCursorDrawable="@color/colorPrimary"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.123"
         app:layout_constraintStart_toEndOf="@+id/button"
         app:layout_constraintTop_toBottomOf="@+id/itemTitle"
         app:layout_constraintVertical_bias="0.0" />
@@ -53,8 +59,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:buttonTint="@android:color/black"
-        android:textColor="@android:color/background_dark"
+        android:buttonTint="@color/recyclerViewItemText"
+        android:textColor="@color/recyclerViewItemText"
         android:textColorHighlight="@android:color/background_light"
         android:textColorHint="@android:color/background_light"
         android:textColorLink="@android:color/background_light"
@@ -88,7 +94,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:enabled="false"
-        android:textColor="@android:color/black"
+        android:textColor="@color/recyclerViewItemText"
         android:textIsSelectable="false"
         android:textSize="12sp"
         android:textStyle="italic"

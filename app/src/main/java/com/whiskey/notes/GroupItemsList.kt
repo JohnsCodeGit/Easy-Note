@@ -16,7 +16,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.group_item_layout.*
@@ -74,18 +73,14 @@ class GroupItemsList : AppCompatActivity() {
                 checkBox, constraintLayout, deleteAll,
                 groups[groupPosition], textView, searchItems
             )
+            addItemDecoration(VerticalSpacing(25))
             setBackgroundColor(Color.TRANSPARENT)
             layoutM.stackFromEnd = true
             layoutM.reverseLayout = true
             layoutManager = layoutM
             adapter = noteAdapter
 //            addItemDecoration(VerticalSpacing(25))
-            recyclerView.addItemDecoration(
-                DividerItemDecoration(
-                    this.context,
-                    LinearLayoutManager.VERTICAL
-                )
-            )
+
         }
     }
 
@@ -135,7 +130,8 @@ class GroupItemsList : AppCompatActivity() {
     override fun onBackPressed() {
 
         val mainIntent = Intent(this, MainActivity::class.java)
-        intent.putExtra("fragment", "Groups")
+        intent.putExtra("frag", "Groups")
+
         startActivity(mainIntent)
     }
 

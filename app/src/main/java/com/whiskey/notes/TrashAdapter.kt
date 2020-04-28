@@ -92,7 +92,7 @@ class TrashAdapter(
         }
 
 
-        if (searchItems.size != 0) {
+        if (!searchItems.isNullOrEmpty()) {
 
             //Delete all items
             deleteAll.setOnCheckedChangeListener{_, isChecked ->
@@ -183,7 +183,7 @@ class TrashAdapter(
                         checkedItems.sort()
 
                         for (i in 0 until checkedItems.size) {
-                            if (checkedItems.size == 0) {
+                            if (checkedItems.isEmpty()) {
                                 break
                             } else {
                                 val noteItem = noteList[checkedItems[0] - i].note
@@ -266,7 +266,7 @@ class TrashAdapter(
 
             }
 
-            if(noteList.size == 0){
+            if (noteList.isEmpty()) {
                 checkedVisible = false
             }
 
@@ -366,7 +366,7 @@ class TrashAdapter(
                 unSelectAll()
                 deleteAll.isChecked = false
 
-                if (noteList.size != 0) {
+                if (!noteList.isNullOrEmpty()) {
                     textView7.visibility = View.GONE
 
                 } else
@@ -393,7 +393,7 @@ class TrashAdapter(
 
 
                 for (i in 0 until checkedItems.size){
-                    if(checkedItems.size == 0) {
+                    if (checkedItems.isEmpty()) {
                         break
                     }
                     else{
@@ -419,7 +419,7 @@ class TrashAdapter(
                 deleteAll.isSelected = false
                 unSelectAll()
                 deleteAll.isChecked = false
-                if (noteList.size != 0) {
+                if (!noteList.isNullOrEmpty()) {
                     textView7.visibility = View.GONE
 
                 } else

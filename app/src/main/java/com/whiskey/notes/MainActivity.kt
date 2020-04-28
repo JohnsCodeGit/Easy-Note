@@ -10,16 +10,15 @@ import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.whiskey.notes.R.color
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -29,35 +28,35 @@ class MainActivity : AppCompatActivity() {
     private var searchItems = ArrayList<NoteModel>()
     private var groupItems = ArrayList<String>()
     private lateinit var barLay: ConstraintLayout
-    private val notedbHandler = NotesDB(this, null)
+    private val notesDB = NotesDB(this, null)
     private val groupsDB = GroupsDB(this, null)
     private lateinit var noteItem: NoteModel
 
-    var selectedFragment: Fragment = HomeFragment()
-
+    private var selectedFragment: Fragment = HomeFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         toolbar.setTitleTextColor(Color.WHITE)
-        toolbar.setBackgroundColor(ContextCompat.getColor(this, color.dark))
+        //toolbar.setBackgroundColor(ContextCompat.getColor(this, color.colorAccent))
 //        window.statusBarColor = Color.parseColor("#13151a")
-
-        //val frag = HomeFragment()
 
         barLay = findViewById(R.id.const_layout)
         val navView: BottomNavigationView = findViewById(R.id.bot_view)
         if (savedInstanceState == null) {
+            Log.d("frag", "None")
+
             selectedFragment = HomeFragment()
             this.supportFragmentManager.beginTransaction()
                 .replace(R.id.frag_container, selectedFragment, "Notes").commit()
-
         }
 //        else {
+//            val frag = intent.getStringExtra("frag")
+//            Log.d("frag", frag)
 //            selectedFragment = supportFragmentManager.findFragmentByTag(frag)!!
 //            this.supportFragmentManager.beginTransaction()
-//                .replace(R.id.frag_container, selectedFragment, "Notes").commit()
+//                .replace(R.id.frag_container, selectedFragment, frag).commit()
 //        }
         navView.setOnNavigationItemSelectedListener{
             for (i in 0 until supportFragmentManager.backStackEntryCount){
@@ -111,8 +110,8 @@ class MainActivity : AppCompatActivity() {
         viewpager.offscreenPageLimit = 0
 
         groupItems = groupsDB.getAllGroups()
-        noteList = notedbHandler.getAllNote()
-        searchItems = notedbHandler.getAllNote()
+        noteList = notesDB.getAllNote()
+        searchItems = notesDB.getAllNote()
 
         var noteText = intent.getStringExtra("note")
         var titleText = intent.getStringExtra("title")
@@ -131,13 +130,12 @@ class MainActivity : AppCompatActivity() {
 
             val position: Int = intent.getIntExtra("position", -1)
 
-
             if(position == -1 && (noteText.isNotEmpty() || titleText.isNotEmpty())) {
 
                 noteList.add(noteItem)
                 searchItems.add(noteItem)
 
-                notedbHandler.addNote(noteText, titleText.toString(), dateText, 0, noteList.size)
+                notesDB.addNote(noteText, titleText.toString(), dateText, 0, noteList.size)
 //                favDbHandler.addNote(noteText, titleText.toString(), dateText, noteList.size)
 
 
@@ -148,12 +146,12 @@ class MainActivity : AppCompatActivity() {
                 searchItems.removeAt(position)
                 noteList.removeAt(position)
 //                val groupName = notedbHandler.getGroupName(position + 1)
-                notedbHandler.deleteItem(position+1)
+                notesDB.deleteItem(position + 1)
 
                 noteList.add(noteItem)
                 searchItems.add(noteItem)
 
-                notedbHandler.addNote(
+                notesDB.addNote(
                     noteItem.note,
                     noteItem.title,
                     noteItem.date,
@@ -199,7 +197,7 @@ class MainActivity : AppCompatActivity() {
         if (frag1 != null)
             home.hideMenuItems(findViewById(R.id.LConst))
         if (frag2 != null)
-            fav.HideDeleteMenu(findViewById(R.id.LConstR))
+            fav.hideDeleteMenu(findViewById(R.id.LConstR))
         if (frag3 != null)
             trash.HideDeleteMenu(findViewById(R.id.LConstT))
         if (frag4 != null)

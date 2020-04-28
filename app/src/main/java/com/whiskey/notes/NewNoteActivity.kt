@@ -77,8 +77,8 @@ class NewNoteActivity : AppCompatActivity() {
             //save function
             //R.id.save.toColor()
             val intent = Intent(this, MainActivity::class.java)
-            val noteText = eTxtNote.text.toString()
-            val noteTitle = eTxtTitle.text.toString()
+            val noteText = eNote.text.toString()
+            val noteTitle = eTitle.text.toString()
             intent.putExtra("note", noteText)
             intent.putExtra("title", noteTitle)
 

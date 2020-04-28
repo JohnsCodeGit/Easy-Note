@@ -3,7 +3,6 @@ package com.whiskey.notes
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,7 +26,6 @@ class AddToGroup : AppCompatActivity() {
         setSupportActionBar(toolbarGLIST)
 
         toolbarGLIST.setTitleTextColor(Color.WHITE)
-        toolbarGLIST.setBackgroundColor(ContextCompat.getColor(this, R.color.dark))
 
         supportActionBar?.title = "Add to Group:"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

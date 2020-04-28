@@ -14,7 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.group_item.view.checkBoxItem
-import kotlinx.android.synthetic.main.group_item.view.dateText
+
 import kotlinx.android.synthetic.main.group_item.view.itemTitle
 import kotlinx.android.synthetic.main.group_item_note.view.*
 import java.util.*
@@ -82,7 +82,7 @@ class GroupItemsListAdapter(
             holder.rowView.checkBoxItem.isChecked = true
 
         }
-        if (searchItems.size != 0) {
+        if (!searchItems.isNullOrEmpty()) {
 
             //Delete all items
             deleteAll.setOnCheckedChangeListener { _, isChecked ->
@@ -228,6 +228,7 @@ class GroupItemsListAdapter(
                 intent.putExtra("group", searchItems[position].group)
                 intent.putParcelableArrayListExtra("noteList", noteList)
                 intent.putParcelableArrayListExtra("searchItems", searchItems)
+                intent.putExtra("frag", "Groups")
 
                 if (noteList == searchItems) {
                     intent.putExtra("position", position)

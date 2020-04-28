@@ -6,99 +6,184 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Background">
+    android:background="@android:color/transparent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:adSize="BANNER"
-            app:adUnitId="ca-app-pub-1441038997276804/4820456308"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.98" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/Background"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/adView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:context=".NewNoteActivity">
-
-
-            <EditText
-                android:id="@+id/eTxtTitle"
-                style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:backgroundTint="@android:color/transparent"
-                android:ems="10"
-                android:hint="@string/Title"
-                android:inputType="textCapSentences|textMultiLine"
-                android:paddingTop="57dp"
-                android:scrollHorizontally="false"
-                android:textColor="#ffffff"
-                android:textColorHighlight="#2196F3"
-                android:textColorHint="#777777"
-                android:textColorLink="#FFFFFF"
-                android:textCursorDrawable="@null"
-                android:textIsSelectable="true"
-                android:textSize="24sp" />
-
-            <EditText
-                android:id="@+id/eTxtNote"
-                style="@style/Base.Widget.MaterialComponents.TextInputEditText"
-                android:layout_width="match_parent"
-
-                android:layout_height="wrap_content"
-                android:layout_weight="0"
-                android:backgroundTint="@android:color/transparent"
-                android:ems="10"
-                android:hint="@string/new_note"
-                android:inputType="date|textMultiLine|number|textCapSentences|numberDecimal"
-                android:scrollHorizontally="false"
-                android:textColor="#ffffff"
-                android:textColorHighlight="#2196F3"
-                android:textColorHint="#777777"
-                android:textColorLink="#FFFFFF"
-                android:textCursorDrawable="@null"
-                android:textIsSelectable="true" />
-
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/dark"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
             android:background="@color/dark"
-            android:visibility="visible"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:theme="@style/ToolbarColoredBackArrow"
-            app:titleTextColor="@android:color/black"
-            tools:visibility="visible" />
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:layout_constraintBottom_toTopOf="@+id/rConst"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </com.google.android.material.appbar.AppBarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/rConst"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0"
+                app:popupTheme="@style/AppTheme.PopupOverlay"
+                app:theme="@style/ToolbarColoredBackArrow"
+                app:titleTextColor="@android:color/black"
+                tools:visibility="visible" />
+
+            <EditText
+                android:id="@+id/eNote"
+                style="@style/Base.Widget.MaterialComponents.TextInputEditText"
+                android:layout_width="0dp"
+
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:autofillHints=""
+                android:background="@drawable/group_shape"
+                android:drawableTint="@color/colorAccent"
+                android:elevation="10dp"
+                android:ems="10"
+                android:fadingEdge="vertical"
+                android:fadingEdgeLength="5dp"
+                android:gravity="top|left"
+                android:hint="Note"
+                android:inputType="textMultiLine"
+                android:maxLength="5000"
+                android:maxLines="100"
+                android:paddingTop="1dp"
+                android:scrollbarAlwaysDrawVerticalTrack="true"
+                android:scrollbarSize="10dp"
+                android:scrollbarStyle="outsideOverlay"
+                android:scrollbars="vertical"
+                android:scrollHorizontally="false"
+                android:textColor="@android:color/black"
+                android:textColorHighlight="@color/colorAccent"
+                android:textColorHint="#AEAEB2"
+                android:textColorLink="@color/colorAccent"
+                android:textCursorDrawable="@drawable/dark_cursor"
+                android:textIsSelectable="true"
+                android:verticalScrollbarPosition="right"
+                app:layout_constraintBottom_toTopOf="@+id/adView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/eTitle"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <EditText
+                android:id="@+id/eTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/group_shape"
+                android:cursorVisible="true"
+                android:drawableTint="@color/colorAccent"
+                android:elevation="10dp"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="@string/Title"
+                android:inputType="none|textNoSuggestions"
+                android:maxLength="28"
+                android:paddingTop="6dp"
+                android:paddingBottom="10dp"
+                android:textColor="@android:color/black"
+                android:textColorHighlight="@color/colorAccent"
+                android:textColorHint="#AEAEB2"
+                android:textColorLink="@color/colorAccent"
+                android:textCursorDrawable="@drawable/dark_cursor"
+                android:textSize="24sp"
+                android:theme="@style/EditText"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="Hello" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar2"
+                android:layout_width="0.1mm"
+                android:layout_height="0.1mm"
+                android:background="#111116"
+                android:minHeight="?attr/actionBarSize"
+                android:theme="?attr/actionBarTheme"
+                app:contentInsetStart="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/toolbar"
+                app:layout_constraintVertical_bias="1.0"
+                tools:ignore="InOrMmUsage">
+
+                <ToggleButton
+                    android:id="@+id/bullet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:background="@android:color/transparent"
+                    android:textColor="@color/colorPrimary"
+                    tools:layout_editor_absoluteX="323dp"
+                    tools:layout_editor_absoluteY="4dp" />
+
+                <ToggleButton
+                    android:id="@+id/number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:textColor="@color/colorPrimary"
+                    tools:layout_editor_absoluteX="162dp"
+                    tools:layout_editor_absoluteY="4dp" />
+
+                <ToggleButton
+                    android:id="@+id/indent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:background="@android:color/transparent"
+                    android:textColor="@color/colorPrimary"
+                    tools:layout_editor_absoluteY="4dp" />
+            </androidx.appcompat.widget.Toolbar>
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="5dp"
+                android:backgroundTint="@android:color/transparent"
+                app:adSize="BANNER"
+                app:adUnitId="ca-app-pub-1441038997276804/4820456308"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                app:layout_constraintVertical_bias="1.0" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

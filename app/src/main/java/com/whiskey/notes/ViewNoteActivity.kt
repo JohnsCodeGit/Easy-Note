@@ -9,6 +9,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -45,6 +46,7 @@ class ViewNoteActivity : AppCompatActivity() {
     private lateinit var mAdView: AdView
     private var trashDB: TrashDB = TrashDB(this, null)
     private var deleteList = ArrayList<NoteModel>()
+    private lateinit var frag: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,6 +67,7 @@ class ViewNoteActivity : AppCompatActivity() {
         noteList = intent.getParcelableArrayListExtra("noteList")
         dateT = intent.getStringExtra("date")
         groupName = intent.getStringExtra("group")
+        frag = intent.getStringExtra("frag")
 
         eTitle.hint = "Note Title"
         eTitle.setHintTextColor(Color.DKGRAY)
@@ -253,11 +256,6 @@ class ViewNoteActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-
-
-        return true
-    }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         val menuItem = menu?.findItem(R.id.save)
@@ -290,8 +288,8 @@ class ViewNoteActivity : AppCompatActivity() {
             mainIntent.putExtra("date", dateText)
             mainIntent.putExtra("group", groupName)
             mainIntent.putExtra("position", position)
-
-
+            mainIntent.putExtra("frag", frag)
+            Log.d("frag", frag)
             startActivity(mainIntent)
         }
 

@@ -5,7 +5,9 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.SearchManager
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
@@ -17,7 +19,6 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
-import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
@@ -41,6 +42,17 @@ class GroupsFragment : Fragment() {
     private lateinit var fab: FloatingActionButton
     private lateinit var constraintLayout: ConstraintLayout
     private lateinit var recyclerView: RecyclerView
+    private var states = arrayOf(
+        intArrayOf(android.R.attr.state_enabled),
+        intArrayOf(-android.R.attr.state_enabled)
+    )
+
+    private var colors = intArrayOf(
+        Color.BLACK,
+        Color.BLACK
+    )
+
+    @SuppressLint("InflateParams")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -65,20 +77,26 @@ class GroupsFragment : Fragment() {
 
             val alertDialog = AlertDialog.Builder(this.context, R.style.AlertDialogStyle)
 
-            alertDialog.setMessage("")
-            alertDialog.setTitle("New Group")
+            val alertText = TextView(this.context)
+            alertText.text = getString(R.string.new_group)
+            alertText.gravity = Gravity.CENTER_HORIZONTAL
+            alertText.textSize = 25.0F
+            alertText.typeface = Typeface.DEFAULT_BOLD
 
-            val input = AppCompatEditText(this.context)
-            input.setPadding(30, -30, 30, 30)
+            alertText.setTextColor(Color.BLACK)
+//            alertText.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+            alertDialog.setCustomTitle(alertText)
+            val myList = ColorStateList(states, colors)
+
+            val input: EditText =
+                LayoutInflater.from(this.context).inflate(R.layout.dialog_content, null) as EditText
+            input.setPadding(30, 180, 30, 30)
             input.inputType = InputType.TYPE_CLASS_TEXT
-            input.setHintTextColor(Color.parseColor("#4b4b4b"))
-//            input.setTextColor(Color.WHITE)
-//            input.setBackgroundColor(Color.BLACK)
-//            input.setTextColor(Color.WHITE)
-//            val colorStateList = ColorStateList.valueOf(Color.BLACK)
-//            ViewCompat.setBackgroundTintList(input, colorStateList)
+            input.setHintTextColor(Color.parseColor("#dee1e3"))
+            input.backgroundTintList = myList
+            input.setTextColor(Color.BLACK)
+
             input.hasFocus()
-            //showKeyboard(mView.findViewById<ConstraintLayout>(R.id.constrainG).context)
             input.hint = "Enter a group name..."
 
             alertDialog.setView(input)

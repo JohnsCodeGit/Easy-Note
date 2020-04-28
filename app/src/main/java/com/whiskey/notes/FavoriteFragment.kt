@@ -51,7 +51,7 @@ class FavoriteFragment : Fragment() {
 
         }
 
-        if (noteList.size != 0)
+        if (!noteList.isNullOrEmpty())
             textView.visibility = View.GONE
         else {
             textView.visibility = View.VISIBLE
@@ -83,7 +83,7 @@ class FavoriteFragment : Fragment() {
         super.onDetach()
     }
     @SuppressLint("RestrictedApi")
-    fun HideDeleteMenu(view: View){
+    fun hideDeleteMenu(view: View) {
 
 
         deleteButton = view.findViewById(R.id.btnDelete)

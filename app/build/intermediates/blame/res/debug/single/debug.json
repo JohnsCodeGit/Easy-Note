@@ -20,6 +20,10 @@
         "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\drawable-xxhdpi\\restore_icon.png"
     },
     {
+        "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\layout_dialog_content.xml.flat",
+        "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\layout\\dialog_content.xml"
+    },
+    {
         "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi_save_icon.png.flat",
         "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\drawable-xxxhdpi\\save_icon.png"
     },
@@ -60,12 +64,12 @@
         "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\menu\\main_menu_delete.xml"
     },
     {
-        "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_fav_icon_empty.png.flat",
-        "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\drawable-xxhdpi\\fav_icon_empty.png"
-    },
-    {
         "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_share_icon.png.flat",
         "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\drawable-hdpi\\share_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_fav_icon_empty.png.flat",
+        "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\drawable-xxhdpi\\fav_icon_empty.png"
     },
     {
         "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_main.xml.flat",
@@ -92,12 +96,12 @@
         "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\layout\\note_row_item.xml"
     },
     {
-        "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_edit_icon.png.flat",
-        "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\drawable-mdpi\\edit_icon.png"
-    },
-    {
         "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher_round.png.flat",
         "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_edit_icon.png.flat",
+        "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\drawable-mdpi\\edit_icon.png"
     },
     {
         "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\layout_group_list_item.xml.flat",
@@ -154,6 +158,10 @@
     {
         "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_action_name.png.flat",
         "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\drawable-mdpi\\ic_action_name.png"
+    },
+    {
+        "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\drawable_dark_cursor.xml.flat",
+        "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\drawable\\dark_cursor.xml"
     },
     {
         "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_menu_manage.xml.flat",

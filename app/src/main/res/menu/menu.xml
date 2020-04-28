@@ -3,12 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
 
+        android:id="@+id/save"
+
+
+        android:title="@string/save"
+
+        app:showAsAction="always" />
+    <item
+
         android:id="@+id/addToGroup"
 
 
         android:icon="@drawable/add_to_group_iconh"
 
-        android:title="Add"
+        android:title="@string/add_to_group_menu"
         app:showAsAction="always" />
     <item
         android:id="@+id/fav"
@@ -25,24 +33,16 @@
 
 
         android:icon="@drawable/delete_icon_2"
-        android:title="Delete"
-        app:showAsAction="always" />
+        android:title="@string/delete"
+        app:showAsAction="never" />
     <item
         android:id="@+id/share"
         android:title="@string/share"
-        app:showAsAction="always"
+        app:showAsAction="never"
         android:icon="@android:drawable/ic_menu_share"
 
 
         />
-    <item
-
-        android:id="@+id/save"
-
-
-        android:title="Save"
-
-        app:showAsAction="always" />
 
 
 </menu>

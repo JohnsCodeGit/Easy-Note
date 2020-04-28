@@ -84,7 +84,7 @@ class DeleteAdapter(
         }
 
 
-        if (searchItems.size != 0) {
+        if (!searchItems.isNullOrEmpty()) {
 
             //Delete all items
             deleteAll.setOnCheckedChangeListener{_, isChecked ->
@@ -175,7 +175,7 @@ class DeleteAdapter(
 
             }
 
-            if(noteList.size == 0){
+            if (noteList.isEmpty()) {
                 checkedVisible = false
             }
 
@@ -321,7 +321,7 @@ class DeleteAdapter(
 
 
                 for (i in 0 until checkedItems.size){
-                    if(checkedItems.size == 0) {
+                    if (noteList.isEmpty()) {
                         break
                     }
                     else{

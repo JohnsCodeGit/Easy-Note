@@ -92,7 +92,7 @@ class FavoriteAdapter(
         }
 
 
-        if (searchItems.size != 0) {
+        if (!searchItems.isNullOrEmpty()) {
 
             //Delete all items
             deleteAll.setOnCheckedChangeListener{_, isChecked ->
@@ -208,7 +208,7 @@ class FavoriteAdapter(
 
             }
 
-            if(noteList.size == 0){
+            if (noteList.isEmpty()) {
                 checkedVisible = false
             }
 
@@ -249,6 +249,7 @@ class FavoriteAdapter(
                     intent.putExtra("note", searchItems[position].note)
                     intent.putExtra("date", searchItems[position].date)
                     intent.putExtra("group", searchItems[position].group)
+                    intent.putExtra("frag", "Favorites")
                     intent.putParcelableArrayListExtra("noteList", noteList)
                     intent.putParcelableArrayListExtra("searchItems", searchItems)
 
@@ -293,7 +294,7 @@ class FavoriteAdapter(
             .setPositiveButton("Yes") {
                     dialog, _-> dialog.dismiss()
                 for (i in 0 until checkedItems.size) {
-                    if (checkedItems.size == 0) {
+                    if (checkedItems.isEmpty()) {
                         break
                     } else {
                         val noteModel = NoteModel(
@@ -334,7 +335,7 @@ class FavoriteAdapter(
                 unSelectAll()
                 deleteAll.isChecked = false
 
-                if (noteList.size != 0) {
+                if (!noteList.isNullOrEmpty()) {
                     textView6.visibility = View.GONE
 
                 } else
@@ -361,7 +362,7 @@ class FavoriteAdapter(
 
 
                 for (i in 0 until checkedItems.size){
-                    if(checkedItems.size == 0) {
+                    if (checkedItems.isEmpty()) {
                         break
                     }
                     else{
@@ -397,7 +398,7 @@ class FavoriteAdapter(
                 deleteAll.isSelected = false
                 unSelectAll()
                 deleteAll.isChecked = false
-                if (noteList.size != 0) {
+                if (!noteList.isNullOrEmpty()) {
                     textView6.visibility = View.GONE
 
                 } else
