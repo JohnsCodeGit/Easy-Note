@@ -114,7 +114,6 @@ class FavoriteAdapter(
                 }
                 else if(!isChecked && searchItems.size == checkedItems.size && !holder.customView.checkBox.isSelected){
 
-
                     unSelectAll()
                     checkedItems.clear()
                     mCheckItems.clear()
@@ -293,23 +292,23 @@ class FavoriteAdapter(
             .setCancelable(false)
             .setPositiveButton("Yes") {
                     dialog, _-> dialog.dismiss()
-                for (i in 0 until checkedItems.size) {
+                for (i in checkedItems.indices) {
                     if (checkedItems.isEmpty()) {
                         break
                     } else {
                         val noteModel = NoteModel(
-                            (noteList[checkedItems[0] - i]).note,
-                            (noteList[checkedItems[0] - i]).title,
-                            (noteList[checkedItems[0] - i]).date,
-                            (noteList[checkedItems[0] - i]).group
+                            (searchItems[checkedItems[0] - i]).note,
+                            (searchItems[checkedItems[0] - i]).title,
+                            (searchItems[checkedItems[0] - i]).date,
+                            (searchItems[checkedItems[0] - i]).group
                         )
 
                         noteDB.updateNote(
                             noteModel,
                             0,
-                            notes.indexOf(noteList[checkedItems[0] - i]) + 1
+                            notes.indexOf(searchItems[checkedItems[0] - i]) + 1
                         )
-                        noteList.removeAt(checkedItems[0] - i)
+                        //noteList.removeAt(checkedItems[0] - i)
                         searchItems.removeAt(checkedItems[0] - i)
 
 
@@ -361,28 +360,28 @@ class FavoriteAdapter(
                 checkedItems.sort()
 
 
-                for (i in 0 until checkedItems.size){
+                for (i in checkedItems.indices) {
                     if (checkedItems.isEmpty()) {
                         break
                     }
                     else{
                         val noteModel = NoteModel(
-                            (noteList[checkedItems[0] - i]).note,
-                            (noteList[checkedItems[0] - i]).title,
-                            (noteList[checkedItems[0] - i]).date,
-                            (noteList[checkedItems[0] - i]).group
+                            (searchItems[checkedItems[0] - i]).note,
+                            (searchItems[checkedItems[0] - i]).title,
+                            (searchItems[checkedItems[0] - i]).date,
+                            (searchItems[checkedItems[0] - i]).group
                         )
 
                         noteDB.updateNote(
                             noteModel,
                             0,
-                            notes.indexOf(noteList[checkedItems[0] - i]) + 1
+                            notes.indexOf(searchItems[checkedItems[0] - i]) + 1
                         )
-                        noteList.removeAt(checkedItems[0]-i)
+                        //noteList.removeAt(checkedItems[0]-i)
                         searchItems.removeAt(checkedItems[0]-i)
 
 
-//                        notifyItemRemoved(checkedItems[0]-i)
+                        notifyItemRemoved(checkedItems[0] - i)
                         checkedItems.removeAt(0)
 
 
