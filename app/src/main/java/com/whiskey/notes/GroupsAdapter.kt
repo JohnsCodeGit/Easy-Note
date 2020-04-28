@@ -275,7 +275,7 @@ class GroupsAdapter(
 //                        for (j in groupPosition.indices)
 //                            notesDB.updateGroup("", groupPosition[i])
 
-                        groupsDB.deleteItem(checkedItems[0] + 1 - i)
+                        groupsDB.deleteItem(noteList.indexOf(searchItems[checkedItems[0] - i]) + 1)
                         noteList.removeAt(noteList.indexOf(searchItems[checkedItems[0] - i]))
                         searchItems.removeAt(checkedItems[0] - i)
                         checkedItems.removeAt(0)
@@ -333,7 +333,7 @@ class GroupsAdapter(
 //                        for (j in groupPositions.indices)
 //                            notesDB.updateGroup("", groupPositions[i])
 
-                        groupsDB.deleteItem(checkedItems[0] + 1 - i)
+                        groupsDB.deleteItem(noteList.indexOf(searchItems[checkedItems[0] - i]) + 1)
                         noteList.removeAt(noteList.indexOf(searchItems[checkedItems[0] - i]))
                         searchItems.removeAt(checkedItems[0]-i)
                         checkedItems.removeAt(0)
