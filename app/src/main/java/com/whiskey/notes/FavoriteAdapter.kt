@@ -183,7 +183,7 @@ class FavoriteAdapter(
 
 
             }
-            if (checkedItems.contains(0) && noteList.size == 1) {
+            if (checkedItems.contains(0) && searchItems.size == 1) {
                 holder.customView.checkBox.isChecked = true
 
             }
