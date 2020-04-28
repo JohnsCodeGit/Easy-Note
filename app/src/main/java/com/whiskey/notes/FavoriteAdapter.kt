@@ -308,11 +308,11 @@ class FavoriteAdapter(
                             0,
                             notes.indexOf(searchItems[checkedItems[0] - i]) + 1
                         )
-                        //noteList.removeAt(checkedItems[0] - i)
+                        noteList.removeAt(noteList.indexOf(searchItems[checkedItems[0] - i]))
                         searchItems.removeAt(checkedItems[0] - i)
 
 
-//                        notifyItemRemoved(checkedItems[0]-i)
+                        notifyItemRemoved(checkedItems[0] - i)
                         checkedItems.removeAt(0)
 
 
@@ -377,7 +377,7 @@ class FavoriteAdapter(
                             0,
                             notes.indexOf(searchItems[checkedItems[0] - i]) + 1
                         )
-                        //noteList.removeAt(checkedItems[0]-i)
+                        noteList.removeAt(noteList.indexOf(searchItems[checkedItems[0] - i]))
                         searchItems.removeAt(checkedItems[0]-i)
 
 
