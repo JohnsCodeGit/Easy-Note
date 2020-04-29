@@ -218,7 +218,6 @@ class GroupsAdapter(
                     val intent = Intent(holder.customView.context, GroupItemsList::class.java)
 
                     holder.customView.checkBoxItem.visibility = View.GONE
-                    //holder.customView.button.visibility = View.GONE
                     bDelete.visibility = View.GONE
                     checkedItems.clear()
                     mCheckItems.clear()
@@ -228,7 +227,7 @@ class GroupsAdapter(
                     } else {
                         intent.putExtra("groupPos", noteList.indexOf(searchItems[position]))
                     }
-                    groupsFragment.activity?.startActivityForResult(intent, 3)
+                    groupsFragment.activity!!.startActivityForResult(intent, 3)
 
                 }
             }

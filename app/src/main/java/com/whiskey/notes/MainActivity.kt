@@ -37,13 +37,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var selectedFragment: Fragment
 
     private fun updateRecyclerView(data: Intent?){
+
         var noteText = data?.getStringExtra("note")
         var titleText = data?.getStringExtra("title")
         var dateText = data?.getStringExtra("date")
         var group = data?.getStringExtra("group")
         var bool = data?.getIntExtra("bool", 0)
 
-        Log.d("noteText", noteText)
+        //Log.d("noteText", noteText)
         noteText = noteText.toString()
         titleText = titleText.toString()
         dateText = dateText.toString()
@@ -84,7 +85,6 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         Log.d("check11", requestCode.toString())
         noteList = notesDB.getAllNote()
-        if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 1 -> {
                     supportFragmentManager.inTransaction {
@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
                         add(R.id.frag_container,selectedFragment)
                     }
                     updateRecyclerView(data)
-                    Log.d("check1", "check")
+                    Log.d("check1", "Fav")
                 }
                 2 -> {
                     supportFragmentManager.inTransaction {
@@ -102,6 +102,7 @@ class MainActivity : AppCompatActivity() {
                         add(R.id.frag_container,selectedFragment)
                     }
                     updateRecyclerView(data)
+                    Log.d("check1", "Note")
 
 
                 }
@@ -111,11 +112,13 @@ class MainActivity : AppCompatActivity() {
                         selectedFragment = GroupsFragment()
                         add(R.id.frag_container,selectedFragment)
                     }
+                    Log.d("check1", "Group")
+
 
                 }
             }
 
-        }
+
     }
     private inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) {
         beginTransaction().func().commit()
@@ -130,6 +133,7 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = findViewById(R.id.bot_view)
 
         if (savedInstanceState == null){
+            Log.d("check119", "Null")
             selectedFragment = HomeFragment()
             supportFragmentManager.inTransaction {
                 add(R.id.frag_container, selectedFragment)
@@ -190,7 +194,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val viewpager = ViewPager(this)
-        viewpager.offscreenPageLimit = 0
+        viewpager.offscreenPageLimit = 3
 
         groupItems = groupsDB.getAllGroups()
         noteList = notesDB.getAllNote()

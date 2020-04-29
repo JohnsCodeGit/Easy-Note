@@ -8,6 +8,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.widget.Button
@@ -40,10 +41,10 @@ class GroupItemsList : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.group_item_layout)
         setSupportActionBar(toolbarItems)
-
+        Log.d("check11199", "GroupItemList")
         val groupPosition = intent.getIntExtra("groupPos", -1)
         groups = groupsDB.getAllGroups()
-
+        Log.d("groupOs", groupPosition.toString())
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.title = groups[groupPosition]
@@ -84,7 +85,10 @@ class GroupItemsList : AppCompatActivity() {
 
         }
     }
-
+    override fun onSupportNavigateUp():Boolean{
+        onBackPressed()
+        return true
+    }
     @SuppressLint("RestrictedApi")
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
@@ -128,12 +132,11 @@ class GroupItemsList : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-
+        super.onBackPressed()
         val mainIntent = Intent(this, MainActivity::class.java)
-        //intent.putExtra("frag", "Groups")
+        setResult(Activity.RESULT_OK, mainIntent)
+        finishActivity(3)
 
-        setResult(Activity.RESULT_OK,mainIntent)
-        finish()
     }
 
 

@@ -291,7 +291,7 @@ class ViewNoteActivity : AppCompatActivity() {
             setResult(Activity.RESULT_OK, mainIntent)
             finish()
         }
-
+        super.onBackPressed()
     }
     private fun save(){
 

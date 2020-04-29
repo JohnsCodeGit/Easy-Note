@@ -42,7 +42,7 @@ class HomeFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("tag", tag.toString())
+
         fabs = mView.findViewById(R.id.fabButton)
         fabs.setOnClickListener {
             val intent = Intent(activity, NewNoteActivity::class.java)

@@ -29,7 +29,7 @@ class NewNoteActivity : AppCompatActivity() {
 
             .setCancelable(false)
             .setPositiveButton("Ok") {
-                    _, _ -> finish()
+                    _, _ -> saveIntent(); finish()
             }
             .setNegativeButton("Cancel") {
                     dialog, _ -> dialog.cancel()
@@ -77,24 +77,27 @@ class NewNoteActivity : AppCompatActivity() {
 
             //save function
             //R.id.save.toColor()
-            val intent = Intent(this, MainActivity::class.java)
-            val noteText = eNote.text.toString()
-            val noteTitle = eTitle.text.toString()
-            intent.putExtra("note", noteText)
-            intent.putExtra("title", noteTitle)
-
-            val date = Calendar.getInstance().time
-            val formatter = SimpleDateFormat("MM/dd/yyyy, hh:mm aaa")
-            val dateText = formatter.format(date).toString()
-            intent.putExtra("group", "")
-            intent.putExtra("date", dateText)
-            setResult(Activity.RESULT_OK,intent)
+            saveIntent()
             finish()
             return true
         }
 
         return super.onOptionsItemSelected(item)
 
+    }
+    fun saveIntent(){
+        val intent = Intent(this, MainActivity::class.java)
+        val noteText = eNote.text.toString()
+        val noteTitle = eTitle.text.toString()
+        intent.putExtra("note", noteText)
+        intent.putExtra("title", noteTitle)
+
+        val date = Calendar.getInstance().time
+        val formatter = SimpleDateFormat("MM/dd/yyyy, hh:mm aaa")
+        val dateText = formatter.format(date).toString()
+        intent.putExtra("group", "")
+        intent.putExtra("date", dateText)
+        setResult(Activity.RESULT_OK, intent)
     }
 
     override fun onBackPressed() {
