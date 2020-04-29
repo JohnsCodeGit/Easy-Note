@@ -18,6 +18,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -27,86 +29,159 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private var noteList = ArrayList<NoteModel>()
-    private var searchItems = ArrayList<NoteModel>()
     private var groupItems = ArrayList<String>()
     private lateinit var barLay: ConstraintLayout
     private val notesDB = NotesDB(this, null)
     private val groupsDB = GroupsDB(this, null)
     private lateinit var noteItem: NoteModel
-
     private lateinit var selectedFragment: Fragment
+
+    private fun updateRecyclerView(data: Intent?){
+        var noteText = data?.getStringExtra("note")
+        var titleText = data?.getStringExtra("title")
+        var dateText = data?.getStringExtra("date")
+        var group = data?.getStringExtra("group")
+        var bool = data?.getIntExtra("bool", 0)
+
+        Log.d("noteText", noteText)
+        noteText = noteText.toString()
+        titleText = titleText.toString()
+        dateText = dateText.toString()
+        group = group.toString()
+        bool = bool!!.toInt()
+
+        noteItem = NoteModel(noteText, titleText, dateText, group)
+
+        val position: Int = data!!.getIntExtra("position", -1)
+
+        if(position == -1 && (noteText.isNotEmpty() || titleText.isNotEmpty())) {
+            noteList.add(noteItem)
+            Log.d("position23", position.toString())
+            notesDB.addNote(noteText, titleText.toString(), dateText, 0, noteList.size)
+
+        } else if (position == -2 && (noteText.isNotEmpty() || titleText.isNotEmpty())) {
+
+        } else if ((position != -1 || position != -2) && (noteText.isNotEmpty() || titleText.isNotEmpty())) {
+
+            noteList.removeAt(position)
+            notesDB.deleteItem(position + 1)
+            Log.d("position22", position.toString())
+            noteList.add(noteItem)
+
+            notesDB.addNote(
+                noteItem.note,
+                noteItem.title,
+                noteItem.date,
+                bool,
+                noteItem.group,
+                noteList.size
+            )
+        }
+
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1) {
-            if (resultCode == Activity.RESULT_OK) {
-                selectedFragment =
-                    supportFragmentManager.findFragmentByTag(data!!.getStringExtra("frag"))!!
+        Log.d("check11", requestCode.toString())
+        noteList = notesDB.getAllNote()
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                1 -> {
+                    supportFragmentManager.inTransaction {
+                        remove(selectedFragment)
+                        selectedFragment = FavoriteFragment()
+                        add(R.id.frag_container,selectedFragment)
+                    }
+                    updateRecyclerView(data)
+                    Log.d("check1", "check")
+                }
+                2 -> {
+                    supportFragmentManager.inTransaction {
+                        remove(selectedFragment)
+                        selectedFragment = HomeFragment()
+                        add(R.id.frag_container,selectedFragment)
+                    }
+                    updateRecyclerView(data)
+
+
+                }
+                3 -> {
+                    supportFragmentManager.inTransaction {
+                        remove(selectedFragment)
+                        selectedFragment = GroupsFragment()
+                        add(R.id.frag_container,selectedFragment)
+                    }
+
+                }
             }
+
         }
+    }
+    private inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) {
+        beginTransaction().func().commit()
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         toolbar.setTitleTextColor(Color.WHITE)
-        //toolbar.setBackgroundColor(ContextCompat.getColor(this, color.colorAccent))
-//        window.statusBarColor = Color.parseColor("#13151a")
 
         barLay = findViewById(R.id.const_layout)
         val navView: BottomNavigationView = findViewById(R.id.bot_view)
-        if (savedInstanceState == null) {
-            Log.d("frag", "None")
 
+        if (savedInstanceState == null){
             selectedFragment = HomeFragment()
-            this.supportFragmentManager.beginTransaction()
-                .replace(R.id.frag_container, selectedFragment, "Notes").commit()
-        } else {
-            val frag = intent.getStringExtra("frag")
-            Log.d("frag", frag)
-            selectedFragment = supportFragmentManager.findFragmentByTag(frag)!!
-            this.supportFragmentManager.beginTransaction()
-                .replace(R.id.frag_container, selectedFragment, frag).commit()
-        }
-        navView.setOnNavigationItemSelectedListener{
-            for (i in 0 until supportFragmentManager.backStackEntryCount){
-                this.supportFragmentManager.popBackStack()
-
+            supportFragmentManager.inTransaction {
+                add(R.id.frag_container, selectedFragment)
             }
+        }
 
+        navView.setOnNavigationItemSelectedListener{
 
             when(it.itemId){
 
                 R.id.nav_home ->{
-                    selectedFragment = HomeFragment()
+
+
                     toolbar.title = "Notes"
-                    this.supportFragmentManager.beginTransaction()
-                        .replace(R.id.frag_container, selectedFragment, "Notes").commit()
+                    supportFragmentManager.inTransaction {
+                        remove(selectedFragment)
+                        selectedFragment = HomeFragment()
+                        add(R.id.frag_container, selectedFragment)
+                    }
+
 
                 }
                 R.id.nav_fav ->{
 
-                    selectedFragment = FavoriteFragment()
-                    toolbar.title = "Favorites"
-                    this.supportFragmentManager.beginTransaction()
-                        .replace(R.id.frag_container, selectedFragment, "Favorites").commit()
 
+                    toolbar.title = "Favorites"
+                    supportFragmentManager.inTransaction {
+                        remove(selectedFragment)
+                        selectedFragment = FavoriteFragment()
+                        add(R.id.frag_container, selectedFragment)
+                    }
 
                 }
                 R.id.nav_groups ->{
 
-                    selectedFragment = GroupsFragment()
                     toolbar.title = "Groups"
-                    this.supportFragmentManager.beginTransaction()
-                        .replace(R.id.frag_container, selectedFragment, "Groups").commit()
+                    supportFragmentManager.inTransaction {
+                        remove(selectedFragment)
+                        selectedFragment = GroupsFragment()
+                        add(R.id.frag_container, selectedFragment)
+                    }
 
 
                 }
                 R.id.nav_trash ->{
 
-                    selectedFragment = TrashFragment()
                     toolbar.title = "Trash"
-                    this.supportFragmentManager.beginTransaction()
-                        .replace(R.id.frag_container, selectedFragment, "Trash").commit()
+                    supportFragmentManager.inTransaction {
+                        remove(selectedFragment)
+                        selectedFragment = TrashFragment()
+                        add(R.id.frag_container, selectedFragment)
+                    }
 
 
                 }
@@ -114,68 +189,11 @@ class MainActivity : AppCompatActivity() {
         true
         }
 
-
         val viewpager = ViewPager(this)
         viewpager.offscreenPageLimit = 0
 
         groupItems = groupsDB.getAllGroups()
         noteList = notesDB.getAllNote()
-        searchItems = notesDB.getAllNote()
-
-        var noteText = intent.getStringExtra("note")
-        var titleText = intent.getStringExtra("title")
-        var dateText = intent.getStringExtra("date")
-        val group = intent.getStringExtra("group")
-        val bool = intent.getIntExtra("bool", 0)
-
-        if(((noteText != null && noteText.isNotBlank()) ||
-                    (titleText != null)) && dateText != null) {
-
-            noteText = noteText.toString()
-            titleText = titleText.toString()
-            dateText = dateText.toString()
-
-            noteItem = NoteModel(noteText, titleText, dateText, group)
-
-            val position: Int = intent.getIntExtra("position", -1)
-
-            if(position == -1 && (noteText.isNotEmpty() || titleText.isNotEmpty())) {
-
-                noteList.add(noteItem)
-                searchItems.add(noteItem)
-
-                notesDB.addNote(noteText, titleText.toString(), dateText, 0, noteList.size)
-//                favDbHandler.addNote(noteText, titleText.toString(), dateText, noteList.size)
-
-
-            } else if (position == -2 && (noteText.isNotEmpty() || titleText.isNotEmpty())) {
-
-            } else if ((position != -1 || position != -2) && (noteText.isNotEmpty() || titleText.isNotEmpty())) {
-
-                searchItems.removeAt(position)
-                noteList.removeAt(position)
-//                val groupName = notedbHandler.getGroupName(position + 1)
-                notesDB.deleteItem(position + 1)
-
-                noteList.add(noteItem)
-                searchItems.add(noteItem)
-
-                notesDB.addNote(
-                    noteItem.note,
-                    noteItem.title,
-                    noteItem.date,
-                    bool,
-                    noteItem.group,
-                    noteList.size
-                )
-
-//                notedbHandler.updateGroup(groupName, position + 1)
-
-            }
-
-
-        }
-
     }
 
     @SuppressLint("RestrictedApi")
@@ -183,10 +201,8 @@ class MainActivity : AppCompatActivity() {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        //val id = item.itemId
-//           if (id == R.id.search) {
-              // fab.visibility = View.GONE
-//           }
+
+
         return super.onOptionsItemSelected(item)
     }
 

@@ -29,7 +29,8 @@ class GroupItemsListAdapter(
     private val btnDelete: Button,
     private val groupTitle: String,
     private val textView: TextView,
-    private var searchItems: ArrayList<NoteModel>
+    private var searchItems: ArrayList<NoteModel>,
+    val groupItemsList: GroupItemsList
 
 ) :
     RecyclerView.Adapter<GroupItemsListAdapter.CustomViewHolder>(), Filterable {

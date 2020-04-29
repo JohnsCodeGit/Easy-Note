@@ -1,6 +1,7 @@
 package com.whiskey.notes
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
@@ -71,7 +72,7 @@ class GroupItemsList : AppCompatActivity() {
             noteAdapter = GroupItemsListAdapter(
                 notes, notesDB, recyclerView,
                 checkBox, constraintLayout, deleteAll,
-                groups[groupPosition], textView, searchItems
+                groups[groupPosition], textView, searchItems, this@GroupItemsList
             )
             addItemDecoration(VerticalSpacing(25))
             setBackgroundColor(Color.TRANSPARENT)
@@ -126,13 +127,13 @@ class GroupItemsList : AppCompatActivity() {
         return true
     }
 
-
     override fun onBackPressed() {
 
         val mainIntent = Intent(this, MainActivity::class.java)
-        intent.putExtra("frag", "Groups")
+        //intent.putExtra("frag", "Groups")
 
-        startActivity(mainIntent)
+        setResult(Activity.RESULT_OK,mainIntent)
+        finish()
     }
 
 

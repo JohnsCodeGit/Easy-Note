@@ -31,7 +31,8 @@ class GroupsAdapter(
     var noteList: ArrayList<String>,
     var searchItems: ArrayList<String>,
     private var textView5: TextView,
-    private var fab: FloatingActionButton
+    private var fab: FloatingActionButton,
+    private val groupsFragment: GroupsFragment
 ) : RecyclerView.Adapter<GroupsAdapter.GroupViewHolder>(), Filterable {
     private var checkedItems = ArrayList<Int>()
     private var checkedVisible = false
@@ -39,7 +40,6 @@ class GroupsAdapter(
     private var mCheckItems = SparseBooleanArray()
     private val groupsDB = GroupsDB(this.context, null)
     private val notesDB = NotesDB(this.context, null)
-    private val notes = notesDB.getAllNote()
     private lateinit var groupName: String
 
     override fun getItemCount() = searchItems.size
@@ -54,10 +54,8 @@ class GroupsAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GroupViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val customView = layoutInflater.inflate(R.layout.group_item, parent, false)
-        //searchItems = groupsDB.getAllGroups()
 
         return GroupViewHolder(customView)
-
     }
 
     override fun onViewRecycled(holder: GroupViewHolder) {
@@ -230,7 +228,7 @@ class GroupsAdapter(
                     } else {
                         intent.putExtra("groupPos", noteList.indexOf(searchItems[position]))
                     }
-                    startActivity(holder.customView.context, intent, null)
+                    groupsFragment.activity?.startActivityForResult(intent, 3)
 
                 }
             }

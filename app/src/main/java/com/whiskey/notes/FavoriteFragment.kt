@@ -17,9 +17,9 @@ import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.findFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_home.*
 
 class FavoriteFragment : Fragment() {
     private var noteList = ArrayList<NoteModel>()
@@ -70,7 +70,7 @@ class FavoriteFragment : Fragment() {
             layoutManager = layoutM
 
             noteadapter  = FavoriteAdapter(deleteButton, deleteAll, constraint, this.context,
-                recyclerView, noteList, searchItems, textView
+                recyclerView, noteList, searchItems, textView, this@FavoriteFragment
             )
             adapter= noteadapter
             addItemDecoration(VerticalSpacing(25))
@@ -137,7 +137,7 @@ class FavoriteFragment : Fragment() {
         searchView.setOnCloseListener {
             searchItems.clear()
             searchItems = notedbHandler.getAllNote()
-            fabButton.visibility = View.VISIBLE
+            //fabButton.visibility = View.VISIBLE
 
             true
         }

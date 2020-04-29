@@ -129,7 +129,7 @@ class GroupsFragment : Fragment() {
             checkBox = activity?.findViewById(R.id.radioButton)!!
             noteadapter = GroupsAdapter(
                 deleteButton, checkBox, constraintLayout, this.context,
-                recyclerView, noteList, searchItems, textView, fab
+                recyclerView, noteList, searchItems, textView, fab, this@GroupsFragment
             )
             adapter = noteadapter
             addItemDecoration(VerticalSpacing(25))

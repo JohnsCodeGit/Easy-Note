@@ -46,7 +46,7 @@ class ViewNoteActivity : AppCompatActivity() {
     private lateinit var mAdView: AdView
     private var trashDB: TrashDB = TrashDB(this, null)
     private var deleteList = ArrayList<NoteModel>()
-    private lateinit var frag: String
+    private var frag: Int = -1
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,7 +67,6 @@ class ViewNoteActivity : AppCompatActivity() {
         noteList = intent.getParcelableArrayListExtra("noteList")
         dateT = intent.getStringExtra("date")
         groupName = intent.getStringExtra("group")
-        frag = intent.getStringExtra("frag")
 
         eTitle.hint = "Note Title"
         eTitle.setHintTextColor(Color.DKGRAY)
@@ -288,8 +287,7 @@ class ViewNoteActivity : AppCompatActivity() {
             mainIntent.putExtra("date", dateText)
             mainIntent.putExtra("group", groupName)
             mainIntent.putExtra("position", position)
-            mainIntent.putExtra("frag", frag)
-            Log.d("frag", frag)
+            Log.d("position2", position.toString())
             setResult(Activity.RESULT_OK, mainIntent)
             finish()
         }

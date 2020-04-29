@@ -1,6 +1,7 @@
 package com.whiskey.notes
 
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.icu.text.SimpleDateFormat
@@ -87,7 +88,8 @@ class NewNoteActivity : AppCompatActivity() {
             val dateText = formatter.format(date).toString()
             intent.putExtra("group", "")
             intent.putExtra("date", dateText)
-            startActivity(intent)
+            setResult(Activity.RESULT_OK,intent)
+            finish()
             return true
         }
 

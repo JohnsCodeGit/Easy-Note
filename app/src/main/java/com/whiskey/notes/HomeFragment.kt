@@ -8,6 +8,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.CheckBox
@@ -18,6 +19,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.findFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -40,12 +42,13 @@ class HomeFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        fabButton.setOnClickListener {
+        Log.d("tag", tag.toString())
+        fabs = mView.findViewById(R.id.fabButton)
+        fabs.setOnClickListener {
             val intent = Intent(activity, NewNoteActivity::class.java)
 
             intent.putParcelableArrayListExtra("noteList", noteList)
-            startActivity(intent)
+            activity!!.startActivityForResult(intent, 2)
         }
 
         mView = view
@@ -80,7 +83,7 @@ class HomeFragment : Fragment(){
 
             noteadapter = NoteAdapter(
                 deleteButton, deleteAll, constraint, fab, this.context,
-                notedbHandler, recyclerView, noteList, searchItems, textView5, addToGroup
+                notedbHandler, recyclerView, noteList, searchItems, textView5, addToGroup, this@HomeFragment
             )
             adapter = noteadapter
             addItemDecoration(VerticalSpacing(25))

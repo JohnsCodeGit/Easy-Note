@@ -34,7 +34,8 @@ class NoteAdapter(
     private var noteList: ArrayList<NoteModel>,
     private var searchItems: ArrayList<NoteModel>,
     private var textView5: TextView,
-    private var addToGroup: ImageButton
+    private var addToGroup: ImageButton,
+    val findFragment: HomeFragment
 
 )
     : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>(), Filterable {
@@ -235,7 +236,7 @@ class NoteAdapter(
                     intent.putExtra("note", searchItems[position].note)
                     intent.putExtra("date", searchItems[position].date)
                     intent.putExtra("group", searchItems[position].group)
-                    intent.putExtra("frag", "Notes")
+                    //intent.putExtra("frag", R.id.nav_home)
                     intent.putParcelableArrayListExtra("noteList", noteList)
                     intent.putParcelableArrayListExtra("searchItems", searchItems)
 
@@ -244,7 +245,9 @@ class NoteAdapter(
                     }else {
                         intent.putExtra("position", noteList.indexOf(searchItems[position]))
                     }
-                    startActivity(holder.customView.context, intent, null)
+                    findFragment.activity?.startActivityForResult(intent, 2)
+
+
                 }
             }
         }

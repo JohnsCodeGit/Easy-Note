@@ -31,7 +31,8 @@ class FavoriteAdapter(
 
     var noteList: ArrayList<NoteModel>,
     var searchItems: ArrayList<NoteModel>,
-    var textView6: TextView
+    var textView6: TextView,
+    val favoriteFragment: FavoriteFragment
 
 )
     : RecyclerView.Adapter<FavoriteAdapter.NoteViewHolder>(), Filterable {
@@ -248,7 +249,7 @@ class FavoriteAdapter(
                     intent.putExtra("note", searchItems[position].note)
                     intent.putExtra("date", searchItems[position].date)
                     intent.putExtra("group", searchItems[position].group)
-                    intent.putExtra("frag", "Favorites")
+                    intent.putExtra("code", 1)
                     intent.putParcelableArrayListExtra("noteList", noteList)
                     intent.putParcelableArrayListExtra("searchItems", searchItems)
 
@@ -257,7 +258,9 @@ class FavoriteAdapter(
                     }else {
                         intent.putExtra("position", notes.indexOf(searchItems[position]))
                     }
-                    startActivity(holder.customView.context, intent, null)
+                    //startActivity(holder.customView.context, intent, null)
+                    favoriteFragment.activity?.startActivityForResult(intent, 1)
+
                 }
             }
         }

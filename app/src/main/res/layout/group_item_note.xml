@@ -53,7 +53,7 @@
         android:maxEms="1"
         android:maxLines="1"
         android:paddingTop="5dp"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorPrimary"
         android:textCursorDrawable="@color/colorPrimary"
         android:textSize="24sp"
         android:textStyle="bold"
