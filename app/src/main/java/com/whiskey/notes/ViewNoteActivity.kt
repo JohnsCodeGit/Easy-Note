@@ -290,7 +290,8 @@ class ViewNoteActivity : AppCompatActivity() {
             mainIntent.putExtra("position", position)
             mainIntent.putExtra("frag", frag)
             Log.d("frag", frag)
-            startActivity(mainIntent)
+            setResult(Activity.RESULT_OK, mainIntent)
+            finish()
         }
 
     }

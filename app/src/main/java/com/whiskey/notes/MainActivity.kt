@@ -7,6 +7,8 @@ package com.whiskey.notes
 
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Rect
 import android.os.Bundle
@@ -32,8 +34,16 @@ class MainActivity : AppCompatActivity() {
     private val groupsDB = GroupsDB(this, null)
     private lateinit var noteItem: NoteModel
 
-    private var selectedFragment: Fragment = HomeFragment()
-
+    private lateinit var selectedFragment: Fragment
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                selectedFragment =
+                    supportFragmentManager.findFragmentByTag(data!!.getStringExtra("frag"))!!
+            }
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -50,14 +60,13 @@ class MainActivity : AppCompatActivity() {
             selectedFragment = HomeFragment()
             this.supportFragmentManager.beginTransaction()
                 .replace(R.id.frag_container, selectedFragment, "Notes").commit()
+        } else {
+            val frag = intent.getStringExtra("frag")
+            Log.d("frag", frag)
+            selectedFragment = supportFragmentManager.findFragmentByTag(frag)!!
+            this.supportFragmentManager.beginTransaction()
+                .replace(R.id.frag_container, selectedFragment, frag).commit()
         }
-//        else {
-//            val frag = intent.getStringExtra("frag")
-//            Log.d("frag", frag)
-//            selectedFragment = supportFragmentManager.findFragmentByTag(frag)!!
-//            this.supportFragmentManager.beginTransaction()
-//                .replace(R.id.frag_container, selectedFragment, frag).commit()
-//        }
         navView.setOnNavigationItemSelectedListener{
             for (i in 0 until supportFragmentManager.backStackEntryCount){
                 this.supportFragmentManager.popBackStack()
