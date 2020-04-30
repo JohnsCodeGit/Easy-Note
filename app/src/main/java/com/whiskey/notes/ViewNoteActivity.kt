@@ -67,11 +67,11 @@ class ViewNoteActivity : AppCompatActivity() {
         noteList = intent.getParcelableArrayListExtra("noteList")
         dateT = intent.getStringExtra("date")
         groupName = intent.getStringExtra("group")
-
+        frag = intent.getIntExtra("frag", -1)
         eTitle.hint = "Note Title"
         eTitle.setHintTextColor(Color.DKGRAY)
         eNote.hint = "Notes"
-
+        Log.d("group", groupName)
         setSupportActionBar(toolbar)
         toolbar.inflateMenu(R.menu.menu)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -275,10 +275,11 @@ class ViewNoteActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+
         if(eTitle.isFocused || eNote.isFocused){
             resetView()
 
-        }else{
+        }else if(frag != 3){
             val mainIntent = Intent(this, MainActivity::class.java)
             save()
             mainIntent.putExtra("note", note)
@@ -288,6 +289,20 @@ class ViewNoteActivity : AppCompatActivity() {
             mainIntent.putExtra("group", groupName)
             mainIntent.putExtra("position", position)
             Log.d("position2", position.toString())
+            setResult(Activity.RESULT_OK, mainIntent)
+            finish()
+        }
+        else{
+            val mainIntent = Intent(this, GroupItemsList::class.java)
+            save()
+            mainIntent.putExtra("note", note)
+            mainIntent.putExtra("title", title)
+            mainIntent.putExtra("bool", boolean)
+            mainIntent.putExtra("date", dateText)
+            mainIntent.putExtra("group", groupName)
+            groupList = groupsDB.getAllGroups()
+            mainIntent.putExtra("groupPos", groupList.indexOf(groupName))
+            Log.d("position232", groupName)
             setResult(Activity.RESULT_OK, mainIntent)
             finish()
         }

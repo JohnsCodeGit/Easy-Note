@@ -37,12 +37,19 @@ class GroupItemsList : AppCompatActivity() {
     private lateinit var deleteAll: Button
     private lateinit var recyclerView: RecyclerView
     private lateinit var noteAdapter: GroupItemsListAdapter
+    private var groupPosition = -1
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        groupPosition = data?.getIntExtra("groupPos", -1)!!
+
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.group_item_layout)
         setSupportActionBar(toolbarItems)
         Log.d("check11199", "GroupItemList")
-        val groupPosition = intent.getIntExtra("groupPos", -1)
+        groupPosition = intent.getIntExtra("groupPos", -1)
+        val groupName = intent.getStringExtra("group")
         groups = groupsDB.getAllGroups()
         Log.d("groupOs", groupPosition.toString())
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -84,6 +91,7 @@ class GroupItemsList : AppCompatActivity() {
 //            addItemDecoration(VerticalSpacing(25))
 
         }
+        noteAdapter.notifyDataSetChanged()
     }
     override fun onSupportNavigateUp():Boolean{
         onBackPressed()

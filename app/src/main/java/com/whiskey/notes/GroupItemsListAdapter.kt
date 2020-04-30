@@ -226,10 +226,11 @@ class GroupItemsListAdapter(
                 intent.putExtra("title", searchItems[position].title)
                 intent.putExtra("note", searchItems[position].note)
                 intent.putExtra("date", searchItems[position].date)
-                intent.putExtra("group", searchItems[position].group)
+                intent.putExtra("group", groupTitle)
                 intent.putParcelableArrayListExtra("noteList", noteList)
                 intent.putParcelableArrayListExtra("searchItems", searchItems)
-                intent.putExtra("frag", "Groups")
+                intent.putExtra("frag", 3)
+                Log.d("group",  searchItems[position].group)
 
                 if (noteList == searchItems) {
                     intent.putExtra("position", position)
