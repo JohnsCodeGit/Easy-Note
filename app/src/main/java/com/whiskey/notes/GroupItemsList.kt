@@ -41,6 +41,7 @@ class GroupItemsList : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         groupPosition = data?.getIntExtra("groupPos", -1)!!
+        noteAdapter.notifyDataSetChanged()
 
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,15 +50,12 @@ class GroupItemsList : AppCompatActivity() {
         setSupportActionBar(toolbarItems)
         Log.d("check11199", "GroupItemList")
         groupPosition = intent.getIntExtra("groupPos", -1)
-        val groupName = intent.getStringExtra("group")
+        val groupName = intent.getStringExtra("group")!!.toString()
         groups = groupsDB.getAllGroups()
-        Log.d("groupOs", groupPosition.toString())
+        Log.d("groupItemsListName", groupName)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.title = groups[groupPosition]
-
-        if (groupsDB.getGroupSize() != 0.toLong())
-            notes = notesDB.getGroup(groups[groupPosition])
 
         deleteAll = findViewById(R.id.btnDeleteAll)
         checkBox = findViewById(R.id.chkDeleteAll)
@@ -67,13 +65,14 @@ class GroupItemsList : AppCompatActivity() {
 
         val textView = findViewById<TextView>(R.id.textView10)
 
-        if (notes.isNotEmpty()) {
+        if (groupsDB.getGroupSize() != 0.toLong()) {
+            notes = notesDB.getGroup(groupName)
+            searchItems = notesDB.getGroup(groupName)
             textView.visibility = View.GONE
-            notes = notesDB.getAllNote()
-
-            searchItems = notesDB.getAllNote()
-        } else
+        }
+        else {
             textView.visibility = View.VISIBLE
+        }
 
         constraintLayout.visibility = View.VISIBLE
         recyclerView.apply {

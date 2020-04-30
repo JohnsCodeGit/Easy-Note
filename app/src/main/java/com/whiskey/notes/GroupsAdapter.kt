@@ -221,11 +221,13 @@ class GroupsAdapter(
                     bDelete.visibility = View.GONE
                     checkedItems.clear()
                     mCheckItems.clear()
+
                     if (noteList == searchItems) {
                         intent.putExtra("groupPos", position)
-
+                        intent.putExtra("group", searchItems[position])
                     } else {
                         intent.putExtra("groupPos", noteList.indexOf(searchItems[position]))
+                        intent.putExtra("group", searchItems[position])
                     }
                     groupsFragment.activity!!.startActivityForResult(intent, 3)
 

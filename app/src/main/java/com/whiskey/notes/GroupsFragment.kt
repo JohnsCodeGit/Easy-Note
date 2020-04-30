@@ -14,10 +14,7 @@ import android.os.Bundle
 import android.text.InputType
 import android.view.*
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.Nullable
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
@@ -106,10 +103,15 @@ class GroupsFragment : Fragment() {
 
                 .setCancelable(true)
                 .setPositiveButton("Add") { dialog, _ ->
-                    addItem(input)
-                    dialog.dismiss()
-                    hideSoftKeyboard(activity!!)
-                    input.clearFocus()
+                    if(noteList.contains(input.text.toString())){
+                        Toast.makeText(this.context, "Group already exists", Toast.LENGTH_LONG).show()
+                    }
+                    else {
+                        addItem(input)
+                        dialog.dismiss()
+                        hideSoftKeyboard(activity!!)
+                        input.clearFocus()
+                    }
                 }
                 .setNegativeButton("Back") { dialog, _ ->
                     dialog.cancel()
