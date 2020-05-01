@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.inTransaction {
                         remove(selectedFragment)
                         selectedFragment = FavoriteFragment()
-                        add(R.id.frag_container,selectedFragment)
+                        add(R.id.frag_container,selectedFragment, "Favorites")
                     }
                     updateRecyclerView(data)
                     Log.d("check1", "Fav")
@@ -99,7 +99,7 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.inTransaction {
                         remove(selectedFragment)
                         selectedFragment = HomeFragment()
-                        add(R.id.frag_container,selectedFragment)
+                        add(R.id.frag_container,selectedFragment, "Notes")
                     }
                     updateRecyclerView(data)
                     Log.d("check1", "Note")
@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.inTransaction {
                         remove(selectedFragment)
                         selectedFragment = GroupsFragment()
-                        add(R.id.frag_container,selectedFragment)
+                        add(R.id.frag_container,selectedFragment, "Groups")
                     }
                     Log.d("check1", "Group")
 
@@ -151,7 +151,7 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.inTransaction {
                         remove(selectedFragment)
                         selectedFragment = HomeFragment()
-                        add(R.id.frag_container, selectedFragment)
+                        add(R.id.frag_container, selectedFragment, "Notes")
                     }
 
 
@@ -163,7 +163,7 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.inTransaction {
                         remove(selectedFragment)
                         selectedFragment = FavoriteFragment()
-                        add(R.id.frag_container, selectedFragment)
+                        add(R.id.frag_container, selectedFragment, "Favorites")
                     }
 
                 }
@@ -173,7 +173,7 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.inTransaction {
                         remove(selectedFragment)
                         selectedFragment = GroupsFragment()
-                        add(R.id.frag_container, selectedFragment)
+                        add(R.id.frag_container, selectedFragment, "Groups")
                     }
 
 
@@ -184,7 +184,7 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.inTransaction {
                         remove(selectedFragment)
                         selectedFragment = TrashFragment()
-                        add(R.id.frag_container, selectedFragment)
+                        add(R.id.frag_container, selectedFragment, "Trash")
                     }
 
 

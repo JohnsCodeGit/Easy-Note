@@ -22,9 +22,9 @@
         android:maxEms="1"
         android:maxLines="1"
         android:paddingTop="5dp"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/recyclerViewItemText"
         android:textCursorDrawable="@color/colorPrimary"
-        android:textSize="24sp"
+        android:textSize="28sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,15 +44,15 @@
         android:maxEms="3"
         android:maxLines="3"
         android:minLines="3"
-        android:textColor="@color/recyclerViewItemText"
+        android:textColor="@color/light_Grey"
         android:textCursorDrawable="@color/colorPrimary"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.123"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/button"
         app:layout_constraintTop_toBottomOf="@+id/itemTitle"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.058" />
 
     <CheckBox
         android:id="@+id/checkBox"

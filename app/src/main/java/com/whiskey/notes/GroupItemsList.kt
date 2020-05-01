@@ -18,6 +18,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.group_item_layout.*
@@ -164,10 +165,16 @@ class GroupItemsList : AppCompatActivity() {
 //    }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-        val mainIntent = Intent(this, MainActivity::class.java)
-        setResult(Activity.RESULT_OK, mainIntent)
-        finishActivity(3)
+        if(constraintLayout.isVisible && deleteAll.isVisible){
+            constraintLayout.visibility = View.GONE
+            noteAdapter.hideItems()
+        }
+        else {
+//            val mainIntent = Intent(this, MainActivity::class.java)
+//            setResult(Activity.RESULT_OK, mainIntent)
+//            finishActivity(3)
+            super.onBackPressed()
+        }
 
     }
 

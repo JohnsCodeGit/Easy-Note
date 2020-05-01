@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#457B9D</color>
-    <color name="colorPrimaryDark">#EE6352 </color>
-    <color name="colorAccent">#457B9D</color>
+    <color name="colorPrimaryDark">#44BBA4 </color>
+    <color name="colorAccent">#44BBA4</color>
     <color name="Background_DARK">#1C1C1E</color>
     <color name="Background_Light">#ffffff</color>
-    <color name="light_Grey">#d1d1d6</color>
+    <color name="light_Grey">#73787A</color>
     <color name="dark">#161618</color>
     <color name="recyclerViewItem">#ffffff</color>
     <color name="recyclerViewItemText">#000000</color>
