@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         noteItem = NoteModel(noteText, titleText, dateText, group)
 
         val position: Int = data!!.getIntExtra("position", -1)
+        noteList = notesDB.getAllNote()
 
         if(position == -1 && (noteText.isNotEmpty() || titleText.isNotEmpty())) {
             noteList.add(noteItem)
@@ -84,7 +85,6 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         Log.d("check11", requestCode.toString())
-        noteList = notesDB.getAllNote()
             when (requestCode) {
                 1 -> {
                     supportFragmentManager.inTransaction {

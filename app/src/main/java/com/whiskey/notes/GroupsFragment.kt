@@ -5,7 +5,6 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.SearchManager
 import android.content.Context
-import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
@@ -22,8 +21,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -32,7 +29,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 class GroupsFragment : Fragment() {
     private var noteList = ArrayList<String>()
     private var searchItems = ArrayList<String>()
-    private lateinit var noteadapter: GroupsAdapter
+    private lateinit var notesAdapter: GroupsAdapter
     private var groupsDB = GroupsDB(null, null)
     private lateinit var searchView: SearchView
     private val layoutM = LinearLayoutManager(activity)
@@ -70,10 +67,11 @@ class GroupsFragment : Fragment() {
             searchItems = groupsDB.getAllGroups()
 
             textView.visibility = View.GONE
-
-        } else
+        }
+        else
             textView.visibility = View.VISIBLE
-        fab.setOnClickListener {
+
+            fab.setOnClickListener {
 
             val alertDialog = AlertDialog.Builder(this.context, R.style.AlertDialogStyle)
 
@@ -82,14 +80,15 @@ class GroupsFragment : Fragment() {
             alertText.gravity = Gravity.CENTER_HORIZONTAL
             alertText.textSize = 25.0F
             alertText.typeface = Typeface.DEFAULT_BOLD
-
             alertText.setTextColor(Color.BLACK)
-//            alertText.paintFlags = Paint.UNDERLINE_TEXT_FLAG
             alertDialog.setCustomTitle(alertText)
+
             val myList = ColorStateList(states, colors)
 
             val input: EditText =
-                LayoutInflater.from(this.context).inflate(R.layout.dialog_content, null) as EditText
+                LayoutInflater.from(this.context)
+                    .inflate(R.layout.dialog_content, null) as EditText
+            input.setBackgroundResource(R.drawable.custom_edittext)
             input.setPadding(30, 180, 30, 30)
             input.inputType = InputType.TYPE_CLASS_TEXT
             input.setHintTextColor(Color.parseColor("#dee1e3"))
@@ -103,14 +102,18 @@ class GroupsFragment : Fragment() {
 
                 .setCancelable(true)
                 .setPositiveButton("Add") { dialog, _ ->
-                    if(noteList.contains(input.text.toString())){
-                        Toast.makeText(this.context, "Group already exists", Toast.LENGTH_LONG).show()
-                    }
-                    else {
-                        addItem(input)
-                        dialog.dismiss()
-                        hideSoftKeyboard(activity!!)
-                        input.clearFocus()
+                    when {
+                        noteList.contains(input.text.toString()) -> {
+                            Toast.makeText(this.context, "Group already exists", Toast.LENGTH_LONG).show()
+                        }
+                        input.text.isNullOrBlank() -> {
+                        }
+                        else -> {
+                            addItem(input)
+                            dialog.dismiss()
+                            hideSoftKeyboard(activity!!)
+                            input.clearFocus()
+                        }
                     }
                 }
                 .setNegativeButton("Back") { dialog, _ ->
@@ -121,7 +124,7 @@ class GroupsFragment : Fragment() {
             val alert = alertDialog.create()
             alert.show()
 
-            noteadapter.notifyDataSetChanged()
+            notesAdapter.notifyDataSetChanged()
         }
 
         recyclerView = view.findViewById(R.id.recyclerView_group)
@@ -132,11 +135,11 @@ class GroupsFragment : Fragment() {
             layoutM.reverseLayout = true
             layoutManager = layoutM
             checkBox = activity?.findViewById(R.id.radioButton)!!
-            noteadapter = GroupsAdapter(
+            notesAdapter = GroupsAdapter(
                 deleteButton, checkBox, constraintLayout, this.context,
                 recyclerView, noteList, searchItems, textView, fab, this@GroupsFragment
             )
-            adapter = noteadapter
+            adapter = notesAdapter
             addItemDecoration(VerticalSpacing(25))
 
         }
@@ -146,7 +149,7 @@ class GroupsFragment : Fragment() {
         noteList.add(input.text.toString())
         searchItems.add(input.text.toString())
         groupsDB.addGroup(input.text.toString(), noteList.size)
-        noteadapter.notifyItemChanged(noteList.size - 1)
+        notesAdapter.notifyItemChanged(noteList.size - 1)
 
     }
     override fun onAttach(context: Context) {
@@ -171,7 +174,7 @@ class GroupsFragment : Fragment() {
         constraintLayout = view.findViewById(R.id.constrainG)
         recyclerView = view.findViewById(R.id.recyclerView_group)
 
-        noteadapter = recyclerView.adapter as GroupsAdapter
+        notesAdapter = recyclerView.adapter as GroupsAdapter
 
         deleteButton.visibility = View.GONE
         deleteButton.isVisible = false
@@ -185,9 +188,7 @@ class GroupsFragment : Fragment() {
         checkBox.isChecked = false
         checkBox.isSelected = false
 
-        noteadapter.hideItems()
-
-
+        notesAdapter.hideItems()
     }
 
     @SuppressLint("RestrictedApi")
@@ -202,7 +203,7 @@ class GroupsFragment : Fragment() {
         searchView.setOnCloseListener {
             searchItems.clear()
             searchItems = groupsDB.getAllGroups()
-            fabButton.visibility = View.VISIBLE
+            fab.visibility = View.VISIBLE
 
             true
         }
@@ -219,7 +220,7 @@ class GroupsFragment : Fragment() {
             override fun onQueryTextChange(newText: String?): Boolean {
                 val text: String = newText.toString().trim()
 
-                noteadapter.filter.filter(text)
+                notesAdapter.filter.filter(text)
 
 
 

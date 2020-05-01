@@ -64,12 +64,12 @@
         "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\menu\\main_menu_delete.xml"
     },
     {
-        "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_fav_icon_empty.png.flat",
-        "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\drawable-xxhdpi\\fav_icon_empty.png"
-    },
-    {
         "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_share_icon.png.flat",
         "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\drawable-hdpi\\share_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_fav_icon_empty.png.flat",
+        "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\drawable-xxhdpi\\fav_icon_empty.png"
     },
     {
         "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_main.xml.flat",
@@ -86,6 +86,10 @@
     {
         "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_fgroup_icon.png.flat",
         "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\drawable-mdpi\\fgroup_icon.png"
+    },
+    {
+        "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\drawable_custom_edittext.xml.flat",
+        "source": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\src\\main\\res\\drawable\\custom_edittext.xml"
     },
     {
         "merged": "C:\\Users\\John\\StudioProjects\\Notes_2.1\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_launcher_foreground.xml.flat",

@@ -24,7 +24,9 @@ import kotlinx.android.synthetic.main.group_item_layout.*
 
 class GroupItemsList : AppCompatActivity() {
     private lateinit var mView: View
-    var notes = ArrayList<NoteModel>()
+    private var notes = ArrayList<NoteModel>()
+    private var notesFull = ArrayList<NoteModel>()
+
     private var searchItems = ArrayList<NoteModel>()
     private var groups = ArrayList<String>()
     private lateinit var searchView: SearchView
@@ -38,11 +40,49 @@ class GroupItemsList : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var noteAdapter: GroupItemsListAdapter
     private var groupPosition = -1
+    private lateinit var groupName : String
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        groupPosition = data?.getIntExtra("groupPos", -1)!!
-        noteAdapter.notifyDataSetChanged()
+        if(requestCode == 1) {
+            var noteText = data?.getStringExtra("note")
+            var titleText = data?.getStringExtra("title")
+            var dateText = data?.getStringExtra("date")
+            var group = data?.getStringExtra("group")
+            var bool = data?.getIntExtra("bool", 0)
 
+            //Log.d("noteText", noteText)
+            noteText = noteText.toString()
+            titleText = titleText.toString()
+            dateText = dateText.toString()
+            group = group.toString()
+            bool = bool!!.toInt()
+            groupPosition = data?.getIntExtra("groupPos", -1)!!
+            notes = notesDB.getGroup(group)
+            val position = data.getIntExtra("position", -1)
+            Log.d("groupNotes", "notes full")
+            notes = notesDB.getGroup(groupName)
+            searchItems = notesDB.getGroup(groupName)
+//            val intent = Intent(this, GroupItemsList::class.java)
+//            intent.putExtra("groupPos", position)
+//            intent.putExtra("group", group)
+//            startActivityForResult(intent, 3)
+//            finishActivity(3)
+            val textView = findViewById<TextView>(R.id.textView10)
+            if (notesDB.getGroup(groupName).isNotEmpty()) {
+                notes = notesDB.getGroup(groupName)
+                searchItems = notesDB.getGroup(groupName)
+                textView.visibility = View.GONE
+            }
+            else {
+                textView.visibility = View.VISIBLE
+            }
+            recyclerView.adapter = GroupItemsListAdapter(
+                notes, notesDB, recyclerView,
+                checkBox, constraintLayout, deleteAll,
+                groups[groupPosition], textView, searchItems, this@GroupItemsList
+            )
+        }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +90,7 @@ class GroupItemsList : AppCompatActivity() {
         setSupportActionBar(toolbarItems)
         Log.d("check11199", "GroupItemList")
         groupPosition = intent.getIntExtra("groupPos", -1)
-        val groupName = intent.getStringExtra("group")!!.toString()
+        groupName = intent.getStringExtra("group")!!.toString()
         groups = groupsDB.getAllGroups()
         Log.d("groupItemsListName", groupName)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -65,7 +105,7 @@ class GroupItemsList : AppCompatActivity() {
 
         val textView = findViewById<TextView>(R.id.textView10)
 
-        if (groupsDB.getGroupSize() != 0.toLong()) {
+        if (notesDB.getGroup(groupName).isNotEmpty()) {
             notes = notesDB.getGroup(groupName)
             searchItems = notesDB.getGroup(groupName)
             textView.visibility = View.GONE
@@ -96,47 +136,47 @@ class GroupItemsList : AppCompatActivity() {
         onBackPressed()
         return true
     }
-    @SuppressLint("RestrictedApi")
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        val searchItem = menu.findItem(R.id.search)
-        val manager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        searchView = searchItem.actionView as SearchView
-        searchView.queryHint = "Search in Notes..."
-        searchView.setSearchableInfo(manager.getSearchableInfo(componentName))
-        searchView.isIconified = true
-        searchView.setOnCloseListener {
-            searchItems.clear()
-            searchItems = notesDB.getAllNote()
-            //fabButton.visibility = View.VISIBLE
-
-            true
-        }
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-
-            override fun onQueryTextSubmit(query: String?): Boolean {
-
-                return false
-
-            }
-
-            @RequiresApi(Build.VERSION_CODES.N)
-            override fun onQueryTextChange(newText: String?): Boolean {
-                val text: String = newText.toString().trim()
-
-                noteAdapter.filter.filter(text)
-
-
-
-                return true
-            }
-
-        })
-
-        super.onCreateOptionsMenu(menu)
-        return true
-    }
+//    @SuppressLint("RestrictedApi")
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//        menuInflater.inflate(R.menu.main_menu, menu)
+//        val searchItem = menu.findItem(R.id.search)
+//        val manager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+//        searchView = searchItem.actionView as SearchView
+//        searchView.queryHint = "Search in Notes..."
+//        searchView.setSearchableInfo(manager.getSearchableInfo(componentName))
+//        searchView.isIconified = true
+//        searchView.setOnCloseListener {
+//            searchItems.clear()
+//            searchItems = notesDB.getGroup(groupName)
+//            //fabButton.visibility = View.VISIBLE
+//
+//            true
+//        }
+//
+//        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//
+//            override fun onQueryTextSubmit(query: String?): Boolean {
+//
+//                return false
+//
+//            }
+//
+//            @RequiresApi(Build.VERSION_CODES.N)
+//            override fun onQueryTextChange(newText: String?): Boolean {
+//                val text: String = newText.toString().trim()
+//
+//                noteAdapter.filter.filter(text)
+//
+//
+//
+//                return true
+//            }
+//
+//        })
+//
+//        super.onCreateOptionsMenu(menu)
+//        return true
+//    }
 
     override fun onBackPressed() {
         super.onBackPressed()

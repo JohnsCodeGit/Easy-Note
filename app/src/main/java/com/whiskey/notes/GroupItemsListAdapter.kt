@@ -37,7 +37,7 @@ class GroupItemsListAdapter(
 
     private var checkedItems = ArrayList<Int>()
     private var noteDB = notesDB
-    private val noteList = noteDB.getAllNote()
+    private var noteList = noteDB.getGroup(groupTitle)
     private var checkedVisible = false
     private var isAllChecked = false
     private var mCheckItems = SparseBooleanArray()
@@ -237,7 +237,7 @@ class GroupItemsListAdapter(
                 } else {
                     intent.putExtra("position", noteList.indexOf(searchItems[position]))
                 }
-                startActivity(holder.rowView.context, intent, null)
+                groupItemsList.startActivityForResult(intent, 1)
             }
         }
 
@@ -274,7 +274,7 @@ class GroupItemsListAdapter(
                 checkedItems.sort()
 
 
-                for (i in 0 until checkedItems.size) {
+                for (i in checkedItems.indices) {
                     if (checkedItems.isEmpty()) {
                         break
                     } else {
@@ -352,10 +352,13 @@ class GroupItemsListAdapter(
         return object : Filter() {
 
             override fun performFiltering(constraint: CharSequence?): FilterResults {
+                //val groupsDB = GroupsDB(groupItemsList, null)
 
                 if (constraint == null || constraint.isEmpty()) {
-
+                    noteList = noteDB.getGroup(groupTitle)
                     searchItems.addAll(noteList)
+                    Log.d("groupSearch", "search active")
+
                 } else {
 
                     val filterPattern =

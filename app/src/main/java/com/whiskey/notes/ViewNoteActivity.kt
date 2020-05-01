@@ -295,11 +295,15 @@ class ViewNoteActivity : AppCompatActivity() {
         else{
             val mainIntent = Intent(this, GroupItemsList::class.java)
             save()
+            val notesFull = noteDB.getAllNote()
             mainIntent.putExtra("note", note)
             mainIntent.putExtra("title", title)
             mainIntent.putExtra("bool", boolean)
             mainIntent.putExtra("date", dateText)
             mainIntent.putExtra("group", groupName)
+            mainIntent.putExtra("position", position)
+            mainIntent.putExtra("positionFull", notesFull.indexOf(noteList[position]))
+
             groupList = groupsDB.getAllGroups()
             mainIntent.putExtra("groupPos", groupList.indexOf(groupName))
             Log.d("position232", groupName)
