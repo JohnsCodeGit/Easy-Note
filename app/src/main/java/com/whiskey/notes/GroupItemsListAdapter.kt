@@ -231,7 +231,7 @@ class GroupItemsListAdapter(
                 intent.putParcelableArrayListExtra("searchItems", searchItems)
                 intent.putExtra("frag", 3)
                 Log.d("group",  searchItems[position].group)
-
+                noteList = noteDB.getGroup(groupTitle)
                 if (noteList == searchItems) {
                     intent.putExtra("position", position)
                 } else {

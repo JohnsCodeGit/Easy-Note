@@ -45,29 +45,14 @@ class GroupItemsList : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == 1) {
-            var noteText = data?.getStringExtra("note")
-            var titleText = data?.getStringExtra("title")
-            var dateText = data?.getStringExtra("date")
-            var group = data?.getStringExtra("group")
-            var bool = data?.getIntExtra("bool", 0)
 
-            //Log.d("noteText", noteText)
-            noteText = noteText.toString()
-            titleText = titleText.toString()
-            dateText = dateText.toString()
-            group = group.toString()
-            bool = bool!!.toInt()
-            groupPosition = data?.getIntExtra("groupPos", -1)!!
-            notes = notesDB.getGroup(group)
-            val position = data.getIntExtra("position", -1)
+            val group = data?.getStringExtra("group")
+            notes = notesDB.getGroup(group!!)
+
             Log.d("groupNotes", "notes full")
             notes = notesDB.getGroup(groupName)
             searchItems = notesDB.getGroup(groupName)
-//            val intent = Intent(this, GroupItemsList::class.java)
-//            intent.putExtra("groupPos", position)
-//            intent.putExtra("group", group)
-//            startActivityForResult(intent, 3)
-//            finishActivity(3)
+
             val textView = findViewById<TextView>(R.id.textView10)
             if (notesDB.getGroup(groupName).isNotEmpty()) {
                 notes = notesDB.getGroup(groupName)
@@ -80,7 +65,7 @@ class GroupItemsList : AppCompatActivity() {
             recyclerView.adapter = GroupItemsListAdapter(
                 notes, notesDB, recyclerView,
                 checkBox, constraintLayout, deleteAll,
-                groups[groupPosition], textView, searchItems, this@GroupItemsList
+               groupName, textView, searchItems, this@GroupItemsList
             )
         }
     }

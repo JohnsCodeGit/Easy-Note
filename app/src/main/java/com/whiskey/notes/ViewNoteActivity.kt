@@ -293,20 +293,13 @@ class ViewNoteActivity : AppCompatActivity() {
             finish()
         }
         else{
-            val mainIntent = Intent(this, GroupItemsList::class.java)
             save()
-            val notesFull = noteDB.getAllNote()
-            mainIntent.putExtra("note", note)
-            mainIntent.putExtra("title", title)
-            mainIntent.putExtra("bool", boolean)
-            mainIntent.putExtra("date", dateText)
-            mainIntent.putExtra("group", groupName)
-            mainIntent.putExtra("position", position)
-            mainIntent.putExtra("positionFull", notesFull.indexOf(noteList[position]))
-
             groupList = groupsDB.getAllGroups()
-            mainIntent.putExtra("groupPos", groupList.indexOf(groupName))
+
+            val mainIntent = Intent(this, GroupItemsList::class.java)
+            mainIntent.putExtra("group", groupName)
             Log.d("position232", groupName)
+
             setResult(Activity.RESULT_OK, mainIntent)
             finish()
         }
@@ -316,11 +309,13 @@ class ViewNoteActivity : AppCompatActivity() {
 
 
         date = Calendar.getInstance().time
-
+        val groupList = noteDB.getGroup(groupName)
+        val notes = noteDB.getAllNote()
         noteDB.updateNote(
             eNote.text.toString(), eTitle.text.toString(),
-            dateText, boolean, groupName, position + 1
+            dateText, boolean, groupName, notes.indexOf(groupList[position]) + 1
         )
+        Log.d("updatePos", (notes.indexOf(groupList[position]) + 1).toString())
 //        notedbHandler.updateGroup(groupName, position + 1)
     }
 }
