@@ -15,7 +15,7 @@
 
         android:layout_height="50dp"
         android:layout_gravity="bottom"
-        android:background="@color/Background_Light"
+        android:background="@color/recyclerViewItem"
         android:elevation="500dp"
         android:visibility="visible"
         app:itemIconTint="@color/bottom_nav_color"
