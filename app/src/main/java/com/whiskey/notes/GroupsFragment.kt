@@ -78,7 +78,7 @@ class GroupsFragment : Fragment() {
             val alertText = TextView(this.context)
             alertText.text = getString(R.string.new_group)
             alertText.gravity = Gravity.CENTER_HORIZONTAL
-            alertText.textSize = 25.0F
+            alertText.textSize = 24.0F
             alertText.typeface = Typeface.DEFAULT_BOLD
             alertText.setTextColor(Color.BLACK)
             alertDialog.setCustomTitle(alertText)
@@ -89,7 +89,7 @@ class GroupsFragment : Fragment() {
                 LayoutInflater.from(this.context)
                     .inflate(R.layout.dialog_content, null) as EditText
             input.setBackgroundResource(R.drawable.custom_edittext)
-            input.setPadding(30, 180, 30, 30)
+            input.setPadding(30, 60, 30, 30)
             input.inputType = InputType.TYPE_CLASS_TEXT
             input.setHintTextColor(Color.parseColor("#dee1e3"))
             input.backgroundTintList = myList
